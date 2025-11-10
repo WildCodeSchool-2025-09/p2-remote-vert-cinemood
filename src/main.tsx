@@ -1,15 +1,13 @@
 import ReactDOM from "react-dom/client";
+import { RouterProvider, createBrowserRouter } from "react-router";
 import "./css/reset.css";
 import "./css/variables.css";
 import App from "./App.tsx";
-import { createBrowserRouter, RouterProvider } from "react-router";
-
-import Home from './components/Home/Home'
 import Catalog from "./components/Catalog/Catalog.tsx";
+import Home from "./components/Home/Home";
 import Movie from "./components/Movie/Movie.tsx";
 import Quiz from "./components/Quiz/Quiz.tsx";
 import Recos from "./components/Recos/Recos.tsx";
-
 
 const router = createBrowserRouter([
 	{

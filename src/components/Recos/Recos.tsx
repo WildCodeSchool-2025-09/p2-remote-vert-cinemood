@@ -1,5 +1,5 @@
 function Recos() {
-	return true;
+	return true
 }
 
 export default Recos;
