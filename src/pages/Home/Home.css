@@ -1,0 +1,50 @@
+header.home-page {
+	align-content: center;
+	height: 60vh;
+	background-image: linear-gradient(
+			to bottom,
+			transparent 50%,
+			var(--dark-purple) 100%
+		), url("../../assets/images/cinema.jpg");
+	background-size: cover;
+	background-position: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.blur {
+	background-image: linear-gradient(
+			to bottom,
+			transparent 70%,
+			var(--dark-purple) 100%
+		),;
+
+}
+
+header .h1, p {
+	text-align: center;
+	width: 30%;
+	color: var(--white);
+}
+
+p {
+margin-bottom: 20px;
+}
+
+.btn {
+	border-radius: 40px;
+	margin: 10px;
+	width: 200px;
+	padding: 5px;
+}
+
+.btn-empty {
+	border: 3px solid var(--light-purple);
+	background-color: transparent;
+	border-radius: 40px;
+	color: var(--white);
+	width: 200px;
+	padding: 5px;
+}
