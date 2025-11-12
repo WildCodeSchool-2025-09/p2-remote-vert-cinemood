@@ -1,0 +1,71 @@
+#how-it-works {
+	background-image: linear-gradient(to bottom, var(--dark-purple), var(--black));
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 30px;
+	width: 100%;
+}
+
+.h2,
+p {
+	text-align: center;
+	width: 100%;
+}
+
+.articles {
+	display: flex;
+	flex-direction: row;
+	gap: 50px;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+.article {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	width: 240px;
+	padding: 10px;
+	border-radius: 20px;
+	background-color: #4d376f;
+}
+.article:hover {
+	box-shadow: 0 0 40px 0 #05a6d6;
+	border: #05a6d6 2px solid;
+}
+
+.sphere {
+	width: 50px;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: radial-gradient(circle, #fff 0%, #4d376f 60%, #4d376f 100%);
+	position: relative;
+	margin: 15px;
+}
+
+.number {
+	color: #4d376f;
+	font-weight: bold;
+}
+
+.h4 {
+	color: var(--white);
+	font-family: var(--font-family-title);
+	font-size: 1.3rem;
+	font-weight: var(--font-weight-bold);
+	margin: 0 0 0 10px;
+	text-align: center;
+}
+
+.description {
+	color: var(--white);
+	font-size: 1rem;
+	margin: 10px;
+	text-align: center;
+	width: 100%;
+}
