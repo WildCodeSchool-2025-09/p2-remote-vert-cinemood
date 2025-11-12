@@ -1,33 +1,9 @@
 import HowItWorks from "../../components/HowItWorks/HowItWorks";
+import MovieList from "../../components/MovieList/MovieList";
 import "./Home.css";
 import { Link } from "react-router";
 
 function Home() {
-	// const navigate = useNavigate();
-
-	// function randomMovie() {
-	// 	const apiKey = import.meta.env.VITE_TMDB_API_KEY;
-	// 	const apiUrl = import.meta.env.VITE_TMDB_API_URL;
-	// 	const maxPage = 100;
-	// 	const randomPage = Math.floor(Math.random() * maxPage) + 1;
-	// 	const urlApi = `${apiUrl}discover/movie?page=${randomPage}`;
-	// 	fetch(urlApi, {
-	// 		headers: {
-	// 			Authorization: `Bearer ${apiKey}`,
-	// 			"Content-Type": "application/json;charset=utf-8",
-	// 		},
-	// 	})
-	// 		.then((response) => {
-	// 			return response.json();
-	// 		})
-	// 		.then((data) => {
-	// 			const results = data.results;
-	// 			const randomIndex = Math.floor(Math.random() * results.length);
-	// 			const movie = results[randomIndex];
-	// 			navigate(`/film/${movie.id}`);
-	// 		});
-	// }
-
 	return (
 		<>
 			<header className="home-page">
@@ -45,7 +21,16 @@ function Home() {
 					</Link>
 				</p>
 			</header>
-			<HowItWorks />
+			<div className="fondu">
+				<HowItWorks />
+
+				<section id="selection-de-la-semaine">
+					<h2 className="h2">
+						Notre <span>sélection</span> de la semaine
+					</h2>
+				<MovieList />
+				</section>
+			</div>
 		</>
 	);
 }

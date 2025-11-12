@@ -1,5 +1,4 @@
 #how-it-works {
-	background-image: linear-gradient(to bottom, var(--dark-purple), var(--black));
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -20,6 +19,7 @@ p {
 	gap: 50px;
 	justify-content: space-between;
 	flex-wrap: wrap;
+	margin-bottom: 60px;
 }
 .article {
 	display: flex;
