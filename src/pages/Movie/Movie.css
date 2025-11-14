@@ -1,0 +1,149 @@
+.header-details {
+	background-size: cover;
+	background-position: center;
+	height: 50vh;
+	display: grid;
+	grid-template-columns: 4fr 4fr 6fr 5fr;
+	grid-template-rows: 2fr 8fr 2fr 2fr;
+	color: var(--white);
+}
+.header-details::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: -1;
+}
+
+.affiche-details {
+	grid-column: 1 / 2;
+	grid-row: 1 / 5;
+	width: 75%;
+	padding: 20px 0 20px 20px;
+}
+
+.info-details {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	grid-column: 2 / 3;
+	gap: 20px;
+	grid-row: 2 / 4;
+}
+
+#bouton-trailer-details {
+	border-radius: 40px;
+	margin: 10px;
+	width: 160px;
+	height: 50px;
+	padding: 15px;
+	text-decoration: none;
+	font-size: 1rem;
+}
+
+.disponibilité-details {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	grid-column: 4 / 5;
+	grid-row: 3 / 4;
+}
+
+.stars {
+	color: gold;
+	font-size: 1.5rem;
+}
+
+.fondu {
+	background-image: linear-gradient(to bottom, var(--dark-purple), var(--black));
+}
+
+.details {
+	color: var(--white);
+	font-size: var(--font-size-text);
+}
+
+.trailer-article {
+	display: flex;
+	justify-content: center;
+	padding: 40px 0 40px 0;
+}
+
+.description-details {
+	display: flex;
+}
+
+.overview-details {
+	padding: 100px;
+	width: 50vw;
+	line-height: 2;
+}
+
+.information-details {
+	padding: 100px;
+	width: 50vw;
+}
+
+span {
+	color: var(--light-blue);
+}
+
+.p-information-details {
+	margin: 20px;
+}
+
+.titre-secondaire {
+	text-align: center;
+	color: var(--white);
+	font-family: var(--font-family-title);
+	font-size: var(--font-size-h2);
+	font-weight: var(--font-weight-bold);
+}
+
+.commentaires {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 20px;
+	width: 100%;
+}
+
+.commentaire-box {
+	width: 100%;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 20px;
+	width: 100%;
+}
+#bouton-commentaire-details {
+	border-radius: 40px;
+	margin: 10px;
+	width: 160px;
+	height: 50px;
+	padding: 15px;
+	text-decoration: none;
+	font-size: 1rem;
+}
+#bouton-commentaire-details:hover {
+	zoom: 1.1;
+}
+
+.pseudo {
+	width: auto;
+}
+.comment {
+	height: 100px;
+	width: 500px;
+	scrollbar-width: auto;
+}
+
+#nouveau-commentaire {
+	text-align: center;
+}
