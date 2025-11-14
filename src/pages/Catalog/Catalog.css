@@ -1,0 +1,37 @@
+body {
+	height: 100%;
+	background: linear-gradient(0deg, #0d1117 0%, #28035c 100%);
+}
+
+.catalog {
+	width: 1440px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.filter-section {
+	width: 100%;
+	height: 150px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 3rem;
+}
+
+.movie-categories {
+	margin-left: 2rem;
+	color: var(--white);
+	font-family: var(--font-family-title);
+	font-size: var(--font-size-h2);
+	font-weight: var(--font-weight-bold);
+}
+
+.catalog-row {
+	display: flex;
+	justify-content: space-between;
+	overflow-x: auto;
+	scroll-behavior: smooth;
+	gap: 1rem;
+	padding: 1rem;
+}
