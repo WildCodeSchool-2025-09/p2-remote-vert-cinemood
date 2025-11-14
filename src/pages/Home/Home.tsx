@@ -16,8 +16,8 @@ function Home() {
 				},
 			})
 				.then((res) => res.json())
-				.then((data) => {
-					setPopular(data.results?.slice(0, 8) || []);
+				.then((movies) => {
+					setPopular(movies.results?.slice(0, 8) || []);
 					setLoadingPopular(false);
 				});
 		}, []);
