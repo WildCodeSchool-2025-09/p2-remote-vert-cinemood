@@ -1,0 +1,15 @@
+.recos-bg {
+	min-height: 100vh;
+	background: var(--primary-background);
+}
+
+.max-characters-30 {
+	max-width: 30ch;
+}
+
+.restart-quiz {
+	color: var(--white);
+	background-color: rgba(248, 249, 251, 0.2);
+	display: block;
+	margin: 4rem auto;
+}
