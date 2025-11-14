@@ -34,14 +34,8 @@
 	grid-row: 2 / 4;
 }
 
-#bouton-trailer-details {
-	border-radius: 40px;
-	margin: 10px;
-	width: 160px;
-	height: 50px;
-	padding: 15px;
+.bouton-trailer-details {
 	text-decoration: none;
-	font-size: 1rem;
 }
 
 .disponibilité-details {
@@ -55,15 +49,6 @@
 .stars {
 	color: gold;
 	font-size: 1.5rem;
-}
-
-.fondu {
-	background-image: linear-gradient(to bottom, var(--dark-purple), var(--black));
-}
-
-.details {
-	color: var(--white);
-	font-size: var(--font-size-text);
 }
 
 .trailer-article {
@@ -87,22 +72,17 @@
 	width: 50vw;
 }
 
-span {
-	color: var(--light-blue);
-}
-
 .p-information-details {
 	margin: 20px;
 }
 
-.titre-secondaire {
+.center {
 	text-align: center;
-	color: var(--white);
-	font-family: var(--font-family-title);
-	font-size: var(--font-size-h2);
-	font-weight: var(--font-weight-bold);
 }
 
+.padding-30 {
+	padding: 30px;
+}
 .commentaires {
 	display: flex;
 	flex-direction: column;
@@ -139,11 +119,28 @@ span {
 	width: auto;
 }
 .comment {
-	height: 100px;
+	height: 50px;
 	width: 500px;
 	scrollbar-width: auto;
 }
 
 #nouveau-commentaire {
 	text-align: center;
+}
+
+.films-similaire {
+	margin-bottom: 50px;
+}
+
+.last-commentaire {
+	border-radius: 5px;
+	background-color: rgba(248, 249, 251, 0.61);
+	margin: 20px;
+	width: 80vw;
+}
+
+.tous-les-commentaires {
+	background-color: rgba(248, 249, 251, 0.2);
+	border-radius: 10px;
+	border: rgba(248, 249, 251, 0.61);
 }

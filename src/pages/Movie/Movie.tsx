@@ -33,10 +33,7 @@ interface ProvidersData {
 }
 
 function Movie() {
-	/*const Movie: React.FC = () => {*/
-	const [messages, setMessages] = useState<{ pseudo: string; text: string }[]>(
-		[],
-	);
+	const [messages, setMessages] = useState<{ pseudo: string; text: string }[]>([]);
 	const [newMessage, setNewMessage] = useState<string>("");
 	const [pseudo, setPseudo] = useState<string>("");
 	const { id } = useParams<{ id: string }>();
@@ -63,22 +60,22 @@ function Movie() {
 
 		fetch(`${apiUrl}movie/${id}?language=fr-FR`, { headers })
 			.then((res) => res.json())
-			.then((data) => setMovie(data))
+			.then((movieDetails) => setMovie(movieDetails))
 			.catch((err) => console.error(err));
 
 		fetch(`${apiUrl}movie/${id}/credits?language=fr-FR`, { headers })
 			.then((res) => res.json())
-			.then((data) => setCredits(data))
+			.then((movieCredits) => setCredits(movieCredits))
 			.catch((err) => console.error(err));
 
 		fetch(`${apiUrl}movie/${id}/videos?language=fr-FR`, { headers })
 			.then((res) => res.json())
-			.then((data) => setVideos(data))
+			.then((movieTrailer) => setVideos(movieTrailer))
 			.catch((err) => console.error(err));
 
 		fetch(`${apiUrl}movie/${id}/watch/providers`, { headers })
 			.then((res) => res.json())
-			.then((data) => setProviders(data))
+			.then((movieProviders) => setProviders(movieProviders))
 			.catch((err) => console.error(err));
 	}, [id]);
 
@@ -115,7 +112,7 @@ function Movie() {
 
 	const posterUrl = movie.poster_path
 		? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-		: "/default-poster.jpg";
+		: "../../assets/images/no-poster.jpg";
 
 	const releaseDate = movie.release_date ?? "N/A";
 	const originCountry =
@@ -153,7 +150,7 @@ function Movie() {
 		"Apple TV Plus": "https://tv.apple.com",
 		"Canal+": "https://www.canalplus.com",
 		"Paramount Plus": "https://www.paramountplus.com",
-		Crunchyroll: "https://www.crunchyroll.com",
+		"Crunchyroll": "https://www.crunchyroll.com",
 		"Google Play Movies": "https://play.google.com/store/movies",
 		"YouTube Premium": "https://www.youtube.com/premium",
 		"Rakuten TV": "https://rakuten.tv",
@@ -186,9 +183,8 @@ function Movie() {
 		setPseudo(event.target.value);
 	}
 	function sendMessage() {
-		setMessages([...messages, { pseudo, text: newMessage }]);
+		setMessages([{ pseudo, text: newMessage }, ...messages ]);
 		setNewMessage("");
-		setPseudo(pseudo);
 		setPseudo("");
 	}
 
@@ -197,22 +193,22 @@ function Movie() {
 			<header className="header-details">
 				<img className="affiche-details" src={posterUrl} alt={movie.title} />
 				<article className="info-details">
-					<h1 className="h1">{movie.title}</h1>
-					<p>Date de sortie : {releaseDate}</p>
-					<p>Durée : {runtime} min</p>
-					<p>
+					<h1 className="primary-title">{movie.title}</h1>
+					<p className="body-text">Date de sortie : {releaseDate}</p>
+					<p className="body-text">Durée : {runtime} min</p>
+					<p className="body-text">
 						Note : {rating}/10 {renderStars(rating)}
 					</p>
 					<button
 						type="button"
-						className="btn"
+						className="primary-button bouton-trailer-details"
 						id="bouton-trailer-details"
 						onClick={handleTrailerClick}
 					>
 						Bande annonce
 					</button>
 				</article>
-				<p className="disponibilité-details">
+				<p className="disponibilité-details body-text">
 					Disponible sur :
 					{streamingProvidersLogos.length > 0 ? (
 						streamingProvidersLogos.map((p) => (
@@ -235,8 +231,8 @@ function Movie() {
 					)}
 				</p>
 			</header>
-			<div className="fondu">
-				<section className="details">
+			<div className="primary-background">
+				<section>
 					{showTrailer && trailerUrl && (
 						<article className="trailer-article">
 							<iframe
@@ -251,28 +247,31 @@ function Movie() {
 						</article>
 					)}
 					<article className="description-details">
-						<p className="overview-details"> {movie.overview} </p>
+						<p className="overview-details body-text"> {movie.overview} </p>
 						<article className="information-details">
-							<p className="p-information-details">
-								<span>Réalisé par</span> : {director}
+							<p className="p-information-details body-text">
+								<span className="body-text-blue">Réalisé par</span> : {director}
 							</p>
-							<p className="p-information-details">
-								<span>Produit par</span> : {producers}
+							<p className="p-information-details body-text">
+								<span className="body-text-blue">Produit par</span> :{" "}
+								{producers}
 							</p>
-							<p className="p-information-details">
-								<span>Casting</span> : {actors}
+							<p className="p-information-details body-text">
+								<span className="body-text-blue">Casting</span> : {actors}
 							</p>
-							<p className="p-information-details">
-								<span>Origine</span> : {originCountry}
+							<p className="p-information-details body-text">
+								<span className="body-text-blue">Origine</span> :{" "}
+								{originCountry}
 							</p>
-							<p className="p-information-details">
-								<span>Societé de production</span> : {productionCompanies}
+							<p className="p-information-details body-text">
+								<span className="body-text-blue">Societé de production</span> :{" "}
+								{productionCompanies}
 							</p>
 						</article>
 					</article>
 				</section>
 				<section className="films-similaire">
-					<h2 className="titre-secondaire">Films similaire</h2>
+					<h2 className="secondary-title center padding-30">Films similaire</h2>
 					{loadingSimilar ? (
 						<p>Chargement...</p>
 					) : (
@@ -280,9 +279,11 @@ function Movie() {
 					)}
 				</section>
 				<section className="commentaires">
-					<h2 className="titre-secondaire">Commentaires</h2>
+					<h2 className="secondary-title">Commentaires</h2>
 					<article className="commentaire-box">
-						<label htmlFor="pseudo">Pseudo : </label>
+						<label htmlFor="pseudo" className="body-text">
+							Pseudo :
+						</label>
 						<input
 							className="pseudo"
 							type="text"
@@ -290,7 +291,9 @@ function Movie() {
 							value={pseudo}
 							onChange={getPseudo}
 						/>
-						<label htmlFor="comment">Commentaire : </label>
+						<label htmlFor="comment" className="body-text">
+							Commentaire :
+						</label>
 						<input
 							className="comment"
 							type="text"
@@ -301,24 +304,25 @@ function Movie() {
 						<br />
 						<button
 							type="button"
-							className="btn"
+							className="primary-button"
 							id="bouton-commentaire-details"
 							onClick={sendMessage}
 						>
 							Envoyer
 						</button>
+						<div className="tous-les-commentaires">
+							<article>
 						{messages.map((msg) => {
 							return (
-								<article
-									className="text"
-									id="nouveau-commentaire"
-									key={msg.pseudo}
-								>
-									<strong>{msg.pseudo}</strong> a écrit : {msg.text}
-								</article>
-							);
+
+										<div className="last-commentaire" key={msg.pseudo}>
+											<strong>{msg.pseudo}</strong> a écrit : {msg.text}
+										</div>
+									);
 						})}
-					</article>
+							</article>
+						</div>
+						</article>
 				</section>
 			</div>
 		</>
