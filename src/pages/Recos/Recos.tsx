@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
+import Carousel from "./RecosCarousel";
+import "./Recos.css";
 
 function Recos() {
+	const quizTaken = false;
+
 	const [moviesWithPoster, setMoviesWithPoster] = useState([]);
 	const randomStartIndex = Math.floor(Math.random() * 14);
 
@@ -33,30 +37,44 @@ function Recos() {
 
 	return (
 		<>
-			<section style={{ backgroundColor: "#de8fe9ff" }}>
-				<h1 className="h1">
-					Découvre ta sélection ciné <span>personnalisée</span> !
-				</h1>
-				<p className="text">
-					En fonction de ton humeur du moment, voici 6 films sélectionnés
-					<span>spécialement pour toi</span>
-				</p>
-
-				{moviesWithPoster && moviesWithPoster.length > 0 ? (
-					moviesWithPoster
-						.slice(randomStartIndex, randomStartIndex + 6)
-						.map((movie) => (
-							<img
-								style={{ width: "200px", height: "auto" }}
-								key={movie.id}
-								src={`https://image.tmdb.org/t/p/w342${movie.poster_path}`}
-								alt={movie.title}
-							/>
-						))
+			<div className="recos-bg">
+				{quizTaken ? (
+					<section className="header-section-center">
+						<h1 className="secondary-title max-characters-30">
+							Découvre ta sélection ciné
+							<span className="body-text-blue"> personnalisée</span> !
+						</h1>
+						<p className="body-text">
+							En fonction de ton humeur du moment, <br /> voici 6 films
+							sélectionnés
+							<span className="body-text-bold"> spécialement pour toi</span>
+						</p>
+					</section>
 				) : (
-					<p>Loading...</p>
+					<section className="header-section-center">
+						<h1 className="secondary-title ">
+							Six films<span className="body-text-blue"> au hasard</span>,{" "}
+							<br />
+							rien que pour toi !
+						</h1>
+						<p className="body-text">
+							Laisse-toi surprendre par notre sélection du moment. <br />
+							Prêt à découvrir
+							<span className="body-text-bold"> de nouvelles pépites </span>?
+						</p>
+					</section>
 				)}
-			</section>
+				<Carousel
+					moviesWithPoster={moviesWithPoster}
+					randomStartIndex={randomStartIndex}
+				/>
+				{quizTaken && (
+					<button type="button" className="primary-button restart-quiz">
+						Redémarrer le quiz
+					</button>
+				)}
+				<div className="body-text ex-footer" />
+			</div>
 		</>
 	);
 }
