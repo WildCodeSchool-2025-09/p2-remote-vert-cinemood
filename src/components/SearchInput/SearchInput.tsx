@@ -1,11 +1,11 @@
 import { useState } from "react";
 import "./SearchInput.css";
 
-function SearchInput({ setFilteredMovies, movieData, setIsOpen, isOpen }: any) {
+function SearchInput({ setFilteredMovies, movieData, setIsOpen, isOpen }) {
 	const [placeholder, setPlaceholder] = useState("Recherceh...");
 	const [inputValue, setInputValue] = useState("");
 
-	function refreshCatalog(movieData: any) {
+	function refreshCatalog(movieData) {
 		setFilteredMovies(movieData);
 		setInputValue("");
 		setPlaceholder("Recherche...");
@@ -27,7 +27,7 @@ function SearchInput({ setFilteredMovies, movieData, setIsOpen, isOpen }: any) {
 						const value = e.target.value;
 						setInputValue(value);
 						setFilteredMovies(
-							movieData.filter((e: any) =>
+							movieData.filter((e) =>
 								e.title.toLowerCase().includes(value.toLowerCase()),
 							),
 						);

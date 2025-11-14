@@ -14,9 +14,7 @@ function DropdownButton() {
 				Dropdown
 			</button>
 			<div id="myDropdown" className={`dropdown-content ${open ? "show" : ""}`}>
-				<a href="#">Link 1</a>
-				<a href="#">Link 2</a>
-				<a href="#">Link 3</a>
+				<p>link 1</p>
 			</div>
 		</div>
 	);

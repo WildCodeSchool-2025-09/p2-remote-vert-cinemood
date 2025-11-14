@@ -1,7 +1,7 @@
 import "./MovieCover.css";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-function MovieCover({ movies }: any) {
+function MovieCover({ movies }) {
 	const [currentIndex, setCurrentIndex] = useState(0);
 
 	useEffect(() => {

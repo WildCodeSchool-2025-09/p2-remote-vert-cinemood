@@ -1,5 +1,5 @@
 function Home() {
-return true;
+	return true;
 }
 
-export default Home
+export default Home;

@@ -1,6 +1,6 @@
 import "./MovieCard.css";
 
-function MovieCard({ movie }: any) {
+function MovieCard({ movie }) {
 	const imageUrl = movie.poster_path
 		? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
 		: "https://via.placeholder.com/500x750?text=No+Image";

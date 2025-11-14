@@ -1,11 +1,11 @@
 import "./Catalog.css";
-import { fetchMovies, movieGenres } from "../../data";
 import { useEffect, useState } from "react";
-import MovieCard from "../../components/MovieCard/MovieCard";
 import Filters from "../../components/Filters/Filters";
+import MovieCard from "../../components/MovieCard/MovieCard";
 import MovieCover from "../../components/MovieCover/MovieCover";
 import SearchInput from "../../components/SearchInput/SearchInput";
 import SearchModal from "../../components/SearchModal/SearchModal";
+import { fetchMovies, movieGenres } from "../../data";
 
 function Catalog() {
 	const [movies, setMovies] = useState([]);

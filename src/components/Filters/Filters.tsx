@@ -1,7 +1,6 @@
 import DropdownButton from "./DropdownButton";
 
-function Filters({ movies, genre }: any) {
-	console.log(genre);
+function Filters({ movies, genre }) {
 	return (
 		<>
 			<DropdownButton />
