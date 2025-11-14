@@ -9,19 +9,19 @@ function Recos() {
   const randomStartIndex = Math.floor(Math.random() * 14);
 
   useEffect(() => {
-    const apiKey = import.meta.env.VITE_TMDB_API_KEY;
     const apiUrl = import.meta.env.VITE_TMDB_API_URL;
 
     const randomPage = Math.floor(Math.random() * 500) + 1;
 
-    const url = `${apiUrl}discover/movie?api_key=${apiKey}&include_adult=false&include_video=false&language=fr-FR&vote_average.gte=5&primary_release_date.gte=1960-01-01&vote_count.gte=100&page=${randomPage}`;
+    const url = `${apiUrl}discover/movie?&include_adult=false&include_video=false&language=fr-FR&vote_average.gte=5&primary_release_date.gte=1960-01-01&vote_count.gte=100&page=${randomPage}`;
 
     const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-    };
+					method: "GET",
+					headers: {
+						Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
+						"Content-Type": "application/json;charset=utf-8",
+					},
+				};
 
     fetch(url, options)
       .then((response) => response.json())
