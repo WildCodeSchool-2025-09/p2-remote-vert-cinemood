@@ -13,9 +13,3 @@
 	display: block;
 	margin: 4rem auto;
 }
-
-.ex-footer {
-	height: 100px;
-	text-align: center;
-	background-color: var(--black);
-}
