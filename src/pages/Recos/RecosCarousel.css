@@ -11,6 +11,8 @@
 .recos-slider-container {
 	margin: -2rem auto;
 	width: 60%;
+	background-color: pink;
+	border: 2px solid red;
 }
 
 .recos-slider-container .slick-track {

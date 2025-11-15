@@ -2,6 +2,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./RecosCarousel.css";
+import "./RecosCarousel-mobile.css";
 import { Link } from "react-router";
 
 export default function RecosCarousel({ moviesWithPoster, randomStartIndex }) {
@@ -15,6 +16,15 @@ export default function RecosCarousel({ moviesWithPoster, randomStartIndex }) {
 		speed: 500,
 		dots: true,
 		arrows: true,
+		responsive: [
+			{
+				breakpoint: 480,
+				settings: {
+					slidesToShow: 1,
+					slidesToScroll: 1,
+				},
+			},
+		],
 	};
 
 	return (
