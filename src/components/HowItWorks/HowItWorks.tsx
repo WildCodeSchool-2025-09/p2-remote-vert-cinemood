@@ -4,39 +4,44 @@ function HowItWorks() {
     return (
 					<>
 						<section id="how-it-works">
-							<h2 className="h2">Comment ça marche ?</h2>
-							<h3 className="h3">
-								Trois étape simple pour découvrir ton prochain film préféré
-							</h3>
-							<div className="articles">
-								<article className="article">
+							<h2 className="secondary-title">Comment ça marche ?</h2>
+							<p className="body-text">
+								Trois étapes simple pour découvrir ton prochain film préféré
+							</p>
+							<div className="steps-container">
+								<article className="step">
 									<div className="sphere">
 										<span className="number">1</span>
 									</div>
 
-									<h4 className="h4">Réponds à des questions simples</h4>
-									<p className="description">
+									<h3 className="section-title">
+										Réponds à des questions simples
+									</h3>
+									<p className="body-text">
 										Partage tes humeurs du moment avec un quiz rapide et amusant
 									</p>
 								</article>
-								<article className="article">
+								<article className="step">
 									<div className="sphere">
 										<span className="number">2</span>
 									</div>
 
-									<h4 className="h4">Nous analysons ton humeur</h4>
-									<p className="description">
+									<h3 className="section-title">Nous analysons ton humeur</h3>
+									<p className="body-text">
 										Notre algorithme associe ton état émotionnel au film qui te
 										correspond
 									</p>
 								</article>
-								<article className="article">
+								<article className="step">
 									<div className="sphere">
 										<span className="number">3</span>
 									</div>
 
-									<h4 className="h4">Installe toi et regarde</h4>
-									<p className="description">
+									<h3 className="section-title">
+										Installe toi et <br />
+										regarde
+									</h3>
+									<p className="body-text">
 										Reçoit des recommandations de films personnalisées et
 										adaptées à toi
 									</p>

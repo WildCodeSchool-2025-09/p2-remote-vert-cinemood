@@ -1,78 +1,58 @@
-header.home-page {
-	align-content: center;
+.header-section-home {
 	height: 60vh;
 	background-image: linear-gradient(
 			to bottom,
 			transparent 50%,
 			var(--dark-purple) 100%
-		), url("../../assets/images/cinema.jpg");
+		), url("../../assets/images/background-home.jpg");
 	background-size: cover;
 	background-position: center;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	padding-top: 6rem;
+}
+.premier-titre {
+	width: 35%;
 }
 
-.header.h1,
-p {
-	text-align: center;
+.width-30 {
 	width: 30%;
 }
 
-.h1 {
-	margin: 15px;
-}
-.header {
-	margin: 10px;
-	font-size: 1.1rem;
-	color: var(--white);
-}
-
-.buttons {
+.buttons-container {
 	display: flex;
-	flex-direction: row;
 	justify-content: space-between;
 	gap: 40px;
-}
-
-.btn {
-	border-radius: 40px;
-	margin: 10px;
-	width: 160px;
-	height: 50px;
-	padding: 15px;
-	text-decoration: none;
-	font-size: 1rem;
 }
 
 .btn-empty {
 	border: 3px solid var(--light-purple);
 	background-color: transparent;
-	border-radius: 40px;
-	color: var(--white);
-	width: 160px;
-	height: 50px;
-	margin: 10px;
-	padding: 15px;
-	font-weight: bold;
 	text-decoration: none;
-	font-size: 1rem;
+	margin-top: 10px;
 }
 
-.fondu {
-	background-image: linear-gradient(to bottom, var(--dark-purple), var(--black));
-}
-
-#selection-de-la-semaine {
+.padding-20 {
 	padding-top: 20px;
 	padding-bottom: 50px;
 	text-align: center;
-	color: var(--white);
 }
-#selection-de-la-semaine .h2 {
-margin-bottom: 40px;
+#selection-de-la-semaine {
+	margin-bottom: 40px;
+	padding-top: 50px;
+	height: 800px;
 }
-span {
-	color: #05a6d6;
+
+.primary-button-home {
+	text-decoration: none;
+	margin-top: 10px;
+}
+.dot {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	margin: 0 5px;
+	border: none;
+	background: red;
+	opacity: 0.4;
+	cursor: pointer;
+	transition: opacity 0.2s, background-color 0.2s;
 }
