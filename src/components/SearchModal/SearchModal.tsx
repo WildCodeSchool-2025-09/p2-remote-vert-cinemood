@@ -4,9 +4,13 @@ import "./SearchModal.css";
 function SearchModal({ filteredMovies }) {
 	return (
 		<div className="modal-catalog">
-			{filteredMovies.map((movie) => (
-				<MovieCard key={movie.id} movie={movie} />
-			))}
+			{filteredMovies.length > 0 ? (
+				filteredMovies.map((movie) => (
+					<MovieCard key={movie.id} movie={movie} />
+				))
+			) : (
+				<h1>Empty</h1>
+			)}
 		</div>
 	);
 }

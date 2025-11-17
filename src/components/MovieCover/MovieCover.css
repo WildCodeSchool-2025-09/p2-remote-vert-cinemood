@@ -25,4 +25,15 @@
 		rgba(40, 3, 92, 1) 100% /* fully opaque at bottom */
 	);
 	pointer-events: none;
+	display: flex;
+	flex-direction: colmn;
+	align-items: flex-end;
+}
+
+.movie-title {
+	margin: 20px;
+}
+
+.btn-info {
+	margin: 20px;
 }

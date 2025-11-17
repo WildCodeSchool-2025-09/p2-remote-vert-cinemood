@@ -5,25 +5,27 @@ import MovieCard from "../../components/MovieCard/MovieCard";
 import MovieCover from "../../components/MovieCover/MovieCover";
 import SearchInput from "../../components/SearchInput/SearchInput";
 import SearchModal from "../../components/SearchModal/SearchModal";
-import { fetchMovies, movieGenres } from "../../data";
+import { fetchMovies, movieGenres, popular, topRated } from "../../data";
 
 function Catalog() {
 	const [movies, setMovies] = useState([]);
 	const [genre, setGenre] = useState([]);
+	const [popularMovies, setPopularMovies] = useState([]);
+	const [topRatedMovies, setTopRatedMovies] = useState([]);
 	const [filteredMovies, setFilteredMovies] = useState(movies);
 	const [isOpen, setIsOpen] = useState(false);
 
 	useEffect(() => {
 		fetchMovies().then(setMovies);
 		movieGenres().then(setGenre);
+		popular().then(setPopularMovies);
+		topRated().then(setTopRatedMovies);
 	}, []);
 
+	// console.log(movies);
+
 	return (
-		<div className="catalog">
-			<MovieCover movies={movies} />
-			<section className="filter-section">
-				<Filters movies={movies} genre={genre} />
-			</section>
+		<div className="primary-background catalog body-text">
 			<SearchInput
 				isOpen={isOpen}
 				setFilteredMovies={setFilteredMovies}
@@ -34,16 +36,20 @@ function Catalog() {
 				<SearchModal filteredMovies={filteredMovies} setIsOpen={setIsOpen} />
 			) : (
 				<>
+					<MovieCover movies={movies} />
+					<section className="filter-section">
+						<Filters movies={movies} genre={genre} />
+					</section>
 					<article className="section-colmn">
-						<h2 className="movie-categories">Drama</h2>
+						<h2 className="movie-categories">Trending</h2>
 						<div className="catalog-row">
-							{movies.map((movie) => (
-								<MovieCard key={movie.id} movie={movie} genre={genre} />
+							{popularMovies.map((movie) => (
+								<MovieCard key={movie.id} movie={movie} />
 							))}
 						</div>
-						<h2 className="movie-categories">Comedy</h2>
+						<h2 className="movie-categories">Top Rated</h2>
 						<div className="catalog-row">
-							{movies.map((movie) => (
+							{topRatedMovies.map((movie) => (
 								<MovieCard key={movie.id} movie={movie} />
 							))}
 						</div>

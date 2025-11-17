@@ -16,7 +16,7 @@ export async function fetchMovies() {
 	try {
 		const res = await fetch(url, options);
 		const data = await res.json();
-		return data.results?.slice(0, 5) || [];
+		return data.results || [];
 	} catch (err) {
 		console.error("rror fetching movies:", err);
 		return [];
@@ -31,5 +31,30 @@ export async function movieGenres() {
 		return data || [];
 	} catch (err) {
 		console.error("Data is not found:", err);
+	}
+}
+
+export async function popular() {
+	const url = "https://api.themoviedb.org/3/trending/movie/day";
+
+	try {
+		const res = await fetch(url, options);
+		const data = await res.json();
+		return data.results.slice(0, 5) || [];
+	} catch (err) {
+		console.error("Data is not found:", err);
+	}
+}
+
+export async function topRated() {
+	const url = `${apiUrl}tv/top_rated?language=fr-FR&page=1`;
+
+	try {
+		const res = await fetch(url, options);
+		const data = await res.json();
+		return data.results?.slice(0, 5) || [];
+	} catch (err) {
+		console.error("Error fetching movies by genre:", err);
+		return [];
 	}
 }

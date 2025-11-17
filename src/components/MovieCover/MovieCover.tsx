@@ -27,7 +27,8 @@ function MovieCover({ movies }) {
 			style={{ backgroundImage: `url(${coverUrl})` }}
 		>
 			<div className="cover-overly">
-				<h1>{movies[currentIndex].title}</h1>
+				{/* <h1 className="movie-title">{movies[currentIndex].title}</h1>
+				<button className="btn-info">Plus Dinfo</button> */}
 			</div>
 		</div>
 	);

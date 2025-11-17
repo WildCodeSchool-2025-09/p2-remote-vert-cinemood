@@ -24,19 +24,18 @@ function SearchInput({ setFilteredMovies, movieData, setIsOpen, isOpen }) {
 					placeholder={placeholder}
 					value={inputValue}
 					onChange={(e) => {
+						setIsOpen(true);
 						const value = e.target.value;
+
 						setInputValue(value);
 						setFilteredMovies(
-							movieData.filter((e) =>
-								e.title.toLowerCase().includes(value.toLowerCase()),
-							),
+							movieData.filter((e) => {
+								return e.title.toLowerCase().includes(value.toLowerCase());
+							}),
 						);
 					}}
 					onClick={(e) => {
-						e.preventDefault();
-						e.stopPropagation();
 						setFilteredMovies(movieData);
-						setIsOpen(true);
 					}}
 				/>
 				<button
