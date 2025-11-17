@@ -1,4 +1,5 @@
 import "./HowItWorks.css";
+import "./HowItWorks-mobile.css";
 
 function HowItWorks() {
     return (
