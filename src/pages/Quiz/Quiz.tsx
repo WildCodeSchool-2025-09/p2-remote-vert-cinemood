@@ -21,7 +21,7 @@ export default function Quiz() {
 						</p>
 						<button
 							type="button"
-							className="primary-button low-emphasis-button"
+							className="primary-button"
 							onClick={() => setQuizStarted(true)}
 						>
 							Lance le quiz
