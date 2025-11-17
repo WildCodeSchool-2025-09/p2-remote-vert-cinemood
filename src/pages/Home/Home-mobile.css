@@ -1,0 +1,41 @@
+@media screen and (max-width: 800px) {
+	.header-section-home {
+		background-image: linear-gradient(
+				to bottom,
+				transparent 50%,
+				var(--dark-purple) 100%
+			), url("../../assets/images/background-home.jpg");
+		background-size: cover;
+		background-position: center;
+		padding-top: 10rem;
+	}
+
+	.primary-title {
+		font-size: 2rem;
+	}
+
+	.premier-titre {
+		width: 50%;
+	}
+
+	.body-text {
+		font-size: 1.5rem;
+        text-align: center;
+	}
+
+	.buttons-container {
+		flex-direction: column;
+		gap: 20px;
+	}
+
+	#selection-de-la-semaine {
+		margin-bottom: 40px;
+		padding-top: 50px;
+		height: 800px;
+	}
+
+	.primary-button-home {
+		text-decoration: none;
+		margin-top: 10px;
+	}
+}
