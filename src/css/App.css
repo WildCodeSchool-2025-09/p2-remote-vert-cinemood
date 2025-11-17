@@ -1,51 +1,63 @@
-.h1 {
-  color: var(--white);
-  font-family: var(--font-family-title);
-  font-size: var(--font-size-h1);
-  font-weight: var(--font-weight-bold);
-} 
-
-.h2 {
-  color: var(--white);
-  font-family: var(--font-family-title);
-  font-size: var(--font-size-h2);
-  font-weight: var(--font-weight-bold);
+.primary-background {
+	background: var(--primary-background);
 }
 
-.h3 {
-  color: var(--white);
-  font-family: var(--font-family-title);
-  font-size: var(--font-size-h3);
-  font-weight: var(--font-weight-bold);
+.primary-title {
+	color: var(--white);
+	font-family: var(--font-family-title);
+	font-size: var(--font-size-h1);
+	font-weight: var(--font-weight-title-bold);
 }
 
-.text{
-  color: var(--white);
-  font-family: var(--font-family-text);
-  font-size: var(--font-size-text);
-  font-weight: var(--font-weight-normal); 
+.secondary-title {
+	color: var(--white);
+	font-family: var(--font-family-title);
+	font-size: var(--font-size-h2);
+	font-weight: var(--font-weight-title-bold);
 }
 
-.btn {
-  color: var(--white);
-  background-color: var(--light-purple);
-  font-size: var(--font-size-text);
-  font-weight: var(--font-weight-bold);
-  border: none;
-  /* padding: ""; */
-  /* border-radius: ""; */
+.section-title {
+	color: var(--white);
+	font-family: var(--font-family-title);
+	font-size: var(--font-size-h3);
+	font-weight: var(--font-weight-title-bold);
 }
 
-.btn-blue {
-  background-color: var(--light-blue);
+.header-section-center {
+	padding: 3rem 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	gap: 1rem;
 }
 
-.hover-general{
-  border: 3px solid var(--light-blue);
-  /* box shadow */
+.body-text {
+	color: var(--white);
+	font-family: var(--font-family-text);
+	font-size: var(--font-size-text);
+	font-weight: var(--font-weight-text-normal);
+	line-height: 1.2;
 }
 
-.movie-poster{
-  border:none;
-  /* border-radius: ""; */
+.body-text-blue {
+	color: var(--light-blue);
+}
+
+.body-text-bold {
+	font-weight: var(--font-weight-text-bold);
+}
+
+.primary-button {
+	color: var(--white);
+	background-color: var(--light-purple);
+	font-family: var(--font-family-title);
+	font-size: var(--font-size-text);
+	font-weight: var(--font-weight-text-bold);
+	padding: 1em;
+	text-align: center;
+	border: none;
+	border-radius: 40px;
+  	cursor: pointer;
 }
