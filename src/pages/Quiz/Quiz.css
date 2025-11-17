@@ -1,0 +1,12 @@
+.quiz-bg {
+	min-height: 100vh;
+	background: var(--primary-background);
+}
+
+.quiz-hero {
+	width: 33%;
+	height: 70vh;
+	margin: 0 auto;
+	gap: 3rem;
+	border: var(--blue-border);
+}

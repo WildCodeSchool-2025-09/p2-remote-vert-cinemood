@@ -1,0 +1,21 @@
+.quiz-container {
+	padding: 50px;
+	text-align: center;
+}
+
+.questions {
+	padding: 50px;
+}
+
+.quiz-images {
+	height: 250px;
+	width: 250px;
+	margin: 50px;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	color: transparent;
+	outline: none;
+    border-radius: 20px;
+}
