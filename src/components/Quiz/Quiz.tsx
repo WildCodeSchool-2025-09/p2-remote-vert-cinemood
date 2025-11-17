@@ -15,17 +15,17 @@ return (
 					vers le bon film
 				</h1>
 				<div className="questions">
-					{buttons.map((item, index) => (
+					{buttons.map((images, id) => (
 						<button
 							type="button"
-							key={item.id}
+							key={images.id}
 							className="quiz-images"
 							style={{
-								backgroundImage: `url(../../assets/images/quizImages/${item.id}.jpg)`,
+								backgroundImage: `url(../../assets/images/quizImages/${images.id}.jpg)`,
 								backgroundSize: "cover",
 								backgroundPosition: "center",
 							}}
-							aria-label={`Image quiz ${index + 1}`}
+							aria-label={`Image quiz ${id + 1}`}
 						/>
 					))}
 				</div>
