@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
-import RecosCarousel from "./RecosCarousel";
+import RecosCarousel from "../../components/RecosCarousel/RecosCarousel";
 import "./Recos.css";
 import { Link } from "react-router";
 
 export default function Recos() {
 	const quizTaken = false;
 
-	const [movieRecos, setMovieRecos] = useState<MovieRecos[]>([]);
+	const [movieRecos, setMovieRecos] = useState<Movie[]>([]);
 	const randomStartIndex = Math.floor(Math.random() * 14);
 
 	const fetchMovie = useCallback(() => {
@@ -69,6 +69,7 @@ export default function Recos() {
 						</>
 					)}
 				</section>
+
 				<RecosCarousel
 					movieRecos={movieRecos}
 					randomStartIndex={randomStartIndex}
@@ -94,10 +95,4 @@ export default function Recos() {
 			</div>
 		</>
 	);
-}
-
-interface MovieRecos {
-	id: number;
-	poster_path: string;
-	title: string;
 }

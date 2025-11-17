@@ -69,12 +69,6 @@ export default function RecosCarousel({
 }
 
 interface RecosCarouselProps {
-	movieRecos: MovieRecos[];
+	movieRecos: Movie[];
 	randomStartIndex: number;
-}
-
-interface MovieRecos {
-	id: number;
-	poster_path: string;
-	title: string;
 }
