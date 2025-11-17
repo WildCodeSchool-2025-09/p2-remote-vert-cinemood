@@ -34,7 +34,7 @@ function Home() {
 					personnalisées qui correspondent à ton humeur du moment.
 				</p>
 				<div className="buttons-container">
-					<Link to="/quiz" className="primary-button primary-button-home">
+					<Link to="/quiz" className="primary-button">
 						Lance le quiz
 					</Link>
 					<Link to="/recommandations" className="primary-button btn-empty">

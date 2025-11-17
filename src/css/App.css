@@ -56,11 +56,14 @@
 	font-size: var(--font-size-text);
 	font-weight: var(--font-weight-text-bold);
 	padding: 1em;
-	text-align: center;
 	border: none;
 	border-radius: 40px;
 	text-decoration: none;
 	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	line-height: 1;
 }
 
 .primary-button:hover {
