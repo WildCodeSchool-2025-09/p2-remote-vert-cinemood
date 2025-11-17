@@ -41,21 +41,21 @@ export default function Recos() {
 	return (
 		<>
 			<div className="recos-bg">
-				{quizTaken ? (
-					<section className="header-section-center">
-						<h1 className="secondary-title">
-							Découvre ta sélection ciné
-							<span className="body-text-blue"> personnalisée</span> !
-						</h1>
-						<p className="body-text">
-							En fonction de ton humeur du moment, <br /> voici 6 films
-							sélectionnés
-							<span className="body-text-bold"> spécialement pour toi</span>
-						</p>
-					</section>
-				) : (
-					<>
-						<section className="header-section-center">
+				<section className="header-section-center">
+					{quizTaken ? (
+						<>
+							<h1 className="secondary-title">
+								Découvre ta sélection ciné
+								<span className="body-text-blue"> personnalisée</span> !
+							</h1>
+							<p className="body-text">
+								En fonction de ton humeur du moment, <br /> voici 6 films
+								sélectionnés
+								<span className="body-text-bold"> spécialement pour toi</span>
+							</p>
+						</>
+					) : (
+						<>
 							<h1 className="secondary-title ">
 								Six films<span className="body-text-blue"> au hasard</span>
 								<br />
@@ -66,10 +66,9 @@ export default function Recos() {
 								découvrir
 								<span className="body-text-bold"> de nouvelles pépites </span>?
 							</p>
-						</section>
-					</>
-				)}
-
+						</>
+					)}
+				</section>
 				<RecosCarousel
 					movieRecos={movieRecos}
 					randomStartIndex={randomStartIndex}
