@@ -53,13 +53,13 @@
 
 .carousel-arrow.left {
 	left: -55px;
-	background-image: url("../../assets/images/fleche-gauche.png");
+	background-image: url("../../assets/images/left-arrow.png");
 	background-size: cover;
 	height: 40px;
 }
 .carousel-arrow.right {
 	right: -55px;
-	background-image: url("../../assets/images/fleche-droite.png");
+	background-image: url("../../assets/images/right-arrow.png");
 	background-size: cover;
 	height: 40px;
 }

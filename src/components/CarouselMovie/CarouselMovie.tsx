@@ -1,19 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import useEmblaCarousel from "embla-carousel-react";
-import "./Carousel.css";
-
-type movies = {
-	id: number;
-	poster_path: string;
-	title: string;
-};
+import "./CarouselMovie.css";
+import { Movie } from "../../types";
 
 type CarouselProps = {
-	movies: movies[];
+	movies: Movie[];
 };
 
-function Carousel({ movies }: CarouselProps) {
+function CarouselMovie({ movies }: CarouselProps) {
 	const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
 	const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -27,9 +22,6 @@ function Carousel({ movies }: CarouselProps) {
 		return () => emblaApi.off("select", onSelect);
 	}, [emblaApi, movies.length]);
 
-	const scrollPrev = () => emblaApi && emblaApi.scrollPrev();
-	const scrollNext = () => emblaApi && emblaApi.scrollNext();
-
 	if (!movies?.length) return <p>Aucun film à afficher</p>;
 
 	return (
@@ -37,7 +29,7 @@ function Carousel({ movies }: CarouselProps) {
 			<button
 				type="button"
 				className="carousel-arrow left"
-				onClick={scrollPrev}
+				onClick={() => emblaApi && emblaApi.scrollPrev()}
 			>
 			</button>
 			<div className="embla" ref={emblaRef}>
@@ -59,7 +51,7 @@ function Carousel({ movies }: CarouselProps) {
 			<button
 				type="button"
 				className="carousel-arrow right"
-				onClick={scrollNext}
+				onClick={() => emblaApi && emblaApi.scrollNext()}
 			>
 			</button>
 			<div className="embla__dots">
@@ -78,4 +70,4 @@ function Carousel({ movies }: CarouselProps) {
 	);
 }
 
-export default Carousel;
+export default CarouselMovie;

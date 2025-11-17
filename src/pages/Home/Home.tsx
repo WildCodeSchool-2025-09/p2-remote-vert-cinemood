@@ -2,7 +2,7 @@ import HowItWorks from "../../components/HowItWorks/HowItWorks";
 import "./Home.css";
 import "./Home-mobile.css"
 import { Link } from "react-router";
-import Carousel from "../../components/Carousel/Carousel";
+import Carousel from "../../components/CarouselMovie/CarouselMovie";
 import { useEffect, useState } from "react";
 
 function Home() {
