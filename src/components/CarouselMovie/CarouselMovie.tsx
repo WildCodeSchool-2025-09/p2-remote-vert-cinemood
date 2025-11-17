@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router";
 import useEmblaCarousel from "embla-carousel-react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router";
 import "./CarouselMovie.css";
-import { Movie } from "../../types";
+import type { Movie } from "../../types";
 
 type CarouselProps = {
 	movies: Movie[];
@@ -20,18 +20,18 @@ function CarouselMovie({ movies }: CarouselProps) {
 		emblaApi.on("select", onSelect);
 		onSelect();
 		return () => emblaApi.off("select", onSelect);
-	}, [emblaApi, movies.length]);
+	}, [emblaApi]);
 
-	if (!movies?.length) return <p>Aucun film à afficher</p>;
+	// if (!movies?.length) return <p>Aucun film à afficher</p>;
+	if (!movies && movies.length < 1) return <p>Aucun film à afficher</p>;
 
 	return (
 		<div className="carousel-wrapper">
 			<button
 				type="button"
 				className="carousel-arrow left"
-				onClick={() => emblaApi && emblaApi.scrollPrev()}
-			>
-			</button>
+				onClick={() => emblaApi?.scrollPrev()}
+			/>
 			<div className="embla" ref={emblaRef}>
 				<div className="embla__container">
 					{movies
@@ -51,18 +51,17 @@ function CarouselMovie({ movies }: CarouselProps) {
 			<button
 				type="button"
 				className="carousel-arrow right"
-				onClick={() => emblaApi && emblaApi.scrollNext()}
-			>
-			</button>
+				onClick={() => emblaApi?.scrollNext()}
+			/>
 			<div className="embla__dots">
 				{movies
 					.filter((movie) => movie.poster_path)
-					.map((_, index) => (
+					.map((_, position) => (
 						<button
 							type="button"
-							key={index}
-							className={index === selectedIndex ? "dot active" : "dot"}
-							onClick={() => emblaApi && emblaApi.scrollTo(index)}
+							key={movies.id}
+							className={position === selectedIndex ? "dot active" : "dot"}
+							onClick={() => emblaApi?.scrollTo(position)}
 						/>
 					))}
 			</div>

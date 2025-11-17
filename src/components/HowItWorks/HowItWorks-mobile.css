@@ -4,10 +4,9 @@
 	}
 
 	.steps-container {
-        flex-direction: column;
+		flex-direction: column;
 	}
 	.step {
-        flex: auto;
+		flex: auto;
 	}
-
 }
