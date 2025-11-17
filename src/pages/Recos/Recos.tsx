@@ -1,19 +1,20 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import RecosCarousel from "./RecosCarousel";
 import "./Recos.css";
+import { Link } from "react-router";
 
-function Recos() {
+export default function Recos() {
 	const quizTaken = false;
 
-	const [moviesWithPoster, setMoviesWithPoster] = useState([]);
+	const [movieRecos, setMovieRecos] = useState<MovieRecos[]>([]);
 	const randomStartIndex = Math.floor(Math.random() * 14);
 
-	useEffect(() => {
+	const fetchMovie = useCallback(() => {
 		const randomPage = Math.floor(Math.random() * 500) + 1;
 
-		const url = `${
-			import.meta.env.VITE_TMDB_API_URL
-		}discover/movie?include_adult=false&include_video=false&language=fr-FR&vote_average.gte=5&primary_release_date.gte=1960-01-01&vote_count.gte=100&page=${randomPage}`;
+		const url = quizTaken
+			? null
+			: `${import.meta.env.VITE_TMDB_API_URL}discover/movie?include_adult=false&include_video=false&language=fr-FR&vote_average.gte=5&primary_release_date.gte=1960-01-01&vote_count.gte=100&page=${randomPage}`;
 
 		const options = {
 			method: "GET",
@@ -23,24 +24,24 @@ function Recos() {
 			},
 		};
 
+		if (!url) return;
+
 		fetch(url, options)
-			.then((response) => response.json())
-			.then((data) => {
-				const originalMovieData = data.results;
-				const moviesWithPoster = originalMovieData.filter(
-					(movie) => movie.poster_path !== null,
-				);
-				setMoviesWithPoster(moviesWithPoster);
-			})
-			.catch((err) => console.error(err));
+			.then((r) => r.json())
+			.then((data) => setMovieRecos(data.results.filter((m) => m.poster_path)))
+			.catch(console.error);
 	}, []);
+
+	useEffect(() => {
+		fetchMovie();
+	}, [fetchMovie]);
 
 	return (
 		<>
 			<div className="recos-bg">
 				{quizTaken ? (
 					<section className="header-section-center">
-						<h1 className="secondary-title max-characters-30">
+						<h1 className="secondary-title">
 							Découvre ta sélection ciné
 							<span className="body-text-blue"> personnalisée</span> !
 						</h1>
@@ -51,32 +52,51 @@ function Recos() {
 						</p>
 					</section>
 				) : (
-					<section className="header-section-center">
-						<h1 className="secondary-title ">
-							Six films<span className="body-text-blue"> au hasard</span>,{" "}
-							<br />
-							rien que pour toi !
-						</h1>
-						<p className="body-text">
-							Laisse-toi surprendre par ces titres tirés au sort.
-							<br />
-							Prêt à découvrir
-							<span className="body-text-bold"> de nouvelles pépites </span>?
-						</p>
-					</section>
+					<>
+						<section className="header-section-center">
+							<h1 className="secondary-title ">
+								Six films<span className="body-text-blue"> au hasard</span>
+								<br />
+								rien que pour toi !
+							</h1>
+							<p className="body-text">
+								Laisse-toi surprendre par ces titres tirés au sort. Prêt à
+								découvrir
+								<span className="body-text-bold"> de nouvelles pépites </span>?
+							</p>
+						</section>
+					</>
 				)}
+
 				<RecosCarousel
-					moviesWithPoster={moviesWithPoster}
+					movieRecos={movieRecos}
 					randomStartIndex={randomStartIndex}
 				/>
-				{quizTaken && (
-					<button type="button" className="primary-button restart-quiz">
-						Redémarrer le quiz
-					</button>
+
+				{quizTaken ? (
+					<div className="link-center-container">
+						<Link to="/quiz" className="primary-button low-emphasis-button">
+							Redémarrer le quiz
+						</Link>
+					</div>
+				) : (
+					<div className="link-center-container">
+						<button
+							type="button"
+							className="primary-button low-emphasis-button"
+							onClick={fetchMovie}
+						>
+							Nouvelle sélection
+						</button>
+					</div>
 				)}
 			</div>
 		</>
 	);
 }
 
-export default Recos;
+interface MovieRecos {
+	id: number;
+	poster_path: string;
+	title: string;
+}

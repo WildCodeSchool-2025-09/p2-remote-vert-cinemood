@@ -16,7 +16,7 @@
 	--font-family-title: "Montserrat", sans-serif;
 	--font-family-text: "Inter", sans-serif;
 	--blue-border: 3px solid var(--light-blue);
-	--blue-shadow: 0px 0px 25px 0px var(--light-blue);
+	--blue-shadow: 0px 0px 1.5rem 0px var(--light-blue);
 	--primary-background: linear-gradient(
 		to bottom,
 		var(--dark-purple),

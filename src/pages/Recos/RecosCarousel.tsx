@@ -2,10 +2,13 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./RecosCarousel.css";
-import "./RecosCarousel-mobile.css";
+import "./Recos-mobile.css";
 import { Link } from "react-router";
 
-export default function RecosCarousel({ moviesWithPoster, randomStartIndex }) {
+export default function RecosCarousel({
+	movieRecos,
+	randomStartIndex,
+}: RecosCarouselProps) {
 	const settings = {
 		centerMode: true,
 		centerPadding: "0px",
@@ -14,6 +17,7 @@ export default function RecosCarousel({ moviesWithPoster, randomStartIndex }) {
 		slidesToScroll: 1,
 		slidesToShow: 3,
 		speed: 500,
+		cssEase: "ease-in-out",
 		dots: true,
 		arrows: true,
 		responsive: [
@@ -22,6 +26,7 @@ export default function RecosCarousel({ moviesWithPoster, randomStartIndex }) {
 				settings: {
 					slidesToShow: 1,
 					slidesToScroll: 1,
+					centerMode: false,
 				},
 			},
 		],
@@ -29,30 +34,47 @@ export default function RecosCarousel({ moviesWithPoster, randomStartIndex }) {
 
 	return (
 		<>
-			{moviesWithPoster && moviesWithPoster.length > 0 ? (
+			{movieRecos && movieRecos.length > 0 ? (
 				<div className="recos-slider-container">
 					<Slider {...settings}>
-						{moviesWithPoster
+						{movieRecos
 							.slice(randomStartIndex, randomStartIndex + 6)
 							.map((movie) => (
 								<div className="recos-img-wrapper" key={movie.id}>
-									<Link to={`/film/${movie.id}`}>
+									<Link to={`/film/${movie.id}`} target="_blank">
 										<img
 											className="recos-movie-poster"
 											src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
 											alt={movie.title}
 										/>
-										<div className="primary-button popUp">En savoir plus</div>
+										<div className="primary-button link-movie-details">
+											En savoir plus
+										</div>
 									</Link>
 								</div>
 							))}
 					</Slider>
 				</div>
 			) : (
-				<div className="loading-screen">
-					<p className="body-text">Loading...</p>
+				<div className="recos-loading-screen">
+					<img
+						className="loading-icon"
+						src="/logo-transparent.png"
+						alt="Chargement…"
+					/>
 				</div>
 			)}
 		</>
 	);
+}
+
+interface RecosCarouselProps {
+	movieRecos: MovieRecos[];
+	randomStartIndex: number;
+}
+
+interface MovieRecos {
+	id: number;
+	poster_path: string;
+	title: string;
 }

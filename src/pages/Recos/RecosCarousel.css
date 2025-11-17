@@ -1,21 +1,13 @@
-.loading-screen {
-	display: flex;
-	justify-content: center;
-	margin: 3rem auto;
-}
-
 .slick-slider {
-	margin-bottom: 6rem;
+	margin-bottom: 4rem;
 }
 
 .recos-slider-container {
-	margin: -2rem auto;
+	margin: -2rem auto 4rem;
 	width: 60%;
-	background-color: pink;
-	border: 2px solid red;
 }
 
-.recos-slider-container .slick-track {
+.slick-track {
 	display: flex;
 	align-items: center;
 	padding: 3rem 0;
@@ -55,21 +47,20 @@
 	transform: scale(1.1);
 }
 
-.popUp {
+.link-movie-details {
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	width: 100%;
 	background-color: var(--light-blue);
 	border-radius: 0 0 1.2rem 1.2rem;
-	text-align: center;
 	z-index: 1;
 	transform: translateY(100%);
 	opacity: 0;
 	transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
-.slick-center .recos-img-wrapper:hover .popUp {
+.slick-center .recos-img-wrapper:hover .link-movie-details {
 	transform: translateY(0);
 	opacity: 1;
 }
