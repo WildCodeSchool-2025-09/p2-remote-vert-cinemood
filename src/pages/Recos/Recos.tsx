@@ -27,8 +27,10 @@ export default function Recos() {
 		if (!url) return;
 
 		fetch(url, options)
-			.then((r) => r.json())
-			.then((data) => setMovieRecos(data.results.filter((m) => m.poster_path)))
+			.then((response) => response.json())
+			.then((movies) =>
+				setMovieRecos(movies.results.filter((movie) => movie.poster_path)),
+			)
 			.catch(console.error);
 	}, []);
 
