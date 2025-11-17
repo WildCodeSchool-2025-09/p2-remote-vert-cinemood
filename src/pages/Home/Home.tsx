@@ -1,5 +1,6 @@
 import HowItWorks from "../../components/HowItWorks/HowItWorks";
 import "./Home.css";
+import "./Home-mobile.css"
 import { Link } from "react-router";
 import Carousel from "../../components/Carousel/Carousel";
 import { useEffect, useState } from "react";
