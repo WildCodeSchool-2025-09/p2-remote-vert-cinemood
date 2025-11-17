@@ -1,5 +1,10 @@
+import Quizz from "../../components/Quiz/Quiz";
+
+
 function Quiz() {
-	return true;
+	return (
+		<Quizz />
+	)
 }
 
 export default Quiz;
