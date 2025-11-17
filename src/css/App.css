@@ -1,3 +1,7 @@
+.primary-background {
+	background: var(--primary-background);
+}
+
 .primary-title {
 	color: var(--white);
 	font-family: var(--font-family-title);
@@ -55,6 +59,7 @@
 	text-align: center;
 	border: none;
 	border-radius: 40px;
+<<<<<<< HEAD
 	text-decoration: none;
 	cursor: pointer;
 }
@@ -103,4 +108,7 @@
 	100% {
 		background-position: 0% 50%;
 	}
+=======
+  	cursor: pointer;
+>>>>>>> US07-Quiz-Componant
 }

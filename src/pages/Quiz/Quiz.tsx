@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./Quiz.css";
+import Quizz from "../../components/Quiz/Quiz";
 
 export default function Quiz() {
 	const [quizStarted, setQuizStarted] = useState(false);
@@ -8,7 +9,7 @@ export default function Quiz() {
 		<>
 			<div className="quiz-bg">
 				{quizStarted ? (
-					<div>QUIZ HERE</div>
+					<Quizz />
 				) : (
 					<section className="header-section-center quiz-hero">
 						<h1 className="primary-title">
