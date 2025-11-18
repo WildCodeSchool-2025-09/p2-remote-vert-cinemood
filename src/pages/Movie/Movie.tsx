@@ -1,7 +1,10 @@
 import "./Movie.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { useParams } from "react-router";
 import Carousel from "../../components/Carousel/Carousel";
+import StarRating from "../../components/StarRating/StarRating";
+import avatar from "./../../assets/images/avatar-utilisateur.jpg";
 
 interface MovieData {
 	title: string;
@@ -33,10 +36,9 @@ interface ProvidersData {
 }
 
 function Movie() {
-	/*const Movie: React.FC = () => {*/
-	const [messages, setMessages] = useState<{ pseudo: string; text: string }[]>(
-		[],
-	);
+	const [messages, setMessages] = useState<
+		{ pseudo: string; text: string; note: number }[]
+	>([]);
 	const [newMessage, setNewMessage] = useState<string>("");
 	const [pseudo, setPseudo] = useState<string>("");
 	const { id } = useParams<{ id: string }>();
@@ -47,7 +49,7 @@ function Movie() {
 	const [showTrailer, setShowTrailer] = useState(false);
 	const [similarMovies, setSimilarMovies] = useState([]);
 	const [loadingSimilar, setLoadingSimilar] = useState(true);
-
+	const [note, setNote] = useState(0);
 	const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 	const apiUrl = import.meta.env.VITE_TMDB_API_URL;
 
@@ -63,22 +65,22 @@ function Movie() {
 
 		fetch(`${apiUrl}movie/${id}?language=fr-FR`, { headers })
 			.then((res) => res.json())
-			.then((data) => setMovie(data))
+			.then((movieDetails) => setMovie(movieDetails))
 			.catch((err) => console.error(err));
 
 		fetch(`${apiUrl}movie/${id}/credits?language=fr-FR`, { headers })
 			.then((res) => res.json())
-			.then((data) => setCredits(data))
+			.then((movieCredits) => setCredits(movieCredits))
 			.catch((err) => console.error(err));
 
 		fetch(`${apiUrl}movie/${id}/videos?language=fr-FR`, { headers })
 			.then((res) => res.json())
-			.then((data) => setVideos(data))
+			.then((movieTrailer) => setVideos(movieTrailer))
 			.catch((err) => console.error(err));
 
 		fetch(`${apiUrl}movie/${id}/watch/providers`, { headers })
 			.then((res) => res.json())
-			.then((data) => setProviders(data))
+			.then((movieProviders) => setProviders(movieProviders))
 			.catch((err) => console.error(err));
 	}, [id]);
 
@@ -115,7 +117,7 @@ function Movie() {
 
 	const posterUrl = movie.poster_path
 		? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-		: "/default-poster.jpg";
+		: "../../assets/images/no-poster.jpg";
 
 	const releaseDate = movie.release_date ?? "N/A";
 	const originCountry =
@@ -136,7 +138,8 @@ function Movie() {
 			.map((a) => a.name)
 			.join(", ") || "N/A";
 
-	const rating = movie.vote_average ?? "N/A";
+	const ratingfloat = movie.vote_average ?? "N/A";
+	const rating = Math.floor(ratingfloat);
 	const runtime = movie.runtime ?? "N/A";
 
 	const trailer = videos?.results?.find(
@@ -166,8 +169,8 @@ function Movie() {
 			url: PROVIDER_URLS[p.provider_name] || null,
 		})) || [];
 
-	const renderStars = (rating: number | "N/A") => {
-		if (rating === "N/A") return "N/A";
+	const renderStars = (ratingfloat: number | "N/A") => {
+		if (ratingfloat === "N/A") return "N/A";
 		const stars = Math.round((rating / 2) * 2) / 2;
 		const fullStars = Math.floor(stars);
 		const halfStar = stars % 1 !== 0;
@@ -178,7 +181,17 @@ function Movie() {
 		return <span className="stars">{starIcons}</span>;
 	};
 
-	function typeNewMessage(event: React.ChangeEvent<HTMLInputElement>) {
+	function renderCommentStars(note?: number) {
+		if (!note || note < 1 || note > 5) return null;
+
+		return (
+			<span className="stars stars-comment">
+				{"★".repeat(note) + "☆".repeat(5 - note)}
+			</span>
+		);
+	}
+
+	function typeNewMessage(event: React.ChangeEvent<HTMLTextAreaElement>) {
 		setNewMessage(event.target.value);
 	}
 
@@ -186,9 +199,13 @@ function Movie() {
 		setPseudo(event.target.value);
 	}
 	function sendMessage() {
-		setMessages([...messages, { pseudo, text: newMessage }]);
+		if (!newMessage.trim()) return;
+		if (!pseudo.trim()) return;
+		if (note === 0) return;
+
+		setMessages([{ pseudo, text: newMessage, note }, ...messages]);
+		setNote(0);
 		setNewMessage("");
-		setPseudo(pseudo);
 		setPseudo("");
 	}
 
@@ -197,22 +214,32 @@ function Movie() {
 			<header className="header-details">
 				<img className="affiche-details" src={posterUrl} alt={movie.title} />
 				<article className="info-details">
-					<h1 className="h1">{movie.title}</h1>
-					<p>Date de sortie : {releaseDate}</p>
-					<p>Durée : {runtime} min</p>
-					<p>
-						Note : {rating}/10 {renderStars(rating)}
+					<h1 className="primary-title">{movie.title}</h1>
+					<p className="body-text">
+						<i className="bi bi-calendar-event body-text" /> : {releaseDate}
 					</p>
+					<p className="body-text">
+						<i className="bi bi-stopwatch body-text" /> : {runtime} min
+					</p>
+					<p className="body-text">
+						<i className="bi bi-star body-text" /> : {rating}/10{" "}
+						{renderStars(rating)}
+					</p>
+					<div className="tag-list">
+						<i className="bi bi-suit-heart body-text" />
+						<i className="bi bi-plus-circle body-text" />
+						<i className="bi bi-eye body-text" />
+					</div>
 					<button
 						type="button"
-						className="btn"
+						className="primary-button bouton-trailer-details"
 						id="bouton-trailer-details"
 						onClick={handleTrailerClick}
 					>
 						Bande annonce
 					</button>
 				</article>
-				<p className="disponibilité-details">
+				<p className="disponibilité-details body-text">
 					Disponible sur :
 					{streamingProvidersLogos.length > 0 ? (
 						streamingProvidersLogos.map((p) => (
@@ -235,8 +262,8 @@ function Movie() {
 					)}
 				</p>
 			</header>
-			<div className="fondu">
-				<section className="details">
+			<div className="primary-background">
+				<section>
 					{showTrailer && trailerUrl && (
 						<article className="trailer-article">
 							<iframe
@@ -251,28 +278,31 @@ function Movie() {
 						</article>
 					)}
 					<article className="description-details">
-						<p className="overview-details"> {movie.overview} </p>
+						<p className="overview-details body-text"> {movie.overview} </p>
 						<article className="information-details">
-							<p className="p-information-details">
-								<span>Réalisé par</span> : {director}
+							<p className="p-information-details body-text">
+								<span className="body-text-blue">Réalisé par</span> : {director}
 							</p>
-							<p className="p-information-details">
-								<span>Produit par</span> : {producers}
+							<p className="p-information-details body-text">
+								<span className="body-text-blue">Produit par</span> :{" "}
+								{producers}
 							</p>
-							<p className="p-information-details">
-								<span>Casting</span> : {actors}
+							<p className="p-information-details body-text">
+								<span className="body-text-blue">Casting</span> : {actors}
 							</p>
-							<p className="p-information-details">
-								<span>Origine</span> : {originCountry}
+							<p className="p-information-details body-text">
+								<span className="body-text-blue">Origine</span> :{" "}
+								{originCountry}
 							</p>
-							<p className="p-information-details">
-								<span>Societé de production</span> : {productionCompanies}
+							<p className="p-information-details body-text">
+								<span className="body-text-blue">Societé de production</span> :{" "}
+								{productionCompanies}
 							</p>
 						</article>
 					</article>
 				</section>
 				<section className="films-similaire">
-					<h2 className="titre-secondaire">Films similaire</h2>
+					<h2 className="secondary-title center padding-30">Films similaire</h2>
 					{loadingSimilar ? (
 						<p>Chargement...</p>
 					) : (
@@ -280,44 +310,63 @@ function Movie() {
 					)}
 				</section>
 				<section className="commentaires">
-					<h2 className="titre-secondaire">Commentaires</h2>
+					<h2 className="secondary-title">Commentaires</h2>
+					<div className="tous-les-commentaires">
+						<article>
+							{messages.map((msg) => {
+								return (
+									<div
+										className="body-text"
+										id="last-commentaire"
+										key={msg.pseudo}
+									>
+										<img src={avatar} alt="avatar" width="50px" height="50px" />
+										<strong className="pseudo">{msg.pseudo}</strong>
+										{renderCommentStars(msg.note)}
+										<article className="contenue-commentaire">
+											{msg.text}
+										</article>
+									</div>
+								);
+							})}
+						</article>
+					</div>
 					<article className="commentaire-box">
-						<label htmlFor="pseudo">Pseudo : </label>
-						<input
-							className="pseudo"
-							type="text"
-							id="pseudo"
-							value={pseudo}
-							onChange={getPseudo}
-						/>
-						<label htmlFor="comment">Commentaire : </label>
-						<input
+						<div className="pseudo-note">
+							<label htmlFor="pseudo" className="body-text">
+								Pseudo :
+							</label>
+							<input
+								className="pseudo"
+								type="text"
+								id="pseudo"
+								value={pseudo}
+								onChange={getPseudo}
+								maxLength={12}
+							/>
+							<p className="body-text">Note :</p>
+							<StarRating maxStars={5} onRatingChange={setNote} value={note} />
+						</div>
+						<label htmlFor="comment" className="body-text">
+							Commentaire :
+						</label>
+						<textarea
 							className="comment"
-							type="text"
 							id="comment"
 							value={newMessage}
 							onChange={typeNewMessage}
+							rows={5}
+							maxLength={1000}
 						/>
 						<br />
 						<button
 							type="button"
-							className="btn"
+							className="primary-button"
 							id="bouton-commentaire-details"
 							onClick={sendMessage}
 						>
 							Envoyer
 						</button>
-						{messages.map((msg) => {
-							return (
-								<article
-									className="text"
-									id="nouveau-commentaire"
-									key={msg.pseudo}
-								>
-									<strong>{msg.pseudo}</strong> a écrit : {msg.text}
-								</article>
-							);
-						})}
 					</article>
 				</section>
 			</div>

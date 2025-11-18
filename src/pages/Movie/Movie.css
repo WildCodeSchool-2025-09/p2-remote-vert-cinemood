@@ -34,14 +34,14 @@
 	grid-row: 2 / 4;
 }
 
-#bouton-trailer-details {
-	border-radius: 40px;
-	margin: 10px;
-	width: 160px;
-	height: 50px;
-	padding: 15px;
+.tag-list {
+	display: flex;
+	gap: 40px;
+}
+
+.bouton-trailer-details {
 	text-decoration: none;
-	font-size: 1rem;
+	background-color: var(--light-blue);
 }
 
 .disponibilité-details {
@@ -55,15 +55,6 @@
 .stars {
 	color: gold;
 	font-size: 1.5rem;
-}
-
-.fondu {
-	background-image: linear-gradient(to bottom, var(--dark-purple), var(--black));
-}
-
-.details {
-	color: var(--white);
-	font-size: var(--font-size-text);
 }
 
 .trailer-article {
@@ -87,22 +78,17 @@
 	width: 50vw;
 }
 
-span {
-	color: var(--light-blue);
-}
-
 .p-information-details {
 	margin: 20px;
 }
 
-.titre-secondaire {
+.center {
 	text-align: center;
-	color: var(--white);
-	font-family: var(--font-family-title);
-	font-size: var(--font-size-h2);
-	font-weight: var(--font-weight-bold);
 }
 
+.padding-30 {
+	padding: 30px;
+}
 .commentaires {
 	display: flex;
 	flex-direction: column;
@@ -135,15 +121,41 @@ span {
 	zoom: 1.1;
 }
 
+.pseudo-note {
+	display: flex;
+	align-items: center;
+	gap: 50px;
+}
+
 .pseudo {
 	width: auto;
 }
+
 .comment {
-	height: 100px;
-	width: 500px;
 	scrollbar-width: auto;
 }
 
 #nouveau-commentaire {
 	text-align: center;
+}
+
+.films-similaire {
+	margin-bottom: 50px;
+}
+
+#last-commentaire {
+	display: flex;
+	gap: 20px;
+	margin: 20px;
+	width: 80vw;
+}
+
+.contenue-commentaire {
+	white-space: pre-wrap;
+	word-break: break-word;
+	max-width: 50vw;
+}
+
+.pseudo {
+	width: 10vw;
 }
