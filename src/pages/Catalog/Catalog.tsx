@@ -22,24 +22,22 @@ function Catalog() {
 		topRated().then(setTopRatedMovies);
 	}, []);
 
-	// console.log(movies);
-
 	return (
 		<div className="primary-background catalog body-text">
+			<MovieCover movies={movies} isOpen={isOpen} />
 			<SearchInput
 				isOpen={isOpen}
 				setFilteredMovies={setFilteredMovies}
 				movieData={movies}
 				setIsOpen={setIsOpen}
 			/>
+			<section className="filter-section">
+				<Filters movies={movies} genre={genre} />
+			</section>
 			{isOpen ? (
 				<SearchModal filteredMovies={filteredMovies} setIsOpen={setIsOpen} />
 			) : (
 				<>
-					<MovieCover movies={movies} />
-					<section className="filter-section">
-						<Filters movies={movies} genre={genre} />
-					</section>
 					<article className="section-colmn">
 						<h2 className="movie-categories">Trending</h2>
 						<div className="catalog-row">

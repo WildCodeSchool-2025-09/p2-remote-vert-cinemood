@@ -1,7 +1,7 @@
 import "./MovieCover.css";
 import { useEffect, useState } from "react";
 
-function MovieCover({ movies }) {
+function MovieCover({ movies, isOpen }) {
 	const [currentIndex, setCurrentIndex] = useState(0);
 
 	useEffect(() => {
@@ -26,10 +26,7 @@ function MovieCover({ movies }) {
 			className="movie-cover"
 			style={{ backgroundImage: `url(${coverUrl})` }}
 		>
-			<div className="cover-overly">
-				{/* <h1 className="movie-title">{movies[currentIndex].title}</h1>
-				<button className="btn-info">Plus Dinfo</button> */}
-			</div>
+			<div className="cover-overly" />
 		</div>
 	);
 }
