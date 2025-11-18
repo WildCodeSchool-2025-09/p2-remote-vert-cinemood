@@ -1,0 +1,54 @@
+#how-it-works {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 30px;
+	width: 100%;
+	padding-top: 50px;
+}
+
+.steps-container {
+	display: flex;
+	gap: 50px;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin-bottom: 60px;
+	width: 80%;
+}
+.step {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	padding: 20px;
+	border-radius: 20px;
+	background-color: rgba(248, 249, 251, 0.2);
+	text-align: center;
+	border: transparent 3px solid;
+}
+.step:hover {
+	box-shadow: var(--blue-shadow);
+	border: var(--blue-border);
+}
+
+.sphere {
+	width: 60px;
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: radial-gradient(circle, #fff 0%, #4d376f 60%, #4d376f 100%);
+	position: relative;
+	margin: 15px;
+}
+
+.number {
+	color: #4d376f;
+	font-weight: bold;
+	font-size: var(--font-size-text);
+	font-family: var(--font-family-text);
+}
