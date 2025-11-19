@@ -16,7 +16,7 @@ export default function Recos() {
 		const randomPage = Math.floor(Math.random() * 500) + 1;
 
 		const url = quizTaken
-			? `${import.meta.env.VITE_TMDB_API_URL}movie/popular?page=1&with_genres=${quizAnswers}`
+			? `${import.meta.env.VITE_TMDB_API_URL}movie/popular?page=1&with_genres=${quizAnswers.join(",")}`
 			: `${import.meta.env.VITE_TMDB_API_URL}discover/movie?include_adult=false&include_video=false&language=fr-FR&vote_average.gte=5&primary_release_date.gte=1960-01-01&vote_count.gte=100&page=${randomPage}`;
 
 		const options = {

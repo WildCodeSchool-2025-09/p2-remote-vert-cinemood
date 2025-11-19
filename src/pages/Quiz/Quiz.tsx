@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import "./Quiz.css";
 import { useNavigate } from "react-router";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
@@ -35,11 +35,6 @@ function createImageQuestions(imagesData, nbQuestions) {
 	return questions;
 }
 
-const imageQuestions = useMemo(
-	() => createImageQuestions(quizPicturesData, 100),
-	[quizPicturesData],
-);
-
 export default function Quiz() {
 	const [quizStarted, setQuizStarted] = useState(false);
 	const [popularMovies, setPopularMovies] = useState([]);
@@ -48,6 +43,10 @@ export default function Quiz() {
 	const [genreSelection, setGenreSelection] = useState([]);
 	const navigate = useNavigate();
 	const [timeLeft, setTimeLeft] = useState(10);
+	const imageQuestions = useMemo(
+		() => createImageQuestions(quizPicturesData, 100),
+		[],
+	);
 	const currentQuestion = imageQuestions[questionNumber];
 
 	useEffect(() => {
@@ -76,20 +75,15 @@ export default function Quiz() {
 		}, {});
 	}, [genreSelection]);
 
-	const calculCountFinal = useMemo(() => {
+	useEffect(() => {
 		let maxCount = 0;
 		const result = [];
 
 		for (const genre in countGenre) {
-			if (countGenre[genre] > maxCount) {
-				maxCount = countGenre[genre];
-			}
+			if (countGenre[genre] > maxCount) maxCount = countGenre[genre];
 		}
-
 		for (const genre in countGenre) {
-			if (countGenre[genre] >= maxCount - 1) {
-				result.push(genre);
-			}
+			if (countGenre[genre] >= maxCount - 1) result.push(genre);
 		}
 		setQuizAnswers(result);
 	}, [countGenre, setQuizAnswers]);
