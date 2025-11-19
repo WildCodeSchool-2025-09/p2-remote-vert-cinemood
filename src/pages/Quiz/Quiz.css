@@ -5,8 +5,40 @@
 
 .quiz-hero {
 	width: 33%;
-	height: 70vh;
 	margin: 0 auto;
 	gap: 3rem;
-	border: var(--blue-border);
+	padding: 9rem 0;
+}
+
+.quiz-section {
+	padding: 3rem;
+}
+
+.quiz-carousel-section {
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
+}
+.quiz-container {
+	padding: 50px;
+	text-align: center;
+}
+
+.questions {
+	padding: 50px;
+}
+
+.quiz-images {
+	height: 250px;
+	width: 250px;
+	margin: 50px;
+	cursor: pointer;
+	outline: none;
+	object-fit: cover;
+	border-radius: 20px;
+}
+
+.quiz-timer {
+	color: var(--white);
 }

@@ -1,38 +1,38 @@
 // import { useEffect, useMemo, useState } from "react";
 // import { useNavigate } from "react-router";
 // import "./Quiz.css";
-// import quizPictures from "./genresImage";
-
-// function createImageQuestions(imagesData, nbQuestions) {
-// 	const pairs = new Set();
-// 	const questions = [];
-// 	const totalImages = imagesData.length;
-// 	while (
-// 		questions.length < nbQuestions &&
-// 		pairs.size < (totalImages * (totalImages - 1)) / 2
-// 	) {
-// 		const idImageA = Math.floor(Math.random() * totalImages);
-// 		let idImageB = Math.floor(Math.random() * totalImages);
-// 		while (idImageB === idImageA) {
-// 			idImageB = Math.floor(Math.random() * totalImages);
-// 		}
-// 		const key =
-// 			idImageA < idImageB
-// 				? `${idImageA}-${idImageB}`
-// 				: `${idImageB}-${idImageA}`;
-// 		if (!pairs.has(key)) {
-// 			pairs.add(key);
-// 			questions.push({
-// 				questionId: questions.length + 1,
-// 				imageA: imagesData[idImageA],
-// 				imageB: imagesData[idImageB],
-// 			});
-// 		}
-// 	}
-// 	return questions;
-// }
+// import quizPictures from "../../pages/Quiz/QuizPicturesData";
 
 // function Quizz() {
+// 	function createImageQuestions(imagesData, nbQuestions) {
+// 		const pairs = new Set();
+// 		const questions = [];
+// 		const totalImages = imagesData.length;
+// 		while (
+// 			questions.length < nbQuestions &&
+// 			pairs.size < (totalImages * (totalImages - 1)) / 2
+// 		) {
+// 			const idImageA = Math.floor(Math.random() * totalImages);
+// 			let idImageB = Math.floor(Math.random() * totalImages);
+// 			while (idImageB === idImageA) {
+// 				idImageB = Math.floor(Math.random() * totalImages);
+// 			}
+// 			const key =
+// 				idImageA < idImageB
+// 					? `${idImageA}-${idImageB}`
+// 					: `${idImageB}-${idImageA}`;
+// 			if (!pairs.has(key)) {
+// 				pairs.add(key);
+// 				questions.push({
+// 					questionId: questions.length + 1,
+// 					imageA: imagesData[idImageA],
+// 					imageB: imagesData[idImageB],
+// 				});
+// 			}
+// 		}
+// 		return questions;
+// 	}
+
 // 	const [questionNumber, setQuestionNumber] = useState(0);
 // 	const imageQuestions = useMemo(
 // 		() => createImageQuestions(quizPictures, 100),
