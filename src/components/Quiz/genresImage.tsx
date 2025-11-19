@@ -1,4 +1,3 @@
-
 const quizPictures = [
 	{
 		id: "img01",
