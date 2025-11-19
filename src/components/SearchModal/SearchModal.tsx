@@ -3,7 +3,7 @@ import "./SearchModal.css";
 
 function SearchModal({ filteredMovies }) {
 	return (
-		<div className="modal-catalog">
+		<div className="modal-catalog primary-background">
 			{filteredMovies.length > 0 ? (
 				filteredMovies.map((movie) => (
 					<MovieCard key={movie.id} movie={movie} />

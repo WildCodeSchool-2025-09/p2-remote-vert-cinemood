@@ -7,9 +7,15 @@ function MovieCard({ movie }) {
 
 	return (
 		<>
-			<div className="movie-card">
-				<img src={imageUrl} alt={movie.title} className="movie-image" />
-				<h3>{movie.title}</h3>
+			<div className="movie-card-wraper">
+				<div className="movie-card">
+					<img src={imageUrl} alt={movie.title} className="movie-image" />
+
+					<div className="card-content">
+						<h3>{movie.title}</h3>
+						<button type="button">Plus d'info</button>
+					</div>
+				</div>
 			</div>
 		</>
 	);

@@ -10,13 +10,10 @@
 	aspect-ratio: 2 / 3;
 	margin: auto;
 	position: relative;
-	/* position: fixed;
-	top: 0;
-	left: 0; */
-	/* z-index: -1; */
 }
 
 .cover-overly {
+	inset: 0;
 	position: absolute;
 	top: 0;
 	left: 0;

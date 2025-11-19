@@ -23,35 +23,37 @@ function Catalog() {
 	}, []);
 
 	return (
-		<div className="primary-background catalog body-text">
-			<MovieCover movies={movies} isOpen={isOpen} />
+		<div className="catalog body-text">
 			<SearchInput
 				isOpen={isOpen}
 				setFilteredMovies={setFilteredMovies}
 				movieData={movies}
 				setIsOpen={setIsOpen}
 			/>
-			<section className="filter-section">
-				<Filters movies={movies} genre={genre} />
-			</section>
 			{isOpen ? (
 				<SearchModal filteredMovies={filteredMovies} setIsOpen={setIsOpen} />
 			) : (
 				<>
-					<article className="section-colmn">
-						<h2 className="movie-categories">Trending</h2>
-						<div className="catalog-row">
-							{popularMovies.map((movie) => (
-								<MovieCard key={movie.id} movie={movie} />
-							))}
-						</div>
-						<h2 className="movie-categories">Top Rated</h2>
-						<div className="catalog-row">
-							{topRatedMovies.map((movie) => (
-								<MovieCard key={movie.id} movie={movie} />
-							))}
-						</div>
-					</article>
+					<MovieCover movies={movies} isOpen={isOpen} />
+					<div className="primary-background">
+						<section className="filter-section">
+							<Filters movies={movies} genre={genre} />
+						</section>
+						<article className="section-colmn">
+							<h2 className="movie-categories">Trending</h2>
+							<div className="catalog-row">
+								{popularMovies.map((movie) => (
+									<MovieCard key={movie.id} movie={movie} />
+								))}
+							</div>
+							<h2 className="movie-categories">Top Rated</h2>
+							<div className="catalog-row">
+								{topRatedMovies.map((movie) => (
+									<MovieCard key={movie.id} movie={movie} />
+								))}
+							</div>
+						</article>
+					</div>
 				</>
 			)}
 		</div>

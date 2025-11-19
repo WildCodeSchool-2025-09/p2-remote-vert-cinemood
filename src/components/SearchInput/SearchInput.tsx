@@ -24,7 +24,7 @@ function SearchInput({ setFilteredMovies, movieData, setIsOpen, isOpen }) {
 					placeholder={placeholder}
 					value={inputValue}
 					onChange={(e) => {
-						setIsOpen(true);
+						// setIsOpen(true);
 						const value = e.target.value;
 
 						setInputValue(value);
@@ -36,6 +36,7 @@ function SearchInput({ setFilteredMovies, movieData, setIsOpen, isOpen }) {
 					}}
 					onClick={(e) => {
 						setFilteredMovies(movieData);
+						setIsOpen(true);
 					}}
 				/>
 				<button
