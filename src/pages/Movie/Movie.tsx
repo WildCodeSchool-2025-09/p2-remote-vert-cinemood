@@ -2,11 +2,13 @@ import "./Movie.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useTagWatchLater } from "../../Contexts/TagWatchLaterContext";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import StarRating from "../../components/StarRating/StarRating";
 import avatar from "./../../assets/images/avatar-utilisateur.jpg";
 
-interface MovieData {
+export interface MovieData {
+	id: number;
 	title: string;
 	release_date: string;
 	vote_average: number;
@@ -51,6 +53,7 @@ function Movie() {
 	const [similarMovies, setSimilarMovies] = useState([]);
 	const [loadingSimilar, setLoadingSimilar] = useState(true);
 	const [note, setNote] = useState(0);
+	const { setTagWatchLater } = useTagWatchLater();
 	const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 	const apiUrl = import.meta.env.VITE_TMDB_API_URL;
 
@@ -222,6 +225,19 @@ function Movie() {
 		setPseudo("");
 	}
 
+	function OnOffTagWatchLater() {
+		if (!movie) return;
+
+		setTagWatchLater((prev) => {
+			const exists = prev.some((fav) => fav.id === movie.id);
+
+			if (exists) {
+				return prev.filter((fav) => fav.id !== movie.id);
+			}
+			return [...prev, movie];
+		});
+	}
+
 	return (
 		<>
 			<header className="header-details">
@@ -240,6 +256,19 @@ function Movie() {
 					</p>
 					<div className="tag-list">
 						<i className="bi bi-suit-heart body-text" />
+						<i
+							className="bi bi-plus-circle body-text"
+							onClick={OnOffTagWatchLater}
+							onKeyDown={(e) => {
+								if (e.key === "Enter" || e.key === " ") {
+									OnOffTagWatchLater();
+								}
+							}}
+							role="button"
+							tabIndex={0}
+							style={{ cursor: "pointer" }}
+						/>
+
 						<i className="bi bi-plus-circle body-text" />
 						<i className="bi bi-eye body-text" />
 					</div>
