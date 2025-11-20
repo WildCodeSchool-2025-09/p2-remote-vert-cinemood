@@ -2,7 +2,7 @@ import "./Movie.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import Carousel from "../../components/Carousel/Carousel";
+import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import StarRating from "../../components/StarRating/StarRating";
 import avatar from "./../../assets/images/avatar-utilisateur.jpg";
 
@@ -16,6 +16,7 @@ interface MovieData {
 	backdrop_path: string;
 	production_countries: { name: string }[];
 	production_companies: { name: string }[];
+	genres: { name: string }[];
 }
 
 interface CreditData {
@@ -181,6 +182,18 @@ function Movie() {
 		return <span className="stars">{starIcons}</span>;
 	};
 
+	const renderGenres = (movie: MovieData) => {
+		return (
+			<>
+				{movie.genres.map((g) => (
+					<p className="genre-movie" key={g.name}>
+						{g.name}
+					</p>
+				))}
+			</>
+		);
+	};
+
 	function renderCommentStars(note?: number) {
 		if (!note || note < 1 || note > 5) return null;
 
@@ -278,7 +291,10 @@ function Movie() {
 						</article>
 					)}
 					<article className="description-details">
-						<p className="overview-details body-text"> {movie.overview} </p>
+						<article>
+							<p className="overview-details body-text"> {movie.overview} </p>
+							<article className="genres">{renderGenres(movie)}</article>
+						</article>
 						<article className="information-details">
 							<p className="p-information-details body-text">
 								<span className="body-text-blue">Réalisé par</span> : {director}
@@ -306,7 +322,7 @@ function Movie() {
 					{loadingSimilar ? (
 						<p>Chargement...</p>
 					) : (
-						<Carousel movies={similarMovies} />
+						<CarouselMovie movies={similarMovies} />
 					)}
 				</section>
 				<section className="commentaires">

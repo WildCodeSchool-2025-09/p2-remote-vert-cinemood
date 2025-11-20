@@ -63,6 +63,24 @@
 	padding: 40px 0 40px 0;
 }
 
+.genre-movie {
+	color: var(--black);
+	background-color: var(--white);
+	font-family: var(--font-family-text);
+	font-size: var(--font-size-text);
+	font-weight: var(--font-weight-text-bold);
+	padding: 0.5em;
+	border: none;
+	border-radius: 40px;
+	text-decoration: none;
+}
+
+.genres {
+	display: flex;
+	justify-content: center;
+	gap: 30px;
+}
+
 .description-details {
 	display: flex;
 }
