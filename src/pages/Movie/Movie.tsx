@@ -49,11 +49,10 @@ function Movie() {
 	const [providers, setProviders] = useState<ProvidersData | null>(null);
 	const [showTrailer, setShowTrailer] = useState(false);
 	const [similarMovies, setSimilarMovies] = useState([]);
-	const [loadingSimilar, setLoadingSimilar] = useState(true);
+	const [loadingSimilar, setLoadingSimilar] = useState(false);
 	const [note, setNote] = useState(0);
 	const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 	const apiUrl = import.meta.env.VITE_TMDB_API_URL;
-
 	const handleTrailerClick = () => setShowTrailer((prev) => !prev);
 
 	useEffect(() => {
@@ -83,9 +82,15 @@ function Movie() {
 			.then((res) => res.json())
 			.then((movieProviders) => setProviders(movieProviders))
 			.catch((err) => console.error(err));
-	}, [id]);
 
-	useEffect(() => {
+		fetch(`${apiUrl}movie/${id}/similar?language=fr-FR&page=1`, { headers })
+			.then((res) => res.json())
+			.then((movieSimilar) => {
+				setSimilarMovies(movieSimilar.results?.slice(0, 8));
+				setLoadingSimilar(true);
+			})
+			.catch(() => setLoadingSimilar(false));
+
 		if (movie) {
 			const header = document.querySelector(".header-details") as HTMLElement;
 			if (header && movie.backdrop_path) {
@@ -93,26 +98,7 @@ function Movie() {
 				header.style.backgroundImage = `linear-gradient(to bottom, transparent 50%, var(--dark-purple) 100%), url(${backdropUrl})`;
 			}
 		}
-	}, [movie]);
-
-	useEffect(() => {
-		if (!id) return;
-
-		setLoadingSimilar(true);
-
-		fetch(`${apiUrl}movie/${id}/similar?language=fr-FR&page=1`, {
-			headers: {
-				Authorization: `Bearer ${apiKey}`,
-				"Content-Type": "application/json;charset=utf-8",
-			},
-		})
-			.then((res) => res.json())
-			.then((movieSimilar) => {
-				setSimilarMovies(movieSimilar.results?.slice(0, 8) || []);
-				setLoadingSimilar(false);
-			})
-			.catch(() => setLoadingSimilar(false));
-	}, [id]);
+	}, [id, movie]);
 
 	if (!movie) return <p>Chargement du film...</p>;
 
@@ -120,28 +106,27 @@ function Movie() {
 		? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
 		: "../../assets/images/no-poster.jpg";
 
-	const releaseDate = movie.release_date ?? "N/A";
+	const releaseDate = movie.release_date ?? "";
 	const originCountry =
-		movie.production_countries?.map((c) => c.name).join(", ") || "N/A";
+		movie.production_countries?.map((c) => c.name).join(", ") || "";
 	const productionCompanies =
-		movie.production_companies?.map((c) => c.name).join(", ") || "N/A";
+		movie.production_companies?.map((c) => c.name).join(", ") || "";
 
-	const director =
-		credits?.crew?.find((c) => c.job === "Director")?.name || "N/A";
+	const director = credits?.crew?.find((c) => c.job === "Director")?.name || "";
 	const producers =
 		credits?.crew
 			?.filter((c) => c.job === "Producer")
 			.map((c) => c.name)
-			.join(", ") || "N/A";
+			.join(", ") || "";
 	const actors =
 		credits?.cast
 			?.slice(0, 5)
 			.map((a) => a.name)
-			.join(", ") || "N/A";
+			.join(", ") || "";
 
-	const ratingfloat = movie.vote_average ?? "N/A";
+	const ratingfloat = movie.vote_average ?? "";
 	const rating = Math.floor(ratingfloat);
-	const runtime = movie.runtime ?? "N/A";
+	const runtime = movie.runtime ?? "";
 
 	const trailer = videos?.results?.find(
 		(v) => v.type === "Trailer" && v.site === "YouTube",
@@ -170,8 +155,8 @@ function Movie() {
 			url: PROVIDER_URLS[p.provider_name] || null,
 		})) || [];
 
-	const renderStars = (ratingfloat: number | "N/A") => {
-		if (ratingfloat === "N/A") return "N/A";
+	const renderStars = (ratingfloat: number | "") => {
+		if (ratingfloat === "") return "";
 		const stars = Math.round((rating / 2) * 2) / 2;
 		const fullStars = Math.floor(stars);
 		const halfStar = stars % 1 !== 0;
@@ -253,25 +238,25 @@ function Movie() {
 					</button>
 				</article>
 				<p className="disponibilité-details body-text">
-					Disponible sur :
-					{streamingProvidersLogos.length > 0 ? (
-						streamingProvidersLogos.map((p) => (
-							<a
-								href={p.url ?? "#"}
-								key={p.name}
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								<img
-									src={p.logo}
-									alt={p.name}
-									title={p.name}
-									className="provider-logo"
-								/>
-							</a>
-						))
-					) : (
-						<p>Aucune plateforme actuellement</p>
+					{streamingProvidersLogos.length > 0 && (
+						<>
+							<p>Disponible sur :</p>
+							{streamingProvidersLogos.map((p) => (
+								<a
+									href={p.url ?? "#"}
+									key={p.name}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									<img
+										src={p.logo}
+										alt={p.name}
+										title={p.name}
+										className="provider-logo"
+									/>
+								</a>
+							))}
+						</>
 					)}
 				</p>
 			</header>
@@ -320,9 +305,9 @@ function Movie() {
 				<section className="films-similaire">
 					<h2 className="secondary-title center padding-30">Films similaire</h2>
 					{loadingSimilar ? (
-						<p>Chargement...</p>
-					) : (
 						<CarouselMovie movies={similarMovies} />
+					) : (
+						<p>Chargement...</p>
 					)}
 				</section>
 				<section className="commentaires">
