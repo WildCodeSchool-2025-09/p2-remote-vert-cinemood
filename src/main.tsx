@@ -3,8 +3,13 @@ import { RouterProvider } from "react-router";
 import router from "./router";
 import "./css/reset.css";
 import "./css/variables.css";
+import TagFavoriteProvider from "./Contexts/TagFavoriteContext";
 const rootElement = document.getElementById("root");
 
 if (rootElement != null) {
-	ReactDOM.createRoot(rootElement).render(<RouterProvider router={router} />);
+	ReactDOM.createRoot(rootElement).render(
+		<TagFavoriteProvider>
+			<RouterProvider router={router} />
+		</TagFavoriteProvider>,
+	);
 }
