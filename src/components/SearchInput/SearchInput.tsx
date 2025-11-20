@@ -12,19 +12,20 @@ function SearchInput({ setFilteredMovies, movieData, setIsOpen, isOpen }) {
 	}
 
 	return (
-		<div className={isOpen ? "search-input" : ""}>
+		<div>
 			<form
+				className="search-input"
 				onSubmit={(p) => {
 					p.preventDefault();
 					p.stopPropagation();
 				}}
 			>
 				<input
+					className="search-text"
 					type="text"
 					placeholder={placeholder}
 					value={inputValue}
 					onChange={(e) => {
-						// setIsOpen(true);
 						const value = e.target.value;
 
 						setInputValue(value);
@@ -40,6 +41,7 @@ function SearchInput({ setFilteredMovies, movieData, setIsOpen, isOpen }) {
 					}}
 				/>
 				<button
+					className="search-btn"
 					type="button"
 					onClick={() => {
 						refreshCatalog(movieData);

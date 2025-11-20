@@ -72,7 +72,7 @@ export async function nowPlaying() {
 }
 
 export async function upcoming() {
-	const url = `${apiUrl}/movie/upcoming?language=fr-FR&page=1`;
+	const url = `${apiUrl}/movie/upcoming?language=fr-FR&page=2`;
 
 	try {
 		const res = await fetch(url, options);

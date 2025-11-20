@@ -1,4 +1,4 @@
-import DropdownButton from "./DropdownButton";
+import DropdownButton from "./genres";
 
 function Filters({ movies, genre }) {
 	return (
