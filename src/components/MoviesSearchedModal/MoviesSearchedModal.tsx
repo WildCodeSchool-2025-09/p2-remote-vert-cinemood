@@ -1,7 +1,7 @@
 import MovieCard from "../MovieCard/MovieCard";
-import "./SearchModal.css";
+import "./MoviesSearchedModal.css";
 
-function SearchModal({ filteredMovies }) {
+function MoviesSearchedModal({ filteredMovies }) {
 	return (
 		<div className="modal-catalog primary-background">
 			{filteredMovies.length > 0 ? (
@@ -15,4 +15,4 @@ function SearchModal({ filteredMovies }) {
 	);
 }
 
-export default SearchModal;
+export default MoviesSearchedModal;

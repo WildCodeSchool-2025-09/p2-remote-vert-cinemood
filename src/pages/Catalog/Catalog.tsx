@@ -11,7 +11,7 @@ import {
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import { SearchbarContext } from "../../components/Context/SearchBarContexts";
 import GenreButton from "../../components/Filters/genres";
-import SearchModal from "../../components/SearchModal/SearchModal";
+import MoviesSearchedModal from "../../components/MoviesSearchedModal/MoviesSearchedModal";
 
 function Catalog() {
 	const [genre, setGenre] = useState([]);
@@ -19,14 +19,8 @@ function Catalog() {
 	const [topRatedMovies, setTopRatedMovies] = useState([]);
 	const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
 	const [upcomingMovies, setUpcomingMovies] = useState([]);
-	const {
-		movies,
-		setMovies,
-		filteredMovies,
-		setFilteredMovies,
-		isOpen,
-		setIsOpen,
-	} = useContext(SearchbarContext);
+	const { allMovies, filteredMovies, setFilteredMovies, isOpen, setIsOpen } =
+		useContext(SearchbarContext);
 	const [currentIndex, setCurrentIndex] = useState(0);
 
 	useEffect(() => {
@@ -38,26 +32,26 @@ function Catalog() {
 	}, []);
 
 	useEffect(() => {
-		if (!movies || movies.length === 0) return;
+		if (!allMovies || allMovies.length === 0) return;
 
 		const interval = setInterval(() => {
-			const randomIndex = Math.floor(Math.random() * movies.length);
+			const randomIndex = Math.floor(Math.random() * allMovies.length);
 			setCurrentIndex(randomIndex);
 		}, 10000);
 
 		return () => clearInterval(interval);
-	}, [movies]);
+	}, [allMovies]);
 
-	if (!movies || movies.length === 0) return <div>Loading...</div>;
+	if (!allMovies || allMovies.length === 0) return <div>Loading...</div>;
 
-	const coverUrl = movies[currentIndex].backdrop_path
-		? `https://image.tmdb.org/t/p/original${movies[currentIndex].backdrop_path}`
+	const coverUrl = allMovies[currentIndex].backdrop_path
+		? `https://image.tmdb.org/t/p/original${allMovies[currentIndex].backdrop_path}`
 		: "https://via.placeholder.com/500x750?text=No+Image";
 
 	return (
 		<>
 			{isOpen ? (
-				<SearchModal filteredMovies={filteredMovies} />
+				<MoviesSearchedModal filteredMovies={filteredMovies} />
 			) : (
 				<>
 					<div
@@ -71,7 +65,7 @@ function Catalog() {
 						<div className="filters">
 							<GenreButton
 								genre={genre}
-								movies={movies}
+								movies={allMovies}
 								setFilteredMovies={setFilteredMovies}
 								setIsOpen={setIsOpen}
 							/>

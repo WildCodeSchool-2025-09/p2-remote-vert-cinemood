@@ -1,23 +1,45 @@
 import { createContext, useEffect, useState } from "react";
-import { getAllMovies } from "../../api";
+import {
+	getMoviesPage1,
+	getMoviesPage2,
+	getMoviesPage3,
+	getMoviesPage4,
+	getMoviesPage5,
+} from "../../api";
 
 export const SearchbarContext = createContext(null);
 
 function SearchbarProvider({ children }: { children }): JSX.Element {
-	const [movies, setMovies] = useState([]);
+	const [moviesPage1, setMoviesPage1] = useState([]);
+	const [moviesPage2, setMoviesPage2] = useState([]);
+	const [moviesPage3, setMoviesPage3] = useState([]);
+	const [moviesPage4, setMoviesPage4] = useState([]);
+	const [moviesPage5, setMoviesPage5] = useState([]);
 	const [filteredMovies, setFilteredMovies] = useState([]);
 	const [isOpen, setIsOpen] = useState(false);
 
 	useEffect(() => {
-		getAllMovies().then(setMovies);
-		getAllMovies().then(setFilteredMovies);
+		getMoviesPage1().then(setMoviesPage1);
+		getMoviesPage2().then(setMoviesPage2);
+		getMoviesPage3().then(setMoviesPage3);
+		getMoviesPage4().then(setMoviesPage4);
+		getMoviesPage5().then(setMoviesPage5);
 	}, []);
+
+	const allMovies = [];
+
+	allMovies.push(
+		...moviesPage1,
+		...moviesPage2,
+		...moviesPage3,
+		...moviesPage4,
+		...moviesPage5,
+	);
 
 	return (
 		<SearchbarContext.Provider
 			value={{
-				movies,
-				setMovies,
+				allMovies,
 				isOpen,
 				setIsOpen,
 				filteredMovies,
