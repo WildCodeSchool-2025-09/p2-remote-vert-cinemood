@@ -1,18 +1,17 @@
 import "./Catalog.css";
 import { useEffect, useState } from "react";
-import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
-import MovieCover from "../../components/MovieCover/MovieCover";
-import SearchModal from "../../components/SearchModal/SearchModal";
-import {
-	movieGenres,
-	nowPlaying,
-	popular,
-	topRated,
-	upcoming,
-} from "../../data";
 import { useContext } from "react";
+import {
+	getGenresMovies,
+	getNowPlayingMovies,
+	getPopularMovies,
+	getTopRatedMovies,
+	getUpcomingMovies,
+} from "../../api";
+import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import { SearchbarContext } from "../../components/Context/SearchBarContexts";
 import GenreButton from "../../components/Filters/genres";
+import SearchModal from "../../components/SearchModal/SearchModal";
 
 function Catalog() {
 	const [genre, setGenre] = useState([]);
@@ -28,17 +27,32 @@ function Catalog() {
 		isOpen,
 		setIsOpen,
 	} = useContext(SearchbarContext);
-
-	console.log(isOpen);
-	console.log(filteredMovies);
+	const [currentIndex, setCurrentIndex] = useState(0);
 
 	useEffect(() => {
-		movieGenres().then(setGenre);
-		popular().then(setPopularMovies);
-		topRated().then(setTopRatedMovies);
-		nowPlaying().then(setNowPlayingMovies);
-		upcoming().then(setUpcomingMovies);
+		getGenresMovies().then(setGenre);
+		getPopularMovies().then(setPopularMovies);
+		getTopRatedMovies().then(setTopRatedMovies);
+		getNowPlayingMovies().then(setNowPlayingMovies);
+		getUpcomingMovies().then(setUpcomingMovies);
 	}, []);
+
+	useEffect(() => {
+		if (!movies || movies.length === 0) return;
+
+		const interval = setInterval(() => {
+			const randomIndex = Math.floor(Math.random() * movies.length);
+			setCurrentIndex(randomIndex);
+		}, 10000);
+
+		return () => clearInterval(interval);
+	}, [movies]);
+
+	if (!movies || movies.length === 0) return <div>Loading...</div>;
+
+	const coverUrl = movies[currentIndex].backdrop_path
+		? `https://image.tmdb.org/t/p/original${movies[currentIndex].backdrop_path}`
+		: "https://via.placeholder.com/500x750?text=No+Image";
 
 	return (
 		<>
@@ -46,7 +60,12 @@ function Catalog() {
 				<SearchModal filteredMovies={filteredMovies} />
 			) : (
 				<>
-					<MovieCover movies={movies} />
+					<div
+						className="movie-cover"
+						style={{ backgroundImage: `url(${coverUrl})` }}
+					>
+						<div className="cover-overly" />
+					</div>
 
 					<div className="primary-background">
 						<div className="filters">

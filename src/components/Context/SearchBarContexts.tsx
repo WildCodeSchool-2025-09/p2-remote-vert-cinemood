@@ -1,16 +1,16 @@
 import { createContext, useEffect, useState } from "react";
-import { fetchMovies } from "../../data";
+import { getAllMovies } from "../../api";
 
 export const SearchbarContext = createContext(null);
 
-function SearchbarProvider({ children }: { children: any }): JSX.Element {
+function SearchbarProvider({ children }: { children }): JSX.Element {
 	const [movies, setMovies] = useState([]);
 	const [filteredMovies, setFilteredMovies] = useState([]);
 	const [isOpen, setIsOpen] = useState(false);
 
 	useEffect(() => {
-		fetchMovies().then(setMovies);
-		fetchMovies().then(setFilteredMovies);
+		getAllMovies().then(setMovies);
+		getAllMovies().then(setFilteredMovies);
 	}, []);
 
 	return (
