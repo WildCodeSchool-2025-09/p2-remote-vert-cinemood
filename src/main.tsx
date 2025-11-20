@@ -3,7 +3,7 @@ import { RouterProvider } from "react-router";
 import router from "./router";
 import "./css/reset.css";
 import "./css/variables.css";
-import TagAlreadySeenProvider from "./context/TagAlreadySeenProvider";
+import TagAlreadySeenProvider from "./Contexts/TagAlreadySeenContext";
 
 const rootElement = document.getElementById("root");
 

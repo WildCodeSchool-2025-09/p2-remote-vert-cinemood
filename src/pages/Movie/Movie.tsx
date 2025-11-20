@@ -2,9 +2,9 @@ import "./Movie.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useTagAlreadySeen } from "../../Contexts/TagAlreadySeenContext";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import StarRating from "../../components/StarRating/StarRating";
-import { useTagAlreadySeen } from "../../context/TagAlreadySeenProvider";
 import avatar from "./../../assets/images/avatar-utilisateur.jpg";
 
 export interface MovieData {
