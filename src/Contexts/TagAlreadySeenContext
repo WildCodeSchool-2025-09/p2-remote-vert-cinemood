@@ -1,0 +1,26 @@
+import { type ReactNode, createContext, useContext, useState } from "react";
+import type { MovieData } from "../pages/Movie/Movie";
+
+type TagAlreadySeenState = {
+	TagAlreadySeen: MovieData[];
+	setTagAlreadySeen: React.Dispatch<React.SetStateAction<MovieData[]>>;
+};
+
+const TagAlreadySeenContext = createContext<TagAlreadySeenState>({
+	TagAlreadySeen: [],
+	setTagAlreadySeen: () => {},
+});
+
+export default function TagAlreadySeenProvider({children}: { children: ReactNode }) {
+	const [TagAlreadySeen, setTagAlreadySeen] = useState<MovieData[]>([]);
+
+	return (
+		<TagAlreadySeenContext.Provider value={{ TagAlreadySeen, setTagAlreadySeen }}>
+			{children}
+		</TagAlreadySeenContext.Provider >
+	);
+}
+
+export const useTagAlreadySeen = () => {
+	return useContext(TagAlreadySeenContext);
+};
