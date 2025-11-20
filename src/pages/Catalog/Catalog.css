@@ -98,3 +98,46 @@ search-input::placeholder {
 .search-btn:active {
 	transform: scale(0.97);
 }
+
+/* Movies Catalog background cover */
+
+.movie-cover {
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	transition: background-image 1s ease-in-out;
+	color: white;
+	font-size: 3rem;
+	width: 100%;
+	height: 500px;
+	aspect-ratio: 2 / 3;
+	margin: auto;
+	position: relative;
+}
+
+.cover-overly {
+	inset: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(
+		to bottom,
+		rgba(40, 3, 92, 0) 0% /* 0% opacity at top */,
+		rgba(40, 3, 92, 0.07) 76% /* 7% opacity at 76% */,
+		rgba(40, 3, 92, 1) 100% /* fully opaque at bottom */
+	);
+	pointer-events: none;
+	display: flex;
+	flex-direction: colmn;
+	align-items: flex-end;
+}
+
+.movie-title {
+	margin: 20px;
+}
+
+.btn-info {
+	margin: 20px;
+}

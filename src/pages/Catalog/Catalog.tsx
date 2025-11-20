@@ -1,36 +1,55 @@
 import "./Catalog.css";
 import { useEffect, useState } from "react";
-import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
-import MovieCover from "../../components/MovieCover/MovieCover";
 import {
-	fetchMovies,
-	movieGenres,
-	nowPlaying,
-	popular,
-	topRated,
-	upcoming,
-} from "../../data";
+	getAllMovies,
+	getNowPlayingMovies,
+	getPopularMovies,
+	getTopRatedMovies,
+	getUpcomingMovies,
+} from "../../api";
+import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 
 function Catalog() {
 	const [movies, setMovies] = useState([]);
-	const [genre, setGenre] = useState([]);
 	const [popularMovies, setPopularMovies] = useState([]);
 	const [topRatedMovies, setTopRatedMovies] = useState([]);
 	const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
 	const [upcomingMovies, setUpcomingMovies] = useState([]);
+	const [currentIndex, setCurrentIndex] = useState(0);
 
 	useEffect(() => {
-		fetchMovies().then(setMovies);
-		movieGenres().then(setGenre);
-		popular().then(setPopularMovies);
-		topRated().then(setTopRatedMovies);
-		nowPlaying().then(setNowPlayingMovies);
-		upcoming().then(setUpcomingMovies);
+		getAllMovies().then(setMovies);
+		getPopularMovies().then(setPopularMovies);
+		getTopRatedMovies().then(setTopRatedMovies);
+		getNowPlayingMovies().then(setNowPlayingMovies);
+		getUpcomingMovies().then(setUpcomingMovies);
 	}, []);
+
+	useEffect(() => {
+		if (!movies || movies.length === 0) return;
+
+		const interval = setInterval(() => {
+			const randomIndex = Math.floor(Math.random() * movies.length);
+			setCurrentIndex(randomIndex);
+		}, 10000);
+
+		return () => clearInterval(interval);
+	}, [movies]);
+
+	if (!movies || movies.length === 0) return <div>Loading...</div>;
+
+	const coverUrl = movies[currentIndex].backdrop_path
+		? `https://image.tmdb.org/t/p/original${movies[currentIndex].backdrop_path}`
+		: "https://via.placeholder.com/500x750?text=No+Image";
 
 	return (
 		<>
-			<MovieCover movies={movies} />
+			<div
+				className="movie-cover"
+				style={{ backgroundImage: `url(${coverUrl})` }}
+			>
+				<div className="cover-overly" />
+			</div>
 			<div className="primary-background">
 				<div className="filters">
 					<button type="button" className="catalog-btn">
