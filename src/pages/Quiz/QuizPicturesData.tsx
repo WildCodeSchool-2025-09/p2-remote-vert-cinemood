@@ -11,7 +11,7 @@ const quizPicturesData = [
 	},
 	{
 		id: "img03",
-		genres: [80, 27, 9648, 878, 53],
+		genres: [28, 80, 27, 9648, 878, 53],
 		description: "Visage mystérieux caché dans l'ombre",
 	},
 	{
@@ -21,7 +21,7 @@ const quizPicturesData = [
 	},
 	{
 		id: "img05",
-		genres: [80, 878, 53],
+		genres: [28, 80, 878, 53],
 		description: "Tas de fils métalliques",
 	},
 	{
@@ -31,7 +31,7 @@ const quizPicturesData = [
 	},
 	{
 		id: "img07",
-		genres: [12, 80],
+		genres: [28, 12, 80],
 		description: "Compteur de vitesse",
 	},
 	{
@@ -46,7 +46,7 @@ const quizPicturesData = [
 	},
 	{
 		id: "img10",
-		genres: [12, 16, 35],
+		genres: [28, 12, 16, 35],
 		description: "Un homme sautant avec enthousiasme d'une falaise",
 	},
 	{
@@ -54,10 +54,10 @@ const quizPicturesData = [
 		genres: [35, 10751, 14, 10402, 10749],
 		description: "Cupcake au chocolat de luxe",
 	},
-	{ id: "img12", genres: [80, 9648, 878], description: "Chambre forte" },
+	{ id: "img12", genres: [28, 80, 9648, 878], description: "Chambre forte" },
 	{
 		id: "img13",
-		genres: [80, 27, 9648, 53, 10752],
+		genres: [28, 80, 27, 9648, 53, 10752],
 		description: "Silhouette d'un homme avec de la fumée rouge",
 	},
 	{
@@ -77,7 +77,7 @@ const quizPicturesData = [
 	},
 	{
 		id: "img17",
-		genres: [12, 878, 10752],
+		genres: [28, 12, 878, 10752],
 		description: "Avions de chasse",
 	},
 	{
@@ -128,7 +128,7 @@ const quizPicturesData = [
 	},
 	{
 		id: "img27",
-		genres: [12, 14, 878],
+		genres: [28, 12, 14, 878],
 		description:
 			"Aéroport de Singapour avec une grande cascade et un tramway-train",
 	},
@@ -159,7 +159,7 @@ const quizPicturesData = [
 	},
 	{
 		id: "img33",
-		genres: [80, 18],
+		genres: [28, 80, 18],
 		description: "Une personne comptant de l'argent",
 	},
 	{
@@ -169,7 +169,7 @@ const quizPicturesData = [
 	},
 	{
 		id: "img35",
-		genres: [10752, 37],
+		genres: [28, 10752, 37],
 		description: "Deux grands oiseaux qui se battent",
 	},
 	{
@@ -182,10 +182,10 @@ const quizPicturesData = [
 		genres: [80, 27, 53, 10752],
 		description: "Bâtiment abandonné aux fenêtres brisées",
 	},
-	{ id: "img38", genres: [12, 35, 80], description: "Table de casino" },
+	{ id: "img38", genres: [28, 12, 35, 80], description: "Table de casino" },
 	{
 		id: "img39",
-		genres: [9648, 878],
+		genres: [28, 9648, 878],
 		description:
 			"Formes abstraites lumineuses et géométriques dans un bleu profond",
 	},
@@ -222,7 +222,7 @@ const quizPicturesData = [
 	},
 	{
 		id: "img46",
-		genres: [27, 10752],
+		genres: [28, 27, 10752],
 		description: "Feu de camp",
 	},
 	{
@@ -232,7 +232,7 @@ const quizPicturesData = [
 	},
 	{
 		id: "img48",
-		genres: [12, 36, 9648, 10752],
+		genres: [28, 12, 36, 9648, 10752],
 		description:
 			"Grand navire se renversant dans les vagues agitées de l'océan",
 	},
@@ -258,7 +258,7 @@ const quizPicturesData = [
 	},
 	{
 		id: "img53",
-		genres: [12, 35, 10402],
+		genres: [28, 12, 35, 10402],
 		description: "Homme faisant du surf",
 	},
 	{
@@ -333,7 +333,7 @@ const quizPicturesData = [
 	},
 	{
 		id: "img68",
-		genres: [80, 878],
+		genres: [28, 80, 878],
 		description: "Matrice de code vert sur fond noir",
 	},
 	{
@@ -394,7 +394,7 @@ const quizPicturesData = [
 	},
 	{
 		id: "img80",
-		genres: [12, 36, 10752],
+		genres: [28, 12, 36, 10752],
 		description: "Hélice d'un ancien avion de guerre",
 	},
 ];
