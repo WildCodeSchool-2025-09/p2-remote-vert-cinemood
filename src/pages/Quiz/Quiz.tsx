@@ -45,7 +45,7 @@ export default function Quiz() {
 	const [questionNumber, setQuestionNumber] = useState(0);
 	const [genreSelection, setGenreSelection] = useState([]);
 	const navigate = useNavigate();
-	const [timeLeft, setTimeLeft] = useState(22);
+	const [timeLeft, setTimeLeft] = useState(21);
 	const [timeLeftAnalysis, setTimeLeftAnalysis] = useState(2);
 	const [quizEnded, setQuizEnded] = useState(false);
 	const imageQuestions = useMemo(
@@ -61,7 +61,7 @@ export default function Quiz() {
 	}
 
 	useEffect(() => {
-		if ((quizStarted && timeLeft <= 0) || questionNumber === 5) {
+		if ((quizStarted && timeLeft <= 0) || questionNumber === 100) {
 			setQuizEnded(true);
 		}
 	}, [quizStarted, timeLeft, questionNumber]);
@@ -102,8 +102,6 @@ export default function Quiz() {
 		for (const genre in countGenre) {
 			if (countGenre[genre] >= maxCount - 1) result.push(genre);
 		}
-		// console.log({ result });
-		// console.log({ countGenre });
 
 		if (result.length > 1) {
 			const randomlyShortened = [...result].sort(() => 0.5 - Math.random());
@@ -150,12 +148,19 @@ export default function Quiz() {
 					) : (
 						<>
 							<section className="quiz-container">
-								<h1 className="primary-title">
-									Laisse ton humeur{" "}
-									<span className="body-text-blue">te guider</span>
-									<br />
-									vers le bon film
-								</h1>
+								<div className="header-section-center">
+									<h1 className="primary-title ">
+										Laisse ton humeur{" "}
+										<span className="body-text-blue">te guider</span>
+										<br />
+										vers le bon film
+									</h1>
+									<p className="body-text quiz-consignes">
+										<span className="body-text-bold"> Sans réfléchir</span>,
+										clique aussi vite que possible sur l'image que tu préfères
+										sur le moment.
+									</p>
+								</div>
 								<article className="question-container">
 									<div className="image-container">
 										<img
@@ -186,14 +191,14 @@ export default function Quiz() {
 										/>
 									</div>
 								</article>
-								<article className="quiz-timer">
+								<div className="quiz-timer">
 									<ProgressTimer
 										barRounded
 										color="#05a6d6"
 										direction="left"
 										duration={20}
 										rootRounded
-										showDuration="true"
+										showDuration
 										variant="empty"
 										started
 										classes={{
@@ -204,10 +209,10 @@ export default function Quiz() {
 											time: "timer-time",
 										}}
 									/>
-								</article>
-								<p className="body-text">
-									Plus tu choisis d'images, <br />
-									plus les recommandations de films seront précises.
+								</div>
+								<p className="body-text quiz-consignes">
+									Plus tu choisis d'images, plus les recommandations de films
+									seront précises.
 								</p>
 							</section>
 						</>

@@ -46,7 +46,7 @@ export default function Recos() {
 				<section className="header-section-center">
 					{quizTaken ? (
 						<>
-							<h1 className="secondary-title">
+							<h1 className="primary-title">
 								Découvre ta sélection ciné
 								<span className="body-text-blue"> personnalisée</span> !
 							</h1>
@@ -58,7 +58,7 @@ export default function Recos() {
 						</>
 					) : (
 						<>
-							<h1 className="secondary-title ">
+							<h1 className="primary-title">
 								Six films<span className="body-text-blue"> au hasard</span>
 								<br />
 								rien que pour toi !
@@ -90,9 +90,6 @@ export default function Recos() {
 								Redémarrer le quiz
 							</Link>
 						</div>
-						<p className="body-text">
-							INTERNAL USE ONLY: {quizAnswers.join(", ")}
-						</p>
 					</>
 				) : (
 					<div className="link-center-container">

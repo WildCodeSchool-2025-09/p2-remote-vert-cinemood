@@ -23,15 +23,25 @@
 	.quiz-hero {
 		width: 100%;
 	}
-	.quiz-container > h1 {
+	.quiz-container h1 {
 		font-size: 1.5rem;
+	}
+
+	.quiz-container .header-section-center {
+		padding: 0;
+		gap: 1rem;
 	}
 
 	.quiz-container {
 		padding: 1rem 1rem;
 		gap: 1rem;
 	}
+
 	.question-container {
 		gap: 1rem;
+	}
+
+	.quiz-timer {
+		margin: 1rem auto;
 	}
 }
