@@ -57,14 +57,6 @@ export default function Quiz() {
 		const timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
 		return () => clearInterval(timer);
 	}
-	function timerAnalysis() {
-		if (timeLeftAnalysis <= 0) navigate("/recommandations");
-		const timerAnalysis = setInterval(
-			() => setTimeLeftAnalysis((prev) => prev - 1),
-			1000,
-		);
-		return () => clearInterval(timerAnalysis);
-	}
 
 	useEffect(() => {
 		if ((quizStarted && timeLeft <= 0) || questionNumber === 100) {
