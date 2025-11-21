@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import "./Quiz.css";
+import "./Quiz-mobile.css";
+import { OrbitProgress } from "react-loading-indicators";
 import ProgressTimer from "react-progress-bar-timer";
 import { useNavigate } from "react-router";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
@@ -43,8 +45,8 @@ export default function Quiz() {
 	const [questionNumber, setQuestionNumber] = useState(0);
 	const [genreSelection, setGenreSelection] = useState([]);
 	const navigate = useNavigate();
-	const [timeLeft, setTimeLeft] = useState(20);
-	const [timeLeftAnalysis, setTimeLeftAnalysis] = useState(3);
+	const [timeLeft, setTimeLeft] = useState(22);
+	const [timeLeftAnalysis, setTimeLeftAnalysis] = useState(2);
 	const [quizEnded, setQuizEnded] = useState(false);
 	const imageQuestions = useMemo(
 		() => createImageQuestions(quizPicturesData, 100),
@@ -59,7 +61,7 @@ export default function Quiz() {
 	}
 
 	useEffect(() => {
-		if ((quizStarted && timeLeft <= 0) || questionNumber === 100) {
+		if ((quizStarted && timeLeft <= 0) || questionNumber === 5) {
 			setQuizEnded(true);
 		}
 	}, [quizStarted, timeLeft, questionNumber]);
@@ -100,8 +102,15 @@ export default function Quiz() {
 		for (const genre in countGenre) {
 			if (countGenre[genre] >= maxCount - 1) result.push(genre);
 		}
+		// console.log({ result });
+		// console.log({ countGenre });
 
-		setQuizAnswers(result.slice(0, 2));
+		if (result.length > 1) {
+			const randomlyShortened = [...result].sort(() => 0.5 - Math.random());
+			setQuizAnswers(randomlyShortened.slice(0, 2));
+		} else {
+			setQuizAnswers(result);
+		}
 	}, [countGenre, setQuizAnswers]);
 
 	useEffect(() => {
@@ -123,7 +132,20 @@ export default function Quiz() {
 				{quizStarted ? (
 					quizEnded ? (
 						<>
-							<p>Nous analysons tes résultats</p>
+							<div className="page-analyse">
+								<p className="primary-title">
+									Nous <span className="gradient-text">analysons </span> <br />
+									tes résultats...
+								</p>
+								<OrbitProgress
+									variant="track-disc"
+									color="#05a6d6"
+									dense
+									size="medium"
+									text=""
+									textColor=""
+								/>
+							</div>
 						</>
 					) : (
 						<>
@@ -134,45 +156,59 @@ export default function Quiz() {
 									<br />
 									vers le bon film
 								</h1>
-								<article className="questions">
-									<img
-										src={`/quizImages/${currentQuestion.imageA.id}.jpg`}
-										alt={`${currentQuestion.imageA.description}`}
-										className="quiz-images"
-										onClick={() => selectGenres(currentQuestion.imageA.genres)}
-										onKeyUp={() => selectGenres(currentQuestion.imageA.genres)}
-										key={currentQuestion.imageA.id}
-									/>
-									<img
-										src={`/quizImages/${currentQuestion.imageB.id}.jpg`}
-										alt={`${currentQuestion.imageB.description}`}
-										className="quiz-images"
-										onClick={() => selectGenres(currentQuestion.imageB.genres)}
-										onKeyUp={() => selectGenres(currentQuestion.imageB.genres)}
-										key={currentQuestion.imageB.id}
-									/>
+								<article className="question-container">
+									<div className="image-container">
+										<img
+											src={`/quizImages/${currentQuestion.imageA.id}.jpg`}
+											alt={`${currentQuestion.imageA.description}`}
+											className="quiz-images"
+											onClick={() =>
+												selectGenres(currentQuestion.imageA.genres)
+											}
+											onKeyUp={() =>
+												selectGenres(currentQuestion.imageA.genres)
+											}
+											key={currentQuestion.imageA.id}
+										/>
+									</div>
+									<div className="image-container">
+										<img
+											src={`/quizImages/${currentQuestion.imageB.id}.jpg`}
+											alt={`${currentQuestion.imageB.description}`}
+											className="quiz-images"
+											onClick={() =>
+												selectGenres(currentQuestion.imageB.genres)
+											}
+											onKeyUp={() =>
+												selectGenres(currentQuestion.imageB.genres)
+											}
+											key={currentQuestion.imageB.id}
+										/>
+									</div>
 								</article>
 								<article className="quiz-timer">
-									<p className="quiz-progress">
-										Tu as {timeLeft} secondes. Plus tu choisis d'images, plus
-										les recommandations de films seront précises.
-									</p>
 									<ProgressTimer
 										barRounded
 										color="#05a6d6"
 										direction="left"
 										duration={20}
 										rootRounded
+										showDuration="true"
 										variant="empty"
 										started
 										classes={{
-											root: "root",
-											progressContainer: "progress-bar-container",
-											progress: "progress-bar",
+											root: "timer-root",
+											progressContainer: "timer-progress-bar-container",
+											progress: "timer-progress-bar",
+											textContainer: "timer-text-container",
 											time: "timer-time",
 										}}
 									/>
 								</article>
+								<p className="body-text">
+									Plus tu choisis d'images, <br />
+									plus les recommandations de films seront précises.
+								</p>
 							</section>
 						</>
 					)
@@ -209,11 +245,14 @@ export default function Quiz() {
 							{popularMovies && popularMovies.length > 0 ? (
 								<CarouselMovie movies={popularMovies} />
 							) : (
-								<div className="recos-loading-screen">
-									<img
-										className="loading-icon"
-										src="/logo-transparent.png"
-										alt="Chargement…"
+								<div className="loading-movies">
+									<OrbitProgress
+										variant="track-disc"
+										color="#05a6d6"
+										dense
+										size="medium"
+										text=""
+										textColor=""
 									/>
 								</div>
 							)}

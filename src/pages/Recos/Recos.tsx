@@ -78,18 +78,22 @@ export default function Recos() {
 				/>
 
 				{quizTaken ? (
-					<div className="link-center-container">
+					<>
+						<div className="link-center-container">
+							<p className="body-text">
+								Pas tout à fait ce que tu ressens ? <br />
+								Clique sur plus d'images pour obtenir des résultats qui
+								reflètent mieux ton humeur.
+							</p>
+
+							<Link to="/quiz" className="primary-button low-emphasis-button">
+								Redémarrer le quiz
+							</Link>
+						</div>
 						<p className="body-text">
-							Si cette sélection ne te correspond pas, n'hésites pas à cliquer
-							davantage sur les images afin d'affiner les résultats.
-							<br />
-							<br /> {quizAnswers.join(", ")}
-							<br />
+							INTERNAL USE ONLY: {quizAnswers.join(", ")}
 						</p>
-						<Link to="/quiz" className="primary-button low-emphasis-button">
-							Redémarrer le quiz
-						</Link>
-					</div>
+					</>
 				) : (
 					<div className="link-center-container">
 						<button

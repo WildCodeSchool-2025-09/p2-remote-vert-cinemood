@@ -12,8 +12,13 @@
 }
 
 .link-center-container {
+	margin: 0 auto;
+	text-align: center;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
+	align-items: center;
+	gap: 1rem;
 }
 
 .low-emphasis-button {

@@ -86,16 +86,8 @@
 	}
 }
 
-.recos-loading-screen {
+.loading-movies {
 	display: flex;
 	justify-content: center;
 	margin: 3rem auto 6rem;
-}
-
-.loading-icon {
-	width: 15%;
-	background: linear-gradient(90deg, var(--light-blue), var(--light-purple));
-	background-size: 200% 200%;
-	transition: 0.4s ease;
-	animation: gradientShift 2s linear infinite;
 }
