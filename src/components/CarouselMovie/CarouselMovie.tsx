@@ -22,7 +22,6 @@ function CarouselMovie({ movies }: CarouselProps) {
 		return () => emblaApi.off("select", onSelect);
 	}, [emblaApi]);
 
-	// if (!movies?.length) return <p>Aucun film à afficher</p>;
 	if (!movies && movies.length < 1) return <p>Aucun film à afficher</p>;
 
 	return (
