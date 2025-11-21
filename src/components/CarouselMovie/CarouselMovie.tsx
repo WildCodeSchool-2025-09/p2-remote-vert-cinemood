@@ -2,7 +2,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import "./CarouselMovie.css";
-import type { Movie } from "../../types";
+import type { Movie } from "../../types/MovieType";
 
 type CarouselProps = {
 	movies: Movie[];

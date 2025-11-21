@@ -1,7 +1,7 @@
 import { type ReactNode, createContext, useContext, useState } from "react";
 
 type QuizState = {
-	quizAnswers: string[];
+	quizAnswers: number[];
 	setQuizAnswers: React.Dispatch<React.SetStateAction<string[]>>;
 };
 

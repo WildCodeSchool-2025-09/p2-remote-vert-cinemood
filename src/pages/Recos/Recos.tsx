@@ -3,12 +3,11 @@ import RecosCarousel from "../../components/RecosCarousel/RecosCarousel";
 import "./Recos.css";
 import { Link } from "react-router";
 import { useQuiz } from "../../context/QuizContext";
-import type { Movie } from "../../types";
+import type { Movie } from "../../types/MovieType";
 
 export default function Recos() {
 	const { quizAnswers } = useQuiz();
 	const quizTaken = quizAnswers.length > 0;
-
 	const [movieRecos, setMovieRecos] = useState<Movie[]>([]);
 	const randomStartIndex = Math.floor(Math.random() * 14);
 
@@ -16,7 +15,7 @@ export default function Recos() {
 		const randomPage = Math.floor(Math.random() * 500) + 1;
 
 		const url = quizTaken
-			? `${import.meta.env.VITE_TMDB_API_URL}movie/popular?page=1&with_genres=${quizAnswers.join(",")}`
+			? `${import.meta.env.VITE_TMDB_API_URL}discover/movie?page=1&language=fr-FR&with_genres=${quizAnswers.join(",")}`
 			: `${import.meta.env.VITE_TMDB_API_URL}discover/movie?include_adult=false&include_video=false&language=fr-FR&vote_average.gte=5&primary_release_date.gte=1960-01-01&vote_count.gte=100&page=${randomPage}`;
 
 		const options = {
@@ -80,6 +79,13 @@ export default function Recos() {
 
 				{quizTaken ? (
 					<div className="link-center-container">
+						<p className="body-text">
+							Si cette sélection ne te correspond pas, n'hésites pas à cliquer
+							davantage sur les images afin d'affiner les résultats.
+							<br />
+							<br /> {quizAnswers.join(", ")}
+							<br />
+						</p>
 						<Link to="/quiz" className="primary-button low-emphasis-button">
 							Redémarrer le quiz
 						</Link>

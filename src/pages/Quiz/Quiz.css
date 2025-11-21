@@ -42,3 +42,18 @@
 .quiz-timer {
 	color: var(--white);
 }
+
+.root {
+	overflow: hidden;
+}
+.progress-bar-container {
+	height: 30px;
+	overflow: hidden;
+}
+.progress-bar {
+	height: 30px;
+	overflow: hidden;
+}
+.timer-time {
+	display: none;
+}

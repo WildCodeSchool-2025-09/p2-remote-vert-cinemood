@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./Quiz.css";
+import ProgressTimer from "react-progress-bar-timer";
 import { useNavigate } from "react-router";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import HowItWorks from "../../components/HowItWorks/HowItWorks";
@@ -38,28 +39,50 @@ function createImageQuestions(imagesData, nbQuestions) {
 export default function Quiz() {
 	const [quizStarted, setQuizStarted] = useState(false);
 	const [popularMovies, setPopularMovies] = useState([]);
-	const { quizAnswers, setQuizAnswers } = useQuiz();
+	const { setQuizAnswers } = useQuiz();
 	const [questionNumber, setQuestionNumber] = useState(0);
 	const [genreSelection, setGenreSelection] = useState([]);
 	const navigate = useNavigate();
-	const [timeLeft, setTimeLeft] = useState(10);
+	const [timeLeft, setTimeLeft] = useState(20);
+	const [timeLeftAnalysis, setTimeLeftAnalysis] = useState(3);
+	const [quizEnded, setQuizEnded] = useState(false);
 	const imageQuestions = useMemo(
 		() => createImageQuestions(quizPicturesData, 100),
 		[],
 	);
 	const currentQuestion = imageQuestions[questionNumber];
 
-	useEffect(() => {
+	function timer() {
 		if (timeLeft <= 0) return;
 		const timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
 		return () => clearInterval(timer);
-	}, [timeLeft]);
+	}
+	function timerAnalysis() {
+		if (timeLeftAnalysis <= 0) navigate("/recommandations");
+		const timerAnalysis = setInterval(
+			() => setTimeLeftAnalysis((prev) => prev - 1),
+			1000,
+		);
+		return () => clearInterval(timerAnalysis);
+	}
 
 	useEffect(() => {
-		if (timeLeft <= 0) {
-			navigate("/recommandations", { state: { quizAnswers } });
+		if ((quizStarted && timeLeft <= 0) || questionNumber === 100) {
+			setQuizEnded(true);
 		}
-	}, [timeLeft, navigate, quizAnswers]);
+	}, [quizStarted, timeLeft, questionNumber]);
+
+	useEffect(() => {
+		if (!quizEnded) return;
+		if (timeLeftAnalysis <= 0) {
+			navigate("/recommandations");
+			return;
+		}
+		const timer = setInterval(() => {
+			setTimeLeftAnalysis((prev) => prev - 1);
+		}, 1000);
+		return () => clearInterval(timer);
+	}, [quizEnded, timeLeftAnalysis, navigate]);
 
 	function selectGenres(genresArray) {
 		setGenreSelection((prev) => [...prev, ...genresArray]);
@@ -85,7 +108,8 @@ export default function Quiz() {
 		for (const genre in countGenre) {
 			if (countGenre[genre] >= maxCount - 1) result.push(genre);
 		}
-		setQuizAnswers(result);
+
+		setQuizAnswers(result.slice(0, 2));
 	}, [countGenre, setQuizAnswers]);
 
 	useEffect(() => {
@@ -105,43 +129,61 @@ export default function Quiz() {
 		<>
 			<div className="quiz-bg">
 				{quizStarted ? (
-					<>
-						<section className="quiz-container">
-							<h1 className="primary-title">
-								Laisse ton humeur{" "}
-								<span className="body-text-blue">te guider</span>
-								<br />
-								vers le bon film
-							</h1>
-							<article className="questions">
-								<img
-									src={`/quizImages/${currentQuestion.imageA.id}.jpg`}
-									alt={`${currentQuestion.imageA.description}`}
-									className="quiz-images"
-									onClick={() => selectGenres(currentQuestion.imageA.genres)}
-									onKeyUp={() => selectGenres(currentQuestion.imageA.genres)}
-									key={currentQuestion.imageA.id}
-								/>
-								<img
-									src={`/quizImages/${currentQuestion.imageB.id}.jpg`}
-									alt={`${currentQuestion.imageB.description}`}
-									className="quiz-images"
-									onClick={() => selectGenres(currentQuestion.imageB.genres)}
-									onKeyUp={() => selectGenres(currentQuestion.imageB.genres)}
-									key={currentQuestion.imageB.id}
-								/>
-							</article>
-							<article className="quiz-timer">
-								<p>
-									⏰ Temps restant : <b>{timeLeft}s</b>
-								</p>
-								<p className="quiz-progress">
-									Question {questionNumber + 1} / {imageQuestions.length}
-								</p>
-								<p>{quizAnswers.join(", ")}</p>
-							</article>
-						</section>
-					</>
+					quizEnded ? (
+						<>
+							<p>Nous analysons tes résultats</p>
+						</>
+					) : (
+						<>
+							<section className="quiz-container">
+								<h1 className="primary-title">
+									Laisse ton humeur{" "}
+									<span className="body-text-blue">te guider</span>
+									<br />
+									vers le bon film
+								</h1>
+								<article className="questions">
+									<img
+										src={`/quizImages/${currentQuestion.imageA.id}.jpg`}
+										alt={`${currentQuestion.imageA.description}`}
+										className="quiz-images"
+										onClick={() => selectGenres(currentQuestion.imageA.genres)}
+										onKeyUp={() => selectGenres(currentQuestion.imageA.genres)}
+										key={currentQuestion.imageA.id}
+									/>
+									<img
+										src={`/quizImages/${currentQuestion.imageB.id}.jpg`}
+										alt={`${currentQuestion.imageB.description}`}
+										className="quiz-images"
+										onClick={() => selectGenres(currentQuestion.imageB.genres)}
+										onKeyUp={() => selectGenres(currentQuestion.imageB.genres)}
+										key={currentQuestion.imageB.id}
+									/>
+								</article>
+								<article className="quiz-timer">
+									<p className="quiz-progress">
+										Tu as {timeLeft} secondes. Plus tu choisis d'images, plus
+										les recommandations de films seront précises.
+									</p>
+									<ProgressTimer
+										barRounded
+										color="#05a6d6"
+										direction="left"
+										duration={20}
+										rootRounded
+										variant="empty"
+										started
+										classes={{
+											root: "root",
+											progressContainer: "progress-bar-container",
+											progress: "progress-bar",
+											time: "timer-time",
+										}}
+									/>
+								</article>
+							</section>
+						</>
+					)
 				) : (
 					<>
 						<section className="header-section-center quiz-hero">
@@ -157,7 +199,10 @@ export default function Quiz() {
 							<button
 								type="button"
 								className="primary-button"
-								onClick={() => setQuizStarted(true)}
+								onClick={() => {
+									timer();
+									setQuizStarted(true);
+								}}
 							>
 								Lance le quiz
 							</button>
