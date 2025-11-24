@@ -59,7 +59,9 @@ function CarouselMovie({ movies }: CarouselProps) {
 						<button
 							type="button"
 							key={movies.id}
-							className={position === selectedIndex ? "dot active" : "dot"}
+							className={
+								position === selectedIndex ? "dot active" : "dot-carousel"
+							}
 							onClick={() => emblaApi?.scrollTo(position)}
 						/>
 					))}
