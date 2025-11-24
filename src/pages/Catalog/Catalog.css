@@ -46,7 +46,7 @@ body {
 	justify-content: center;
 	gap: 1rem;
 	padding: 1rem;
-	background-color: black;
+	background-color: var(--dark-purple);
 }
 
 .catalog-btn {

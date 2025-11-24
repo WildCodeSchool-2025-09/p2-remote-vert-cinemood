@@ -1,7 +1,41 @@
 .navbar {
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
+	align-items: center;
 	gap: 1rem;
+	height: 60px;
+	background-color: var(--black);
+}
+
+.logo {
+	height: 50px;
+}
+
+.links {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 2rem;
+	margin: 2rem;
+}
+
+#apropo-link {
+	padding: 0.6rem 1rem;
+	font-size: 1rem;
+	background-color: var(--light-blue);
+}
+
+#catalog-link {
+	color: var(--white);
+	font-family: var(--font-family-title);
+	font-size: var(--font-size-text);
+	font-weight: var(--font-weight-text-bold);
+	text-decoration: none;
+}
+
+#quiz-link {
+	padding: 0.6rem;
+	font-size: 1rem;
 }
 
 .btn {
