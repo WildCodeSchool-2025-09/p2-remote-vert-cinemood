@@ -2,9 +2,9 @@ import "./Movie.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
+import avatar from "../../assets/images/avatar-utilisateur.jpg";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import StarRating from "../../components/StarRating/StarRating";
-import avatar from "./../../assets/images/avatar-utilisateur.jpg";
 
 interface MovieData {
 	title: string;
