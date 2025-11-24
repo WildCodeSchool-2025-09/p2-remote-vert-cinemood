@@ -50,8 +50,24 @@ function Catalog() {
 
 	return (
 		<>
+			<div className="filters">
+				<GenreButton
+					genre={genre}
+					movies={allMovies}
+					setFilteredMovies={setFilteredMovies}
+					setIsOpen={setIsOpen}
+				/>
+				<button type="button" className="catalog-btn">
+					Rating
+				</button>
+				<button type="button" className="catalog-btn">
+					Annee
+				</button>
+			</div>
 			{isOpen ? (
-				<MoviesSearchedModal filteredMovies={filteredMovies} />
+				<>
+					<MoviesSearchedModal filteredMovies={filteredMovies} />
+				</>
 			) : (
 				<>
 					<div
@@ -62,21 +78,6 @@ function Catalog() {
 					</div>
 
 					<div className="primary-background">
-						<div className="filters">
-							<GenreButton
-								genre={genre}
-								movies={allMovies}
-								setFilteredMovies={setFilteredMovies}
-								setIsOpen={setIsOpen}
-							/>
-							<button type="button" className="catalog-btn">
-								Rating
-							</button>
-							<button type="button" className="catalog-btn">
-								Annee
-							</button>
-						</div>
-
 						<h2 className="movie-categories">Tendances</h2>
 						<CarouselMovie movies={popularMovies} />
 
