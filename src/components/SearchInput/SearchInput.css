@@ -1,0 +1,30 @@
+.search-wraper {
+	max-width: 320px;
+	padding: 0.7rem 1rem;
+	border-radius: 4px;
+	border: none;
+	font-size: 0.1rem;
+	outline: none;
+	/* transition: background 0.25s ease, box-shadow 0.25s ease; */
+}
+
+search-input::placeholder {
+	color: rgba(255, 255, 255, 0.55);
+}
+
+.search-btn {
+	background: var(#05a6d6);
+	margin-left: 0.8rem;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.search-btn:hover {
+	background: #f6121d;
+	transform: scale(1.02);
+}
+
+.search-btn:active {
+	transform: scale(0.97);
+}

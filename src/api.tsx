@@ -9,7 +9,19 @@ const options = {
 	},
 };
 
-export async function getAllMovies() {
+export async function getMoviesPage1() {
+	const url = `${apiUrl}discover/movie?&include_adult=false&include_video=false&language=fr-FR&vote_average.gte=5&primary_release_date.gte=1960-01-01&vote_count.gte=100&page=1`;
+	try {
+		const res = await fetch(url, options);
+		const data = await res.json();
+		return data.results || [];
+	} catch (err) {
+		console.error("rror fetching movies:", err);
+		return [];
+	}
+}
+
+export async function getMoviesPage2() {
 	const url = `${apiUrl}discover/movie?&include_adult=false&include_video=false&language=fr-FR&vote_average.gte=5&primary_release_date.gte=1960-01-01&vote_count.gte=100&page=2`;
 	try {
 		const res = await fetch(url, options);
@@ -18,6 +30,53 @@ export async function getAllMovies() {
 	} catch (err) {
 		console.error("rror fetching movies:", err);
 		return [];
+	}
+}
+
+export async function getMoviesPage3() {
+	const url = `${apiUrl}discover/movie?&include_adult=false&include_video=false&language=fr-FR&vote_average.gte=5&primary_release_date.gte=1960-01-01&vote_count.gte=100&page=3`;
+	try {
+		const res = await fetch(url, options);
+		const data = await res.json();
+		return data.results || [];
+	} catch (err) {
+		console.error("rror fetching movies:", err);
+		return [];
+	}
+}
+
+export async function getMoviesPage4() {
+	const url = `${apiUrl}discover/movie?&include_adult=false&include_video=false&language=fr-FR&vote_average.gte=5&primary_release_date.gte=1960-01-01&vote_count.gte=100&page=4`;
+	try {
+		const res = await fetch(url, options);
+		const data = await res.json();
+		return data.results || [];
+	} catch (err) {
+		console.error("rror fetching movies:", err);
+		return [];
+	}
+}
+
+export async function getMoviesPage5() {
+	const url = `${apiUrl}discover/movie?&include_adult=false&include_video=false&language=fr-FR&vote_average.gte=5&primary_release_date.gte=1960-01-01&vote_count.gte=100&page=5`;
+	try {
+		const res = await fetch(url, options);
+		const data = await res.json();
+		return data.results || [];
+	} catch (err) {
+		console.error("rror fetching movies:", err);
+		return [];
+	}
+}
+
+export async function getGenresMovies() {
+	const urlGenre = "https://api.themoviedb.org/3/genre/movie/list";
+	try {
+		const res = await fetch(urlGenre, options);
+		const data = await res.json();
+		return data || [];
+	} catch (err) {
+		console.error("Data is not found:", err);
 	}
 }
 
@@ -60,7 +119,7 @@ export async function getNowPlayingMovies() {
 }
 
 export async function getUpcomingMovies() {
-	const url = `${apiUrl}/movie/upcoming?language=fr-FR&page=1`;
+	const url = `${apiUrl}/movie/upcoming?language=fr-FR&page=2`;
 
 	try {
 		const res = await fetch(url, options);
