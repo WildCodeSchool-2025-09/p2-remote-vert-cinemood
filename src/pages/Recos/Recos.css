@@ -3,13 +3,24 @@
 	background: var(--primary-background);
 }
 
-.max-characters-30 {
+.recos-bg .header-section-center h1 {
 	max-width: 30ch;
 }
 
-.restart-quiz {
-	color: var(--white);
-	background-color: rgba(248, 249, 251, 0.2);
-	display: block;
-	margin: 4rem auto;
+.recos-bg .header-section-center p.body-text {
+	max-width: 45ch;
+}
+
+.link-center-container {
+	margin: 0 auto;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 3rem;
+}
+
+.low-emphasis-button {
+	background-color: #f8f9fb33;
 }
