@@ -3,7 +3,7 @@
 	background: var(--primary-background);
 }
 
-.recos-bg .header-section-center h1.secondary-title {
+.recos-bg .header-section-center h1 {
 	max-width: 30ch;
 }
 
@@ -12,8 +12,13 @@
 }
 
 .link-center-container {
+	margin: 0 auto;
+	text-align: center;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
+	align-items: center;
+	gap: 3rem;
 }
 
 .low-emphasis-button {

@@ -3,8 +3,14 @@ import { RouterProvider } from "react-router";
 import router from "./router";
 import "./css/reset.css";
 import "./css/variables.css";
+import QuizProvider from "./context/QuizContext";
+
 const rootElement = document.getElementById("root");
 
 if (rootElement != null) {
-	ReactDOM.createRoot(rootElement).render(<RouterProvider router={router} />);
+	ReactDOM.createRoot(rootElement).render(
+		<QuizProvider>
+			<RouterProvider router={router} />
+		</QuizProvider>,
+	);
 }

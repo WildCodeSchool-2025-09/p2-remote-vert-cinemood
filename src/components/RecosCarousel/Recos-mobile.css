@@ -42,6 +42,14 @@
 		padding: 2rem 2rem 0;
 	}
 
+	.recos-bg .header-section-center {
+		padding: 2rem 2rem 0;
+	}
+
+	.recos-bg .header-section-center h1 {
+		font-size: 1.5rem;
+	}
+
 	.recos-slider-container {
 		width: 80%;
 		margin: 0 auto;
