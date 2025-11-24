@@ -14,7 +14,7 @@ function SearchInput({ setFilteredMovies, movieData, setIsOpen, isOpen }) {
 	return (
 		<div>
 			<form
-				className="search-input"
+				className="search-wraper"
 				onSubmit={(p) => {
 					p.preventDefault();
 					p.stopPropagation();
