@@ -3,7 +3,7 @@ import "./Home.css";
 import "./Home-mobile.css";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import Carousel from "../../components/CarouselMovie/CarouselMovie";
+import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 
 function Home() {
 	const [popularMovies, setPopularMovies] = useState([]);
@@ -53,7 +53,7 @@ function Home() {
 					{loadingPopularMovies ? (
 						<p>Chargement...</p>
 					) : (
-						<Carousel movies={popularMovies} />
+						<CarouselMovie movies={popularMovies} />
 					)}
 				</section>
 			</div>

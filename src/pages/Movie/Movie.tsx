@@ -1,7 +1,7 @@
 import "./Movie.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import Carousel from "../../components/Carousel/Carousel";
+import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 
 interface MovieData {
 	title: string;
@@ -33,7 +33,9 @@ interface ProvidersData {
 }
 
 function Movie() {
-	const [messages, setMessages] = useState<{ pseudo: string; text: string }[]>([]);
+	const [messages, setMessages] = useState<{ pseudo: string; text: string }[]>(
+		[],
+	);
 	const [newMessage, setNewMessage] = useState<string>("");
 	const [pseudo, setPseudo] = useState<string>("");
 	const { id } = useParams<{ id: string }>();
@@ -150,7 +152,7 @@ function Movie() {
 		"Apple TV Plus": "https://tv.apple.com",
 		"Canal+": "https://www.canalplus.com",
 		"Paramount Plus": "https://www.paramountplus.com",
-		"Crunchyroll": "https://www.crunchyroll.com",
+		Crunchyroll: "https://www.crunchyroll.com",
 		"Google Play Movies": "https://play.google.com/store/movies",
 		"YouTube Premium": "https://www.youtube.com/premium",
 		"Rakuten TV": "https://rakuten.tv",
@@ -183,7 +185,7 @@ function Movie() {
 		setPseudo(event.target.value);
 	}
 	function sendMessage() {
-		setMessages([{ pseudo, text: newMessage }, ...messages ]);
+		setMessages([{ pseudo, text: newMessage }, ...messages]);
 		setNewMessage("");
 		setPseudo("");
 	}
@@ -275,7 +277,7 @@ function Movie() {
 					{loadingSimilar ? (
 						<p>Chargement...</p>
 					) : (
-						<Carousel movies={similarMovies} />
+						<CarouselMovie movies={similarMovies} />
 					)}
 				</section>
 				<section className="commentaires">
@@ -312,17 +314,16 @@ function Movie() {
 						</button>
 						<div className="tous-les-commentaires">
 							<article>
-						{messages.map((msg) => {
-							return (
-
+								{messages.map((msg) => {
+									return (
 										<div className="last-commentaire" key={msg.pseudo}>
 											<strong>{msg.pseudo}</strong> a écrit : {msg.text}
 										</div>
 									);
-						})}
+								})}
 							</article>
 						</div>
-						</article>
+					</article>
 				</section>
 			</div>
 		</>
