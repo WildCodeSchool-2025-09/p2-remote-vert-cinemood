@@ -83,7 +83,9 @@ function Movie() {
 			.then((movieProviders) => setProviders(movieProviders))
 			.catch((err) => console.error(err));
 
-		fetch(`${apiUrl}movie/${id}/similar?language=fr-FR&page=1`, { headers })
+		fetch(`${apiUrl}movie/${id}/recommendations?language=fr-FR&page=1`, {
+			headers,
+		})
 			.then((res) => res.json())
 			.then((movieSimilar) => {
 				setSimilarMovies(movieSimilar.results?.slice(0, 8));
