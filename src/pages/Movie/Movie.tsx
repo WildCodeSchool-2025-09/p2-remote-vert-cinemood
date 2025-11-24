@@ -1,7 +1,7 @@
 import "./Movie.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import StarRating from "../../components/StarRating/StarRating";
 import avatar from "./../../assets/images/avatar-utilisateur.jpg";
@@ -95,8 +95,9 @@ function Movie() {
 			const header = document.querySelector(".header-details") as HTMLElement;
 			if (header && movie.backdrop_path) {
 				const backdropUrl = `https://image.tmdb.org/t/p/original${movie.backdrop_path}`;
-				header.style.backgroundImage = `linear-gradient(to bottom, transparent 50%, var(--dark-purple) 100%), url(${backdropUrl})`;
-			}
+				header.style.backgroundImage = `url(${backdropUrl})`;
+			} else
+				header.style.backgroundImage = "url(/background-movie-not-found.jpg)";
 		}
 	}, [id, movie]);
 
@@ -104,7 +105,7 @@ function Movie() {
 
 	const posterUrl = movie.poster_path
 		? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-		: "../../assets/images/no-poster.jpg";
+		: "/no-poster.jpg";
 
 	const releaseDate = movie.release_date ?? "";
 	const originCountry =
@@ -137,7 +138,13 @@ function Movie() {
 
 	const PROVIDER_URLS: Record<string, string> = {
 		Netflix: "https://www.netflix.com",
+		"Netflix Standard with Ads": "https://www.netflix.com",
 		"Amazon Prime Video": "https://www.primevideo.com",
+		"HBO Max": "https://www.primevideo.com",
+		"HBO Max  Amazon Channel": "https://www.primevideo.com",
+		Universcine: "https://www.primevideo.com",
+		"Universcine Amazon Channel": "https://www.primevideo.com",
+		"Cine+ OCS Amazon Channel ": "https://www.primevideo.com",
 		"Disney Plus": "https://www.disneyplus.com",
 		"Apple TV Plus": "https://tv.apple.com",
 		"Canal+": "https://www.canalplus.com",
@@ -146,6 +153,7 @@ function Movie() {
 		"Google Play Movies": "https://play.google.com/store/movies",
 		"YouTube Premium": "https://www.youtube.com/premium",
 		"Rakuten TV": "https://rakuten.tv",
+		"INA  madelen Amazon Channel": "https://www.primevideo.com",
 	};
 
 	const streamingProvidersLogos =
@@ -228,36 +236,34 @@ function Movie() {
 						<i className="bi bi-plus-circle body-text" />
 						<i className="bi bi-eye body-text" />
 					</div>
-					<button
-						type="button"
-						className="primary-button bouton-trailer-details"
-						id="bouton-trailer-details"
-						onClick={handleTrailerClick}
-					>
-						Bande annonce
-					</button>
-				</article>
-				<p className="disponibilité-details body-text">
-					{streamingProvidersLogos.length > 0 && (
-						<>
-							<p>Disponible sur :</p>
-							{streamingProvidersLogos.map((p) => (
-								<a
-									href={p.url ?? "#"}
-									key={p.name}
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									<img
-										src={p.logo}
-										alt={p.name}
-										title={p.name}
-										className="provider-logo"
-									/>
-								</a>
-							))}
-						</>
+					{trailerUrl !== null && (
+						<button
+							type="button"
+							className="primary-button bouton-trailer-details"
+							onClick={handleTrailerClick}
+						>
+							Bande annonce
+						</button>
 					)}
+				</article>
+
+				<p className="disponibilité-details-logo body-text">
+					{streamingProvidersLogos.length > 0 &&
+						streamingProvidersLogos.map((p) => (
+							<a
+								href={p.url ?? "#"}
+								key={p.name}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<img
+									src={p.logo}
+									alt={p.name}
+									title={p.name}
+									className="provider-logo"
+								/>
+							</a>
+						))}
 				</p>
 			</header>
 			<div className="primary-background">
@@ -277,8 +283,28 @@ function Movie() {
 					)}
 					<article className="description-details">
 						<article>
-							<p className="overview-details body-text"> {movie.overview} </p>
 							<article className="genres">{renderGenres(movie)}</article>
+							<p className="overview-details body-text">
+								{movie.overview ? (
+									movie.overview
+								) : (
+									<>
+										<p>Cette fiche ne contient pas encore de description.</p>
+										<p>
+											🎬 Mais pas de panique ! Clique ci-dessous pour lancer le
+											quiz interactif et découvrir une sélection de films rien
+											que pour toi.
+										</p>
+										<Link
+											to="/quiz"
+											className="primary-button primary-button-home"
+											id="button-quiz"
+										>
+											Lance le quiz
+										</Link>
+									</>
+								)}
+							</p>
 						</article>
 						<article className="information-details">
 							<p className="p-information-details body-text">
@@ -303,7 +329,9 @@ function Movie() {
 					</article>
 				</section>
 				<section className="films-similaire">
-					<h2 className="secondary-title center padding-30">Films similaire</h2>
+					<h2 className="secondary-title center padding-30">
+						Cela pourrait aussi t'intéresser
+					</h2>
 					{loadingSimilar ? (
 						<CarouselMovie movies={similarMovies} />
 					) : (
