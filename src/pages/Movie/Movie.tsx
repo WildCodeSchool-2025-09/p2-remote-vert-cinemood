@@ -1,7 +1,10 @@
 import "./Movie.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
+import StarRating from "../../components/StarRating/StarRating";
+import avatar from "./../../assets/images/avatar-utilisateur.jpg";
 
 interface MovieData {
 	title: string;
@@ -13,6 +16,7 @@ interface MovieData {
 	backdrop_path: string;
 	production_countries: { name: string }[];
 	production_companies: { name: string }[];
+	genres: { name: string }[];
 }
 
 interface CreditData {
@@ -33,9 +37,9 @@ interface ProvidersData {
 }
 
 function Movie() {
-	const [messages, setMessages] = useState<{ pseudo: string; text: string }[]>(
-		[],
-	);
+	const [messages, setMessages] = useState<
+		{ pseudo: string; text: string; note: number }[]
+	>([]);
 	const [newMessage, setNewMessage] = useState<string>("");
 	const [pseudo, setPseudo] = useState<string>("");
 	const { id } = useParams<{ id: string }>();
@@ -45,11 +49,10 @@ function Movie() {
 	const [providers, setProviders] = useState<ProvidersData | null>(null);
 	const [showTrailer, setShowTrailer] = useState(false);
 	const [similarMovies, setSimilarMovies] = useState([]);
-	const [loadingSimilar, setLoadingSimilar] = useState(true);
-
+	const [loadingSimilar, setLoadingSimilar] = useState(false);
+	const [note, setNote] = useState(0);
 	const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 	const apiUrl = import.meta.env.VITE_TMDB_API_URL;
-
 	const handleTrailerClick = () => setShowTrailer((prev) => !prev);
 
 	useEffect(() => {
@@ -79,64 +82,52 @@ function Movie() {
 			.then((res) => res.json())
 			.then((movieProviders) => setProviders(movieProviders))
 			.catch((err) => console.error(err));
-	}, [id]);
 
-	useEffect(() => {
+		fetch(`${apiUrl}movie/${id}/similar?language=fr-FR&page=1`, { headers })
+			.then((res) => res.json())
+			.then((movieSimilar) => {
+				setSimilarMovies(movieSimilar.results?.slice(0, 8));
+				setLoadingSimilar(true);
+			})
+			.catch(() => setLoadingSimilar(false));
+
 		if (movie) {
 			const header = document.querySelector(".header-details") as HTMLElement;
 			if (header && movie.backdrop_path) {
 				const backdropUrl = `https://image.tmdb.org/t/p/original${movie.backdrop_path}`;
-				header.style.backgroundImage = `linear-gradient(to bottom, transparent 50%, var(--dark-purple) 100%), url(${backdropUrl})`;
-			}
+				header.style.backgroundImage = `url(${backdropUrl})`;
+			} else
+				header.style.backgroundImage = "url(/background-movie-not-found.jpg)";
 		}
-	}, [movie]);
-
-	useEffect(() => {
-		if (!id) return;
-
-		setLoadingSimilar(true);
-
-		fetch(`${apiUrl}movie/${id}/similar?language=fr-FR&page=1`, {
-			headers: {
-				Authorization: `Bearer ${apiKey}`,
-				"Content-Type": "application/json;charset=utf-8",
-			},
-		})
-			.then((res) => res.json())
-			.then((movieSimilar) => {
-				setSimilarMovies(movieSimilar.results?.slice(0, 8) || []);
-				setLoadingSimilar(false);
-			})
-			.catch(() => setLoadingSimilar(false));
-	}, [id]);
+	}, [id, movie]);
 
 	if (!movie) return <p>Chargement du film...</p>;
 
 	const posterUrl = movie.poster_path
 		? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-		: "../../assets/images/no-poster.jpg";
+		: "/no-poster.jpg";
 
-	const releaseDate = movie.release_date ?? "N/A";
+	const releaseDate = movie.release_date ?? "";
 	const originCountry =
-		movie.production_countries?.map((c) => c.name).join(", ") || "N/A";
+		movie.production_countries?.map((c) => c.name).join(", ") || "";
 	const productionCompanies =
-		movie.production_companies?.map((c) => c.name).join(", ") || "N/A";
+		movie.production_companies?.map((c) => c.name).join(", ") || "";
 
-	const director =
-		credits?.crew?.find((c) => c.job === "Director")?.name || "N/A";
+	const director = credits?.crew?.find((c) => c.job === "Director")?.name || "";
 	const producers =
 		credits?.crew
 			?.filter((c) => c.job === "Producer")
 			.map((c) => c.name)
-			.join(", ") || "N/A";
+			.join(", ") || "";
 	const actors =
 		credits?.cast
 			?.slice(0, 5)
 			.map((a) => a.name)
-			.join(", ") || "N/A";
+			.join(", ") || "";
 
-	const rating = movie.vote_average ?? "N/A";
-	const runtime = movie.runtime ?? "N/A";
+	const ratingfloat = movie.vote_average ?? "";
+	const rating = Math.floor(ratingfloat);
+	const runtime = movie.runtime ?? "";
 
 	const trailer = videos?.results?.find(
 		(v) => v.type === "Trailer" && v.site === "YouTube",
@@ -147,7 +138,13 @@ function Movie() {
 
 	const PROVIDER_URLS: Record<string, string> = {
 		Netflix: "https://www.netflix.com",
+		"Netflix Standard with Ads": "https://www.netflix.com",
 		"Amazon Prime Video": "https://www.primevideo.com",
+		"HBO Max": "https://www.primevideo.com",
+		"HBO Max  Amazon Channel": "https://www.primevideo.com",
+		Universcine: "https://www.primevideo.com",
+		"Universcine Amazon Channel": "https://www.primevideo.com",
+		"Cine+ OCS Amazon Channel ": "https://www.primevideo.com",
 		"Disney Plus": "https://www.disneyplus.com",
 		"Apple TV Plus": "https://tv.apple.com",
 		"Canal+": "https://www.canalplus.com",
@@ -156,6 +153,7 @@ function Movie() {
 		"Google Play Movies": "https://play.google.com/store/movies",
 		"YouTube Premium": "https://www.youtube.com/premium",
 		"Rakuten TV": "https://rakuten.tv",
+		"INA  madelen Amazon Channel": "https://www.primevideo.com",
 	};
 
 	const streamingProvidersLogos =
@@ -165,8 +163,8 @@ function Movie() {
 			url: PROVIDER_URLS[p.provider_name] || null,
 		})) || [];
 
-	const renderStars = (rating: number | "N/A") => {
-		if (rating === "N/A") return "N/A";
+	const renderStars = (ratingfloat: number | "") => {
+		if (ratingfloat === "") return "";
 		const stars = Math.round((rating / 2) * 2) / 2;
 		const fullStars = Math.floor(stars);
 		const halfStar = stars % 1 !== 0;
@@ -177,7 +175,29 @@ function Movie() {
 		return <span className="stars">{starIcons}</span>;
 	};
 
-	function typeNewMessage(event: React.ChangeEvent<HTMLInputElement>) {
+	const renderGenres = (movie: MovieData) => {
+		return (
+			<>
+				{movie.genres.map((g) => (
+					<p className="genre-movie" key={g.name}>
+						{g.name}
+					</p>
+				))}
+			</>
+		);
+	};
+
+	function renderCommentStars(note?: number) {
+		if (!note || note < 1 || note > 5) return null;
+
+		return (
+			<span className="stars stars-comment">
+				{"★".repeat(note) + "☆".repeat(5 - note)}
+			</span>
+		);
+	}
+
+	function typeNewMessage(event: React.ChangeEvent<HTMLTextAreaElement>) {
 		setNewMessage(event.target.value);
 	}
 
@@ -185,7 +205,12 @@ function Movie() {
 		setPseudo(event.target.value);
 	}
 	function sendMessage() {
-		setMessages([{ pseudo, text: newMessage }, ...messages]);
+		if (!newMessage.trim()) return;
+		if (!pseudo.trim()) return;
+		if (note === 0) return;
+
+		setMessages([{ pseudo, text: newMessage, note }, ...messages]);
+		setNote(0);
 		setNewMessage("");
 		setPseudo("");
 	}
@@ -196,23 +221,34 @@ function Movie() {
 				<img className="affiche-details" src={posterUrl} alt={movie.title} />
 				<article className="info-details">
 					<h1 className="primary-title">{movie.title}</h1>
-					<p className="body-text">Date de sortie : {releaseDate}</p>
-					<p className="body-text">Durée : {runtime} min</p>
 					<p className="body-text">
-						Note : {rating}/10 {renderStars(rating)}
+						<i className="bi bi-calendar-event body-text" /> : {releaseDate}
 					</p>
-					<button
-						type="button"
-						className="primary-button bouton-trailer-details"
-						id="bouton-trailer-details"
-						onClick={handleTrailerClick}
-					>
-						Bande annonce
-					</button>
+					<p className="body-text">
+						<i className="bi bi-stopwatch body-text" /> : {runtime} min
+					</p>
+					<p className="body-text">
+						<i className="bi bi-star body-text" /> : {rating}/10{" "}
+						{renderStars(rating)}
+					</p>
+					<div className="tag-list">
+						<i className="bi bi-suit-heart body-text" />
+						<i className="bi bi-plus-circle body-text" />
+						<i className="bi bi-eye body-text" />
+					</div>
+					{trailerUrl !== null && (
+						<button
+							type="button"
+							className="primary-button bouton-trailer-details"
+							onClick={handleTrailerClick}
+						>
+							Bande annonce
+						</button>
+					)}
 				</article>
-				<p className="disponibilité-details body-text">
-					Disponible sur :
-					{streamingProvidersLogos.length > 0 ? (
+
+				<p className="disponibilité-details-logo body-text">
+					{streamingProvidersLogos.length > 0 &&
 						streamingProvidersLogos.map((p) => (
 							<a
 								href={p.url ?? "#"}
@@ -227,10 +263,7 @@ function Movie() {
 									className="provider-logo"
 								/>
 							</a>
-						))
-					) : (
-						<p>Aucune plateforme actuellement</p>
-					)}
+						))}
 				</p>
 			</header>
 			<div className="primary-background">
@@ -249,7 +282,30 @@ function Movie() {
 						</article>
 					)}
 					<article className="description-details">
-						<p className="overview-details body-text"> {movie.overview} </p>
+						<article>
+							<article className="genres">{renderGenres(movie)}</article>
+							<p className="overview-details body-text">
+								{movie.overview ? (
+									movie.overview
+								) : (
+									<>
+										<p>Cette fiche ne contient pas encore de description.</p>
+										<p>
+											🎬 Mais pas de panique ! Clique ci-dessous pour lancer le
+											quiz interactif et découvrir une sélection de films rien
+											que pour toi.
+										</p>
+										<Link
+											to="/quiz"
+											className="primary-button primary-button-home"
+											id="button-quiz"
+										>
+											Lance le quiz
+										</Link>
+									</>
+								)}
+							</p>
+						</article>
 						<article className="information-details">
 							<p className="p-information-details body-text">
 								<span className="body-text-blue">Réalisé par</span> : {director}
@@ -273,35 +329,63 @@ function Movie() {
 					</article>
 				</section>
 				<section className="films-similaire">
-					<h2 className="secondary-title center padding-30">Films similaire</h2>
+					<h2 className="secondary-title center padding-30">
+						Cela pourrait aussi t'intéresser
+					</h2>
 					{loadingSimilar ? (
-						<p>Chargement...</p>
-					) : (
 						<CarouselMovie movies={similarMovies} />
+					) : (
+						<p>Chargement...</p>
 					)}
 				</section>
 				<section className="commentaires">
 					<h2 className="secondary-title">Commentaires</h2>
+					<div className="tous-les-commentaires">
+						<article>
+							{messages.map((msg) => {
+								return (
+									<div
+										className="body-text"
+										id="last-commentaire"
+										key={msg.pseudo}
+									>
+										<img src={avatar} alt="avatar" width="50px" height="50px" />
+										<strong className="pseudo">{msg.pseudo}</strong>
+										{renderCommentStars(msg.note)}
+										<article className="contenue-commentaire">
+											{msg.text}
+										</article>
+									</div>
+								);
+							})}
+						</article>
+					</div>
 					<article className="commentaire-box">
-						<label htmlFor="pseudo" className="body-text">
-							Pseudo :
-						</label>
-						<input
-							className="pseudo"
-							type="text"
-							id="pseudo"
-							value={pseudo}
-							onChange={getPseudo}
-						/>
+						<div className="pseudo-note">
+							<label htmlFor="pseudo" className="body-text">
+								Pseudo :
+							</label>
+							<input
+								className="pseudo"
+								type="text"
+								id="pseudo"
+								value={pseudo}
+								onChange={getPseudo}
+								maxLength={12}
+							/>
+							<p className="body-text">Note :</p>
+							<StarRating maxStars={5} onRatingChange={setNote} value={note} />
+						</div>
 						<label htmlFor="comment" className="body-text">
 							Commentaire :
 						</label>
-						<input
+						<textarea
 							className="comment"
-							type="text"
 							id="comment"
 							value={newMessage}
 							onChange={typeNewMessage}
+							rows={5}
+							maxLength={1000}
 						/>
 						<br />
 						<button
@@ -312,17 +396,6 @@ function Movie() {
 						>
 							Envoyer
 						</button>
-						<div className="tous-les-commentaires">
-							<article>
-								{messages.map((msg) => {
-									return (
-										<div className="last-commentaire" key={msg.pseudo}>
-											<strong>{msg.pseudo}</strong> a écrit : {msg.text}
-										</div>
-									);
-								})}
-							</article>
-						</div>
 					</article>
 				</section>
 			</div>
