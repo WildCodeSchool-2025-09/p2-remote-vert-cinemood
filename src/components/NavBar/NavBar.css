@@ -19,18 +19,10 @@
 	margin: 2rem;
 }
 
-#apropo-link {
+.nav-links-size {
 	padding: 0.6rem 1rem;
 	font-size: 1rem;
-	background-color: var(--light-blue);
-}
-
-#catalog-link {
-	color: var(--white);
-	font-family: var(--font-family-title);
-	font-size: var(--font-size-text);
-	font-weight: var(--font-weight-text-bold);
-	text-decoration: none;
+	background-color: transparent;
 }
 
 #quiz-link {

@@ -12,10 +12,10 @@ function NavBar() {
 		<div className="navbar">
 			<img src="/favicon.ico" alt="logo" className="logo" />
 			<div className="links">
-				<Link to="/" className="primary-button" id="apropo-link">
+				<Link to="/" className="primary-button nav-links-size">
 					À propos
 				</Link>
-				<Link to="/catalogue" id="catalog-link">
+				<Link to="/catalogue" className="primary-button nav-links-size">
 					Catalogue
 				</Link>
 				<SearchInput
