@@ -35,7 +35,7 @@ function Home() {
 				</p>
 				<div className="buttons-container">
 					<Link to="/quiz" className="primary-button">
-						Lance le quiz
+						En savoir plus
 					</Link>
 					<Link to="/recommandations" className="primary-button btn-empty">
 						Film au hasard
@@ -43,7 +43,7 @@ function Home() {
 				</div>
 			</header>
 			<div className="primary-background">
-				<HowItWorks />
+				{/* <HowItWorks /> */}
 
 				<section id="selection-de-la-semaine">
 					<h2 className="secondary-title padding-20">
