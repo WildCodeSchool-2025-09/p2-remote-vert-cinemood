@@ -24,10 +24,10 @@ function Home() {
 	return (
 		<>
 			<header className="header-section-center header-section-home">
-				<h1 className="primary-title premier-titre">
+				<h1 className="primary-title width-title-section">
 					Ta prochaine soirée ciné commence ici !
 				</h1>
-				<p className="body-text width-30">
+				<p className="body-text width-title-section">
 					Réponds à notre petit quiz et reçoit des recommandations de films
 					personnalisées qui correspondent à ton humeur du moment.
 				</p>
@@ -43,7 +43,7 @@ function Home() {
 
 			<div className="primary-background">
 				<section id="selection-de-la-semaine">
-					<h2 className="secondary-title padding-20">
+					<h2 className="secondary-title home-secondary-title">
 						Notre <span className="body-text-blue">sélection</span> de la
 						semaine
 					</h2>
@@ -56,8 +56,6 @@ function Home() {
 								color="#05a6d6"
 								dense
 								size="medium"
-								text=""
-								textColor=""
 							/>
 						</div>
 					)}

@@ -1,6 +1,7 @@
 import useEmblaCarousel from "embla-carousel-react";
 import { Link } from "react-router";
 import "./CarouselMovie.css";
+import "./CarouselMovie-mobile.css";
 import type { Movie } from "../../types/MovieType";
 
 type CarouselProps = {

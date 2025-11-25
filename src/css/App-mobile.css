@@ -1,0 +1,17 @@
+@media (max-width: 480px) {
+	.primary-title {
+		font-size: 1.5rem;
+	}
+
+	.secondary-title {
+		font-size: 1.125rem;
+	}
+
+	.body-text {
+		font-size: 0.875rem;
+	}
+
+	.primary-button {
+		font-size: 0.875rem;
+	}
+}

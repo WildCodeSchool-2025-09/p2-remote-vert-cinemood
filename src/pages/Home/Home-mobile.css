@@ -1,41 +1,39 @@
-@media screen and (max-width: 800px) {
-	.header-section-home {
-		background-image: linear-gradient(
-				to bottom,
-				transparent 50%,
-				var(--dark-purple) 100%
-			), url("../../assets/images/background-home.jpg");
-		background-size: cover;
-		background-position: center;
-		padding-top: 10rem;
-	}
-
-	.header-section-home > h1 {
-		font-size: 2rem;
-	}
-
-	.premier-titre {
+@media (max-width: 1440px) {
+	.width-title-section {
 		width: 50%;
 	}
+}
 
-	.header-section-home > .body-text {
-		font-size: 1.5rem;
-		text-align: center;
+@media (max-width: 768px) {
+	.header-section-home {
+		height: 50vh;
+		background-size: 180%;
+	}
+
+	.width-title-section {
+		width: 70%;
+	}
+}
+
+@media (max-width: 480px) {
+	.header-section-home {
+		margin-top: 0px;
+		height: 60vh;
+		background-size: 380%;
+		padding-top: 9rem;
+	}
+
+	.width-title-section {
+		width: 80%;
 	}
 
 	.buttons-container {
 		flex-direction: column;
-		gap: 20px;
+		gap: 1rem;
 	}
-
-	#selection-de-la-semaine {
-		margin-bottom: 40px;
-		padding-top: 50px;
-		height: 800px;
-	}
-
-	.primary-button-home {
-		text-decoration: none;
-		margin-top: 10px;
+	.home-secondary-title {
+		width: 50%;
+		margin: 0 auto;
+		padding: 1rem 0;
 	}
 }
