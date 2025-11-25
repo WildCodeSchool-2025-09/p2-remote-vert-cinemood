@@ -1,0 +1,22 @@
+.bas-de-page {
+	background-color: var(--black);
+	display: flex;
+	justify-content: space-around;
+	padding: 50px 0 50px 0;
+}
+
+.footer {
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+}
+.follow {
+	display: flex;
+	justify-content: space-around;
+	cursor: pointer;
+}
+
+a {
+	text-decoration: none;
+	color: var(--white);
+}
