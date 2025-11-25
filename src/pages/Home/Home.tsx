@@ -1,13 +1,12 @@
-import HowItWorks from "../../components/HowItWorks/HowItWorks";
 import "./Home.css";
 import "./Home-mobile.css";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import Carousel from "../../components/CarouselMovie/CarouselMovie";
+import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
+import { OrbitProgress } from "react-loading-indicators";
 
 function Home() {
 	const [popularMovies, setPopularMovies] = useState([]);
-	const [loadingPopularMovies, setLoadingPopularMovies] = useState(true);
 
 	useEffect(() => {
 		fetch(`${import.meta.env.VITE_TMDB_API_URL}movie/popular?page=1`, {
@@ -18,8 +17,7 @@ function Home() {
 		})
 			.then((res) => res.json())
 			.then((popularMovies) => {
-				setPopularMovies(popularMovies.results?.slice(0, 50) || []);
-				setLoadingPopularMovies(false);
+				setPopularMovies(popularMovies.results);
 			});
 	}, []);
 
@@ -42,18 +40,26 @@ function Home() {
 					</Link>
 				</div>
 			</header>
-			<div className="primary-background">
-				{/* <HowItWorks /> */}
 
+			<div className="primary-background">
 				<section id="selection-de-la-semaine">
 					<h2 className="secondary-title padding-20">
 						Notre <span className="body-text-blue">sélection</span> de la
 						semaine
 					</h2>
-					{loadingPopularMovies ? (
-						<p>Chargement...</p>
+					{popularMovies && popularMovies.length > 0 ? (
+						<CarouselMovie movies={popularMovies} />
 					) : (
-						<Carousel movies={popularMovies} />
+						<div className="loading-movies">
+							<OrbitProgress
+								variant="track-disc"
+								color="#05a6d6"
+								dense
+								size="medium"
+								text=""
+								textColor=""
+							/>
+						</div>
 					)}
 				</section>
 			</div>
