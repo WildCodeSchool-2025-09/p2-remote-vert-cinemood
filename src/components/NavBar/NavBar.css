@@ -1,50 +1,72 @@
 .navbar {
+	height: 5rem;
+	background-color: var(--black);
+}
+
+.links-container {
+	/* border: 2px solid red; */
+	margin: 0 auto;
+	width: 80%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	gap: 1rem;
-	height: 60px;
+	height: 5rem;
 	background-color: var(--black);
 }
 
 .logo {
-	height: 50px;
+	height: 5rem;
+	width: auto;
+	/* border: 2px solid red; */
 }
 
-.links {
+.nav-links-container {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	gap: 2rem;
-	margin: 2rem;
+	/* border: 2px solid red; */
 }
 
-#apropo-link {
-	padding: 0.6rem 1rem;
-	font-size: 1rem;
-	background-color: var(--light-blue);
-}
-
-#catalog-link {
+.nav-button {
 	color: var(--white);
-	font-family: var(--font-family-title);
+	font-family: var(--font-family-text);
 	font-size: var(--font-size-text);
-	font-weight: var(--font-weight-text-bold);
-	text-decoration: none;
-}
-
-#quiz-link {
-	padding: 0.6rem;
-	font-size: 1rem;
-}
-
-.btn {
+	font-weight: var(--font-weight-text-normal);
+	padding: 0.25em;
 	border: none;
-	color: white;
-	padding: 15px 32px;
-	text-align: center;
+	border-radius: 40px;
 	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
 	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	line-height: 1;
+}
+
+.nav-button:hover,
+.logo:hover {
+	/* background: linear-gradient(90deg, var(--light-blue), var(--light-purple));
+	background-size: 200% 200%;
+	transition: 0.4s ease;
+	animation: gradientShift 2s linear infinite; */
+	transform: scale(1.05);
+}
+
+.quiz-nav-button {
+	font-size: var(--font-size-text);
+	font-weight: var(--font-weight-text-normal);
+	padding: 0.5em;
+}
+
+.search-bar {
+	background-color: rgba(248, 249, 251, 0.2);
+	border: none;
+	color: var(--white);
+	font-family: var(--font-family-text);
+	font-size: var(--font-size-text);
+	font-weight: var(--font-weight-text-normal);
+	border-radius: 1.2rem;
+	padding: 0 1.2rem;
 }

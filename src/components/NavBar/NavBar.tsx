@@ -1,32 +1,46 @@
 import { Link } from "react-router";
 // import SearchInput from "../SearchInput/SearchInput";
 import "./NavBar.css";
-import { useContext } from "react";
+// import { useContext, useState } from "react";
 // import { SearchbarContext } from "../Context/SearchBarContexts";
 
 function NavBar() {
 	// const { allMovies, setMovies, setFilteredMovies, isOpen, setIsOpen } =
 	// 	useContext(SearchbarContext);
+	// const [quizStarted, setQuizStarted] = useState(false);
 
 	return (
 		<div className="navbar">
-			<img src="/favicon.ico" alt="logo" className="logo" />
-			<div className="links">
-				<Link to="/" className="primary-button">
-					À propos
+			<div className="links-container">
+				<Link to="/">
+					<img
+						src="logo-black-background.webp"
+						alt="CinéMood"
+						className="logo"
+					/>
 				</Link>
-				<Link to="/catalogue" id="catalog-link">
-					Catalogue
-				</Link>
-				{/* <SearchInput
+				<div className="nav-links-container">
+					<Link to="/" className="nav-button">
+						À propos
+					</Link>
+					<Link to="/catalogue" className="nav-button">
+						Catalogue
+					</Link>
+					{/* <SearchInput
 					isOpen={isOpen}
 					setFilteredMovies={setFilteredMovies}
 					movieData={allMovies}
 					setIsOpen={setIsOpen}
 				/> */}
-				<Link to="/quiz" className="primary-button" id="quiz-link">
-					Lance le Quiz
-				</Link>
+					<input type="text" className="search-bar" placeholder="Recherche" />
+					<Link
+						to="/quiz"
+						className="primary-button quiz-nav-button"
+						// onClick={() => setQuizStarted(true)}
+					>
+						Lance le Quiz
+					</Link>
+				</div>
 			</div>
 		</div>
 	);
