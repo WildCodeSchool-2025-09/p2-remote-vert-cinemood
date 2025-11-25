@@ -25,7 +25,7 @@ function Footer() {
 					SOCIÉTÉ
 					<ul>
 						<li>A propos</li>
-						<li>contact</li>
+						<li>Contact</li>
 						<li>Actualités</li>
 					</ul>
 				</p>
