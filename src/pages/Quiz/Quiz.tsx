@@ -2,8 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import "./Quiz.css";
 import "./Quiz-mobile.css";
 import { OrbitProgress } from "react-loading-indicators";
-import ProgressTimer from "react-progress-bar-timer";
+import "react-step-progress-bar/styles.css";
 import { useNavigate } from "react-router";
+import { ProgressBar, Step } from "react-step-progress-bar";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import HowItWorks from "../../components/HowItWorks/HowItWorks";
 import { useQuiz } from "../../context/QuizContext";
@@ -45,26 +46,19 @@ export default function Quiz() {
 	const [questionNumber, setQuestionNumber] = useState(0);
 	const [genreSelection, setGenreSelection] = useState([]);
 	const navigate = useNavigate();
-	const [timeLeft, setTimeLeft] = useState(21);
 	const [timeLeftAnalysis, setTimeLeftAnalysis] = useState(2);
 	const [quizEnded, setQuizEnded] = useState(false);
 	const imageQuestions = useMemo(
-		() => createImageQuestions(quizPicturesData, 100),
+		() => createImageQuestions(quizPicturesData, 27),
 		[],
 	);
 	const currentQuestion = imageQuestions[questionNumber];
 
-	function timer() {
-		if (timeLeft <= 0) return;
-		const timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
-		return () => clearInterval(timer);
-	}
-
 	useEffect(() => {
-		if ((quizStarted && timeLeft <= 0) || questionNumber === 100) {
+		if (quizStarted && questionNumber === 26) {
 			setQuizEnded(true);
 		}
-	}, [quizStarted, timeLeft, questionNumber]);
+	}, [quizStarted, questionNumber]);
 
 	useEffect(() => {
 		if (!quizEnded) return;
@@ -80,7 +74,7 @@ export default function Quiz() {
 
 	function selectGenres(genresArray) {
 		setGenreSelection((prev) => [...prev, ...genresArray]);
-		if (questionNumber + 1 < imageQuestions.length && timeLeft > 0) {
+		if (questionNumber + 1 < imageQuestions.length) {
 			setQuestionNumber((q) => q + 1);
 		}
 	}
@@ -123,6 +117,22 @@ export default function Quiz() {
 				setPopularMovies(movies.results);
 			});
 	}, []);
+
+	let encouragements = "";
+	switch (true) {
+		case questionNumber < 9:
+			encouragements = "Clique sur une image pour commencer !";
+			break;
+		case questionNumber < 17:
+			encouragements = "Premier palier atteint, continue comme ça !";
+			break;
+		case questionNumber < 25:
+			encouragements = "Dernière ligne droite, tu tiens le bon bout !";
+			break;
+		case questionNumber === 25:
+			encouragements = "Plus qu'une question, tu es presque arrivé !";
+			break;
+	}
 
 	return (
 		<>
@@ -192,28 +202,50 @@ export default function Quiz() {
 									</div>
 								</article>
 								<div className="quiz-timer">
-									<ProgressTimer
-										barRounded
-										color="#05a6d6"
-										direction="left"
-										duration={20}
-										rootRounded
-										showDuration
-										variant="empty"
-										started
-										classes={{
-											root: "timer-root",
-											progressContainer: "timer-progress-bar-container",
-											progress: "timer-progress-bar",
-											textContainer: "timer-text-container",
-											time: "timer-time",
-										}}
-									/>
+									<ProgressBar
+										height="20px"
+										filledBackground="linear-gradient(to right, red, #49fd31ff)"
+										percent={questionNumber * 4}
+									>
+										<Step transition="scale">
+											{({ accomplished, index }) => (
+												<div
+													className={`transitionStep ${accomplished ? "accomplished" : null}`}
+												>
+													🎞️
+												</div>
+											)}
+										</Step>
+										<Step transition="scale">
+											{({ accomplished, index }) => (
+												<div
+													className={`transitionStep ${accomplished ? "accomplished" : null}`}
+												>
+													🍿
+												</div>
+											)}
+										</Step>
+										<Step transition="scale">
+											{({ accomplished, index }) => (
+												<div
+													className={`transitionStep ${accomplished ? "accomplished" : null}`}
+												>
+													🎬
+												</div>
+											)}
+										</Step>
+										<Step transition="scale">
+											{({ accomplished, index }) => (
+												<div
+													className={`transitionStep ${accomplished ? "accomplished" : null}`}
+												>
+													🏆
+												</div>
+											)}
+										</Step>
+									</ProgressBar>
 								</div>
-								<p className="body-text quiz-consignes">
-									Plus tu choisis d'images, plus les recommandations de films
-									seront précises.
-								</p>
+								<p className="body-text quiz-consignes">{encouragements}</p>
 							</section>
 						</>
 					)
@@ -233,12 +265,14 @@ export default function Quiz() {
 								type="button"
 								className="primary-button"
 								onClick={() => {
-									timer();
 									setQuizStarted(true);
 								}}
 							>
 								Lance le quiz
 							</button>
+						</section>
+						<section className="quiz-section">
+							<HowItWorks />
 						</section>
 						<section className="quiz-section quiz-carousel-section">
 							<h2 className="secondary-title">
@@ -261,9 +295,6 @@ export default function Quiz() {
 									/>
 								</div>
 							)}
-						</section>
-						<section className="quiz-section">
-							<HowItWorks />
 						</section>
 					</>
 				)}

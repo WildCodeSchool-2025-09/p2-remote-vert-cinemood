@@ -51,6 +51,7 @@
 	height: 100%;
 	object-fit: cover;
 	transition: 0.6s ease;
+	cursor: pointer;
 }
 
 .image-container:hover {
@@ -66,25 +67,23 @@
 	width: 100%;
 	margin: 3rem auto;
 	border-radius: 1.2rem;
-	overflow: hidden;
-}
-
-.timer-root {
-	max-height: 30px;
-	pointer-events: none;
-}
-
-.timer-time {
 	color: var(--white);
-	font-family: var(--font-family-text);
-	font-size: var(--font-size-text);
-	font-weight: var(--font-weight-text-normal);
 }
 
-.timer-text-container {
-	max-height: 20px;
+.transitionStep {
+	filter: grayscale(1);
+	font-size: 1.8rem;
+	border-radius: 50%;
 }
 
+.transitionStep.accomplished {
+	filter: grayscale(0);
+}
+
+.RSPBprogressBar {
+	position: relative;
+	z-index: -1;
+}
 .quiz-consignes {
 	max-width: 45ch;
 }
