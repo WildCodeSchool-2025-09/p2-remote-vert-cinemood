@@ -36,6 +36,12 @@ interface ProvidersData {
 	};
 }
 
+interface ResizeParams {
+	url: string;
+	width: number;
+	height: number;
+}
+
 function Movie() {
 	const [messages, setMessages] = useState<
 		{ pseudo: string; text: string; note: number }[]
@@ -92,16 +98,28 @@ function Movie() {
 				setLoadingSimilar(true);
 			})
 			.catch(() => setLoadingSimilar(false));
+	}, [id]);
 
-		if (movie) {
-			const header = document.querySelector(".header-details") as HTMLElement;
-			if (header && movie.backdrop_path) {
-				const backdropUrl = `https://image.tmdb.org/t/p/original${movie.backdrop_path}`;
-				header.style.backgroundImage = `url(${backdropUrl})`;
-			} else
-				header.style.backgroundImage = "url(/background-movie-not-found.jpg)";
+	useEffect(() => {
+		if (!movie) return;
+
+		const header = document.querySelector(".header-details") as HTMLElement;
+		if (!header) return;
+
+		if (movie.backdrop_path) {
+			const originalUrl = `https://image.tmdb.org/t/p/original${movie.backdrop_path}`;
+
+			resizeImage({ url: originalUrl, width: 1040, height: 400 })
+				.then((resizedUrl) => {
+					header.style.backgroundImage = `url(${resizedUrl})`;
+				})
+				.catch(() => {
+					header.style.backgroundImage = "url(/background-movie-not-found.jpg)";
+				});
+		} else {
+			header.style.backgroundImage = "url(/background-movie-not-found.jpg)";
 		}
-	}, [id, movie]);
+	}, [movie]);
 
 	if (!movie) return <p>Chargement du film...</p>;
 
@@ -217,26 +235,48 @@ function Movie() {
 		setPseudo("");
 	}
 
+	function resizeImage({ url, width, height }: ResizeParams): Promise<string> {
+		return new Promise((resolve, reject) => {
+			const img = new Image();
+			img.crossOrigin = "anonymous";
+			img.src = url;
+
+			img.onload = () => {
+				const canvas = document.createElement("canvas");
+				canvas.width = width;
+				canvas.height = height;
+
+				const ctx = canvas.getContext("2d");
+				if (!ctx) return reject("Canvas unsupported");
+
+				ctx.drawImage(img, 0, 0, width, height);
+
+				resolve(canvas.toDataURL("image/jpeg", 0.8));
+			};
+
+			img.onerror = reject;
+		});
+	}
+
 	return (
 		<>
 			<header className="header-details">
 				<img className="affiche-details" src={posterUrl} alt={movie.title} />
 				<article className="info-details">
 					<h1 className="primary-title">{movie.title}</h1>
-					<p className="body-text">
-						<i className="bi bi-calendar-event body-text" /> : {releaseDate}
+					<p className="header-text">
+						<i className="bi bi-calendar-event" /> : {releaseDate}
 					</p>
-					<p className="body-text">
-						<i className="bi bi-stopwatch body-text" /> : {runtime} min
+					<p className="header-text">
+						<i className="bi bi-stopwatch" /> : {runtime} min
 					</p>
-					<p className="body-text">
-						<i className="bi bi-star body-text" /> : {rating}/10{" "}
-						{renderStars(rating)}
+					<p className="header-text">
+						<i className="bi bi-star" /> : {rating}/10 {renderStars(rating)}
 					</p>
 					<div className="tag-list">
-						<i className="bi bi-suit-heart body-text" />
-						<i className="bi bi-plus-circle body-text" />
-						<i className="bi bi-eye body-text" />
+						<i className="bi bi-suit-heart" />
+						<i className="bi bi-plus-circle" />
+						<i className="bi bi-eye" />
 					</div>
 					{trailerUrl !== null && (
 						<button
