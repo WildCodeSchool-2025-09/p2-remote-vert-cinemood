@@ -50,33 +50,26 @@ function Catalog() {
 
 	return (
 		<>
-			<div className="filters">
-				<GenreButton
-					genre={genre}
-					movies={allMovies}
-					setFilteredMovies={setFilteredMovies}
-					setIsOpen={setIsOpen}
-				/>
-				<button type="button" className="catalog-btn">
-					Rating
-				</button>
-				<button type="button" className="catalog-btn">
-					Annee
-				</button>
+			<div
+				className={`movie-cover ${isOpen ? "open" : ""}`}
+				style={{ backgroundImage: `url(${coverUrl})` }}
+			>
+				<div className="cover-overly" />
 			</div>
+
+			<GenreButton
+				genre={genre}
+				movies={allMovies}
+				setFilteredMovies={setFilteredMovies}
+				setIsOpen={setIsOpen}
+			/>
+
 			{isOpen ? (
 				<>
 					<MoviesSearchedModal filteredMovies={filteredMovies} />
 				</>
 			) : (
 				<>
-					<div
-						className="movie-cover"
-						style={{ backgroundImage: `url(${coverUrl})` }}
-					>
-						<div className="cover-overly" />
-					</div>
-
 					<div className="primary-background">
 						<h2 className="movie-categories">Tendances</h2>
 						<CarouselMovie movies={popularMovies} />

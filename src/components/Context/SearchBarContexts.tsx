@@ -26,14 +26,18 @@ function SearchbarProvider({ children }: { children }): JSX.Element {
 		getMoviesPage5().then(setMoviesPage5);
 	}, []);
 
-	const allMovies = [];
+	const moviesWithoutDuplicats = [];
 
-	allMovies.push(
+	moviesWithoutDuplicats.push(
 		...moviesPage1,
 		...moviesPage2,
 		...moviesPage3,
 		...moviesPage4,
 		...moviesPage5,
+	);
+
+	const allMovies = moviesWithoutDuplicats.filter(
+		(movie, index, self) => index === self.findIndex((m) => m.id === movie.id),
 	);
 
 	return (
