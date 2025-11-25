@@ -5,20 +5,8 @@ import { useParams } from "react-router";
 import { useTagFavorite } from "../../Contexts/TagFavoriteContext";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import StarRating from "../../components/StarRating/StarRating";
+import type { MovieData } from "../../types";
 import avatar from "./../../assets/images/avatar-utilisateur.jpg";
-
-export interface MovieData {
-	id: number;
-	title: string;
-	release_date: string;
-	vote_average: number;
-	runtime: number;
-	overview: string;
-	poster_path: string;
-	backdrop_path: string;
-	production_countries: { name: string }[];
-	production_companies: { name: string }[];
-}
 
 interface CreditData {
 	crew: { job: string; name: string }[];
@@ -54,7 +42,7 @@ function Movie() {
 	const [note, setNote] = useState(0);
 	const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 	const apiUrl = import.meta.env.VITE_TMDB_API_URL;
-	const { setTagFavorite } = useTagFavorite();
+	const { TagFavorite, setTagFavorite } = useTagFavorite();
 
 	const handleTrailerClick = () => setShowTrailer((prev) => !prev);
 
@@ -212,7 +200,7 @@ function Movie() {
 		setPseudo("");
 	}
 
-	function TagFavorit() {
+	function OnOffTagFavorite() {
 		if (!movie) return;
 
 		setTagFavorite((prev) => {
@@ -224,6 +212,8 @@ function Movie() {
 			return [...prev, movie];
 		});
 	}
+
+	const isFavorite = TagFavorite.some((fav) => fav.id === movie.id);
 
 	return (
 		<>
@@ -243,16 +233,15 @@ function Movie() {
 					</p>
 					<div className="tag-list">
 						<i
-							className="bi bi-suit-heart body-text"
-							onClick={TagFavorit}
+							className={`bi bi-suit-heart body-text ${isFavorite ? "heart-favorite" : ""}`}
+							onClick={OnOffTagFavorite}
 							onKeyDown={(e) => {
 								if (e.key === "Enter" || e.key === " ") {
-									TagFavorit();
+									OnOffTagFavorite();
 								}
 							}}
 							role="button"
 							tabIndex={0}
-							style={{ cursor: "pointer" }}
 						/>
 
 						<i className="bi bi-plus-circle body-text" />

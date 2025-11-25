@@ -37,6 +37,7 @@
 .tag-list {
 	display: flex;
 	gap: 40px;
+	cursor: grab;
 }
 
 .bouton-trailer-details {
@@ -55,6 +56,10 @@
 .stars {
 	color: gold;
 	font-size: 1.5rem;
+}
+
+.heart-favorite {
+	color: var(--light-blue);
 }
 
 .trailer-article {
