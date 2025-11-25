@@ -201,7 +201,7 @@ export default function Quiz() {
 										/>
 									</div>
 								</article>
-								<div className="quiz-timer">
+								<div className="progress-bar-container">
 									<ProgressBar
 										height="20px"
 										filledBackground="linear-gradient(to right, red, #49fd31ff)"
