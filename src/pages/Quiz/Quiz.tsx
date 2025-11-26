@@ -12,31 +12,63 @@ import { useQuiz } from "../../context/QuizContext";
 import quizPicturesData from "./QuizPicturesData";
 
 function createImageQuestions(imagesData, nbQuestions) {
-	const pairs = new Set();
+	const usedImages = new Set();
 	const questions = [];
 	const totalImages = imagesData.length;
-	while (
-		questions.length < nbQuestions &&
-		pairs.size < (totalImages * (totalImages - 1)) / 2
-	) {
-		const idImageA = Math.floor(Math.random() * totalImages);
-		let idImageB = Math.floor(Math.random() * totalImages);
-		while (idImageB === idImageA) {
-			idImageB = Math.floor(Math.random() * totalImages);
+
+	while (questions.length < nbQuestions) {
+		let idA = Math.floor(Math.random() * totalImages);
+
+		while (usedImages.has(idA)) {
+			idA = Math.floor(Math.random() * totalImages);
 		}
-		const key =
-			idImageA < idImageB
-				? `${idImageA}-${idImageB}`
-				: `${idImageB}-${idImageA}`;
-		if (!pairs.has(key)) {
-			pairs.add(key);
-			questions.push({
-				questionId: questions.length + 1,
-				imageA: imagesData[idImageA],
-				imageB: imagesData[idImageB],
-			});
+
+		let idB = Math.floor(Math.random() * totalImages);
+
+		while (idB === idA || usedImages.has(idB)) {
+			idB = Math.floor(Math.random() * totalImages);
 		}
+
+		usedImages.add(idA);
+		usedImages.add(idB);
+		/*console.log(questions.id);*/
+		questions.push({
+			questionId: questions.length + 1,
+			imageA: imagesData[idA],
+			imageB: imagesData[idB],
+		});
 	}
+	/*----------------------------------------------------------------------------*/
+	// const pairs = new Set();
+	// const questions = [];
+	// const totalImages = imagesData.length;
+
+	// while (
+	// 	questions.length < nbQuestions &&
+	// 	pairs.size < (totalImages * (totalImages - 1)) / 2
+	// ) {
+	// 	const idImageA = Math.floor(Math.random() * totalImages);
+	// 	let idImageB = Math.floor(Math.random() * totalImages);
+
+	// 	while (idImageB === idImageA) {
+	// 		idImageB = Math.floor(Math.random() * totalImages);
+	// 	}
+
+	// 	const key =
+	// 		idImageA < idImageB
+	// 			? `${idImageA}-${idImageB}`
+	// 			: `${idImageB}-${idImageA}`;
+
+	// 	if (!pairs.has(key) && (pairs.has(`${idImageA}`) && pairs.has(`${idImageB}`))) {
+	// 		console.log(key);
+	// 		pairs.add(key);
+	// 		questions.push({
+	// 			questionId: questions.length + 1,
+	// 			imageA: imagesData[idImageA],
+	// 			imageB: imagesData[idImageB],
+	// 		});
+	// 	}
+	// }
 	return questions;
 }
 
