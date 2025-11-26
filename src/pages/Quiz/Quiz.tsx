@@ -163,7 +163,7 @@ export default function Quiz() {
 							<div className="header-section-center">
 								<h1 className="primary-title ">
 									Laisse ton humeur
-									<span className="body-text-blue">te guider</span>
+									<span className="body-text-blue"> te guider</span>
 									<br />
 									vers le bon film
 								</h1>
@@ -184,6 +184,7 @@ export default function Quiz() {
 										key={currentQuestion.imageA.id}
 									/>
 								</div>
+								
 								<div className="image-container">
 									<img
 										src={`/quizImages/${currentQuestion.imageB.id}.jpg`}
@@ -195,6 +196,7 @@ export default function Quiz() {
 									/>
 								</div>
 							</article>
+
 							<div className="progress-bar-container">
 								<ProgressBar
 									height="20px"
