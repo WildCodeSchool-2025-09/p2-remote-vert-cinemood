@@ -17,58 +17,28 @@ function createImageQuestions(imagesData, nbQuestions) {
 	const totalImages = imagesData.length;
 
 	while (questions.length < nbQuestions) {
-		let idA = Math.floor(Math.random() * totalImages);
+		let idImageA = Math.floor(Math.random() * totalImages);
 
-		while (usedImages.has(idA)) {
-			idA = Math.floor(Math.random() * totalImages);
+		while (usedImages.has(idImageA)) {
+			idImageA = Math.floor(Math.random() * totalImages);
 		}
 
-		let idB = Math.floor(Math.random() * totalImages);
+		let idImageB = Math.floor(Math.random() * totalImages);
 
-		while (idB === idA || usedImages.has(idB)) {
-			idB = Math.floor(Math.random() * totalImages);
+		while (idImageB === idImageA || usedImages.has(idImageB)) {
+			idImageB = Math.floor(Math.random() * totalImages);
 		}
 
-		usedImages.add(idA);
-		usedImages.add(idB);
-		/*console.log(questions.id);*/
+		usedImages.add(idImageA);
+		usedImages.add(idImageB);
+
 		questions.push({
 			questionId: questions.length + 1,
-			imageA: imagesData[idA],
-			imageB: imagesData[idB],
+			imageA: imagesData[idImageA],
+			imageB: imagesData[idImageB],
 		});
 	}
-	/*----------------------------------------------------------------------------*/
-	// const pairs = new Set();
-	// const questions = [];
-	// const totalImages = imagesData.length;
 
-	// while (
-	// 	questions.length < nbQuestions &&
-	// 	pairs.size < (totalImages * (totalImages - 1)) / 2
-	// ) {
-	// 	const idImageA = Math.floor(Math.random() * totalImages);
-	// 	let idImageB = Math.floor(Math.random() * totalImages);
-
-	// 	while (idImageB === idImageA) {
-	// 		idImageB = Math.floor(Math.random() * totalImages);
-	// 	}
-
-	// 	const key =
-	// 		idImageA < idImageB
-	// 			? `${idImageA}-${idImageB}`
-	// 			: `${idImageB}-${idImageA}`;
-
-	// 	if (!pairs.has(key) && (pairs.has(`${idImageA}`) && pairs.has(`${idImageB}`))) {
-	// 		console.log(key);
-	// 		pairs.add(key);
-	// 		questions.push({
-	// 			questionId: questions.length + 1,
-	// 			imageA: imagesData[idImageA],
-	// 			imageB: imagesData[idImageB],
-	// 		});
-	// 	}
-	// }
 	return questions;
 }
 
@@ -109,7 +79,7 @@ export default function Quiz() {
 	function selectGenres(genresArray) {
 		setGenreSelection((prev) => [...prev, ...genresArray]);
 		if (questionNumber + 1 < imageQuestions.length) {
-			setQuestionNumber((q) => q + 1);
+			setQuestionNumber((question) => question + 1);
 		}
 	}
 
@@ -127,6 +97,7 @@ export default function Quiz() {
 		for (const genre in countGenre) {
 			if (countGenre[genre] > maxCount) maxCount = countGenre[genre];
 		}
+
 		for (const genre in countGenre) {
 			if (countGenre[genre] >= maxCount - 1) result.push(genre);
 		}
@@ -183,8 +154,6 @@ export default function Quiz() {
 								color="#05a6d6"
 								dense
 								size="medium"
-								text=""
-								textColor=""
 							/>
 						</div>
 					</>
@@ -193,7 +162,7 @@ export default function Quiz() {
 						<section className="quiz-container">
 							<div className="header-section-center">
 								<h1 className="primary-title ">
-									Laisse ton humeur{" "}
+									Laisse ton humeur
 									<span className="body-text-blue">te guider</span>
 									<br />
 									vers le bon film
@@ -233,7 +202,7 @@ export default function Quiz() {
 									percent={questionNumber * 4}
 								>
 									<Step transition="scale">
-										{({ accomplished, index }) => (
+										{({ accomplished }) => (
 											<div
 												className={`transitionStep ${accomplished ? "accomplished" : null}`}
 											>
@@ -242,7 +211,7 @@ export default function Quiz() {
 										)}
 									</Step>
 									<Step transition="scale">
-										{({ accomplished, index }) => (
+										{({ accomplished }) => (
 											<div
 												className={`transitionStep ${accomplished ? "accomplished" : null}`}
 											>
@@ -251,7 +220,7 @@ export default function Quiz() {
 										)}
 									</Step>
 									<Step transition="scale">
-										{({ accomplished, index }) => (
+										{({ accomplished }) => (
 											<div
 												className={`transitionStep ${accomplished ? "accomplished" : null}`}
 											>
@@ -260,7 +229,7 @@ export default function Quiz() {
 										)}
 									</Step>
 									<Step transition="scale">
-										{({ accomplished, index }) => (
+										{({ accomplished }) => (
 											<div
 												className={`transitionStep ${accomplished ? "accomplished" : null}`}
 											>
@@ -314,8 +283,6 @@ export default function Quiz() {
 										color="#05a6d6"
 										dense
 										size="medium"
-										text=""
-										textColor=""
 									/>
 								</div>
 							)}

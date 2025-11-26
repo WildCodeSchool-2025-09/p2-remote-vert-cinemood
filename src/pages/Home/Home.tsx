@@ -41,7 +41,11 @@ function Home() {
 					>
 						Lance le quiz
 					</Link>
-					<Link to="/quiz" className="primary-button btn-empty">
+					<Link
+						to="/quiz"
+						className="primary-button btn-empty"
+						onClick={() => setLaunch(false)}
+					>
 						En savoir plus
 					</Link>
 				</div>
@@ -65,6 +69,14 @@ function Home() {
 							/>
 						</div>
 					)}
+				</section>
+
+				<section className="header-section-center random-section">
+					<h2 className="secondary-title">Laisse la chance décider !</h2>
+					<p className="body-text">
+						Reçois une recommandation tirée au sort rien que pour toi.
+					</p>
+					<button className="primary-button">Surprends-moi</button>
 				</section>
 			</div>
 		</>

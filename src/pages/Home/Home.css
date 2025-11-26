@@ -37,14 +37,7 @@
 	text-align: center;
 }
 
-.dot {
-	width: 10px;
-	height: 10px;
-	border-radius: 50%;
-	margin: 0 5px;
-	border: none;
-	background: transparent;
-	opacity: 0.4;
-	cursor: pointer;
-	transition: opacity 0.2s, background-color 0.2s;
-}
+/* .random-section {
+	background: linear-gradient(to bottom, #88289a, #f8f9fb);
+	border: 2px solid red;
+} */
