@@ -66,6 +66,10 @@
 	line-height: 1;
 }
 
+.blue-button{
+	background-color: var(--light-blue);
+}
+
 .primary-button:hover {
 	background: linear-gradient(90deg, var(--light-blue), var(--light-purple));
 	background-size: 200% 200%;

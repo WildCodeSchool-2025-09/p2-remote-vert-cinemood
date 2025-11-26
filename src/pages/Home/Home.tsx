@@ -10,6 +10,15 @@ function Home() {
 	const [popularMovies, setPopularMovies] = useState([]);
 	const { setLaunch } = useLaunch();
 
+	const representativeMovies = [
+	{ genre: "Action", id: 76341 },    
+	{ genre: "Drama", id: 157336, },        
+	{ genre: "Thriller", id: 27205 },    
+	{ genre: "Familial", id: 552524 },  
+	];
+
+	const [genreImages, setGenreImages] = useState({});
+
 	useEffect(() => {
 		fetch(`${import.meta.env.VITE_TMDB_API_URL}movie/popular?page=1`, {
 			headers: {
@@ -21,7 +30,24 @@ function Home() {
 			.then((popularMovies) => {
 				setPopularMovies(popularMovies.results);
 			});
+		
+		representativeMovies.map(({ genre, id }) => {
+			fetch(`${import.meta.env.VITE_TMDB_API_URL}movie/${id}`, {
+			headers: {
+				Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
+			},
+			})
+			.then((res) => res.json())
+			.then((movie) => {
+				setGenreImages((previousRepMovies) => ({
+				...previousRepMovies,
+				[genre]: `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`
+				}));
+			});
+		})
+
 	}, []);
+
 
 	return (
 		<>
@@ -72,11 +98,34 @@ function Home() {
 				</section>
 
 				<section className="header-section-center random-section">
-					<h2 className="secondary-title">Laisse la chance décider !</h2>
+					<h2 className="primary-title">Laisse la chance décider</h2>
 					<p className="body-text">
 						Reçois une recommandation tirée au sort rien que pour toi.
 					</p>
-					<button className="primary-button">Surprends-moi</button>
+					<Link
+						to="/recommandations"
+						className="primary-button blue-button"
+					>
+						Surprends-moi
+					</Link>
+				</section>
+
+				<section className="header-section-center home-genres-section">
+					<h2 className="secondary-title">Popular Genres</h2>
+					{/* <button type="button" className="primary-button">Voir tout</button> */}
+					
+					<div className="catalog-preview-container">
+						{representativeMovies.map(({ genre }) => (
+							<div className="catalog-preview">
+								<img key={genre} src={genreImages[genre]} alt={genre} />
+								{console.log(genreImages[genre])}
+								{/* <div>
+									<p className="body-text">{genreImages[genre]}</p>
+								</div> */}
+							</div>
+						))}
+					</div>
+		
 				</section>
 			</div>
 		</>
