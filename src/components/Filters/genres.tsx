@@ -5,8 +5,8 @@ function GenreButton({ genre, movies, setFilteredMovies, setIsOpen }) {
 	const [open, setOpen] = useState(false);
 	const [yearOpen, setYearOpen] = useState(false);
 	const [combainedGenres, setCombainedGenres] = useState([]);
-	const [minYear, setMinYear] = useState(null);
-	const [maxYear, setMaxYear] = useState(null);
+	const [minYear, setMinYear] = useState(1950);
+	const [maxYear, setMaxYear] = useState(2025);
 
 	const selectGenre = (g) => {
 		let update = [];
@@ -30,15 +30,18 @@ function GenreButton({ genre, movies, setFilteredMovies, setIsOpen }) {
 	};
 
 	const handleYearChange = (min, max) => {
+		setIsOpen(true);
 		setMinYear(min);
 		setMaxYear(max);
-		setIsOpen(true);
+
+		const minNum = min ? Number(min) : null;
+		const maxNum = max ? Number(max) : null;
 
 		const filtered = movies.filter((movie) => {
 			const year = Number(movie.release_date.slice(0, 4));
 
-			if (min < year) return false;
-			if (year > max) return false;
+			if (minNum != null && year < minNum) return false;
+			if (maxNum != null && year > maxNum) return false;
 
 			return true;
 		});
@@ -81,7 +84,7 @@ function GenreButton({ genre, movies, setFilteredMovies, setIsOpen }) {
 					<div className={`year-content ${yearOpen ? "show-year" : ""}`}>
 						<input
 							type="number"
-							placeholder="Min"
+							value={minYear}
 							min={1950}
 							max={2025}
 							className="year-input"
@@ -89,12 +92,24 @@ function GenreButton({ genre, movies, setFilteredMovies, setIsOpen }) {
 						/>
 						<input
 							type="number"
-							placeholder="Max"
+							value={maxYear}
 							min={1950}
 							max={2025}
 							className="year-input"
 							onChange={(e) => handleYearChange(minYear, e.target.value)}
 						/>
+						<button
+							className="year-input"
+							type="button"
+							onClick={() => {
+								setCombainedGenres([]);
+								setFilteredMovies(movies);
+								setMinYear(1950);
+								setMaxYear(2025);
+							}}
+						>
+							Rafraîchir
+						</button>
 					</div>
 				</div>
 				<div>
