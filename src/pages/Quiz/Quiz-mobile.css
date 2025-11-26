@@ -21,8 +21,10 @@
 
 @media (max-width: 480px) {
 	.quiz-hero {
-		width: 100%;
+		width: 80%;
+		padding: 5rem 0;
 	}
+
 	.quiz-container h1 {
 		font-size: 1.5rem;
 	}
