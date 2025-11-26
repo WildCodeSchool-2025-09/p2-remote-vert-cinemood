@@ -100,7 +100,7 @@ function Home() {
 				<section className="header-section-center random-section">
 					<h2 className="primary-title">Laisse la chance décider</h2>
 					<p className="body-text">
-						Reçois une recommandation tirée au sort rien que pour toi.
+						Reçois une recommandation tirée au sort rien que pour toi
 					</p>
 					<Link
 						to="/recommandations"
@@ -117,15 +117,17 @@ function Home() {
 					<div className="catalog-preview-container">
 						{representativeMovies.map(({ genre }) => (
 
-							// <Link to="/catalogue">
+							
 							<div className="catalog-preview">
+								<Link to="/catalogue">
 								<img key={genre} src={genreImages[genre]} alt={genre} />
 							
 								<div>
 									<p className="primary-button show-genre">{genre}</p>
-								</div>
+								</div>		
+								</Link>
 							</div>
-							// </Link>
+					
 
 						))}
 					</div>
