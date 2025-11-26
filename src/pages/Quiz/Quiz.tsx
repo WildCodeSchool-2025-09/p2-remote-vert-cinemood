@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import { ProgressBar, Step } from "react-step-progress-bar";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import HowItWorks from "../../components/HowItWorks/HowItWorks";
+import { useLaunch } from "../../context/LaunchQuiz";
 import { useQuiz } from "../../context/QuizContext";
 import quizPicturesData from "./QuizPicturesData";
 
@@ -40,7 +41,7 @@ function createImageQuestions(imagesData, nbQuestions) {
 }
 
 export default function Quiz() {
-	const [quizStarted, setQuizStarted] = useState(false);
+	const { launch, setLaunch } = useLaunch();
 	const [popularMovies, setPopularMovies] = useState([]);
 	const { setQuizAnswers } = useQuiz();
 	const [questionNumber, setQuestionNumber] = useState(0);
@@ -55,10 +56,11 @@ export default function Quiz() {
 	const currentQuestion = imageQuestions[questionNumber];
 
 	useEffect(() => {
-		if (quizStarted && questionNumber === 26) {
+		if (launch && questionNumber === 26) {
 			setQuizEnded(true);
+			setLaunch(false);
 		}
-	}, [quizStarted, questionNumber]);
+	}, [launch, questionNumber, setLaunch]);
 
 	useEffect(() => {
 		if (!quizEnded) return;
@@ -137,118 +139,108 @@ export default function Quiz() {
 	return (
 		<>
 			<div className="quiz-bg">
-				{quizStarted ? (
-					quizEnded ? (
-						<>
-							<div className="page-analyse">
-								<p className="primary-title">
-									Nous <span className="gradient-text">analysons </span> <br />
-									tes résultats...
+				{quizEnded ? (
+					<>
+						<div className="page-analyse">
+							<p className="primary-title">
+								Nous <span className="gradient-text">analysons </span> <br />
+								tes résultats...
+							</p>
+							<OrbitProgress
+								variant="track-disc"
+								color="#05a6d6"
+								dense
+								size="medium"
+								text=""
+								textColor=""
+							/>
+						</div>
+					</>
+				) : launch ? (
+					<>
+						<section className="quiz-container">
+							<div className="header-section-center">
+								<h1 className="primary-title ">
+									Laisse ton humeur{" "}
+									<span className="body-text-blue">te guider</span>
+									<br />
+									vers le bon film
+								</h1>
+								<p className="body-text quiz-consignes">
+									<span className="body-text-bold"> Sans réfléchir</span>,
+									clique aussi vite que possible sur l'image que tu préfères sur
+									le moment.
 								</p>
-								<OrbitProgress
-									variant="track-disc"
-									color="#05a6d6"
-									dense
-									size="medium"
-									text=""
-									textColor=""
-								/>
 							</div>
-						</>
-					) : (
-						<>
-							<section className="quiz-container">
-								<div className="header-section-center">
-									<h1 className="primary-title ">
-										Laisse ton humeur{" "}
-										<span className="body-text-blue">te guider</span>
-										<br />
-										vers le bon film
-									</h1>
-									<p className="body-text quiz-consignes">
-										<span className="body-text-bold"> Sans réfléchir</span>,
-										clique aussi vite que possible sur l'image que tu préfères
-										sur le moment.
-									</p>
+							<article className="question-container">
+								<div className="image-container">
+									<img
+										src={`/quizImages/${currentQuestion.imageA.id}.jpg`}
+										alt={`${currentQuestion.imageA.description}`}
+										className="quiz-images"
+										onClick={() => selectGenres(currentQuestion.imageA.genres)}
+										onKeyUp={() => selectGenres(currentQuestion.imageA.genres)}
+										key={currentQuestion.imageA.id}
+									/>
 								</div>
-								<article className="question-container">
-									<div className="image-container">
-										<img
-											src={`/quizImages/${currentQuestion.imageA.id}.jpg`}
-											alt={`${currentQuestion.imageA.description}`}
-											className="quiz-images"
-											onClick={() =>
-												selectGenres(currentQuestion.imageA.genres)
-											}
-											onKeyUp={() =>
-												selectGenres(currentQuestion.imageA.genres)
-											}
-											key={currentQuestion.imageA.id}
-										/>
-									</div>
-									<div className="image-container">
-										<img
-											src={`/quizImages/${currentQuestion.imageB.id}.jpg`}
-											alt={`${currentQuestion.imageB.description}`}
-											className="quiz-images"
-											onClick={() =>
-												selectGenres(currentQuestion.imageB.genres)
-											}
-											onKeyUp={() =>
-												selectGenres(currentQuestion.imageB.genres)
-											}
-											key={currentQuestion.imageB.id}
-										/>
-									</div>
-								</article>
-								<div className="progress-bar-container">
-									<ProgressBar
-										height="20px"
-										filledBackground="linear-gradient(to right, red, #49fd31ff)"
-										percent={questionNumber * 4}
-									>
-										<Step transition="scale">
-											{({ accomplished, index }) => (
-												<div
-													className={`transitionStep ${accomplished ? "accomplished" : null}`}
-												>
-													🎞️
-												</div>
-											)}
-										</Step>
-										<Step transition="scale">
-											{({ accomplished, index }) => (
-												<div
-													className={`transitionStep ${accomplished ? "accomplished" : null}`}
-												>
-													🍿
-												</div>
-											)}
-										</Step>
-										<Step transition="scale">
-											{({ accomplished, index }) => (
-												<div
-													className={`transitionStep ${accomplished ? "accomplished" : null}`}
-												>
-													🎬
-												</div>
-											)}
-										</Step>
-										<Step transition="scale">
-											{({ accomplished, index }) => (
-												<div
-													className={`transitionStep ${accomplished ? "accomplished" : null}`}
-												>
-													🏆
-												</div>
-											)}
-										</Step>
-									</ProgressBar>
+								<div className="image-container">
+									<img
+										src={`/quizImages/${currentQuestion.imageB.id}.jpg`}
+										alt={`${currentQuestion.imageB.description}`}
+										className="quiz-images"
+										onClick={() => selectGenres(currentQuestion.imageB.genres)}
+										onKeyUp={() => selectGenres(currentQuestion.imageB.genres)}
+										key={currentQuestion.imageB.id}
+									/>
 								</div>
-								<p className="body-text quiz-consignes">{encouragements}</p>
-							</section>
-						</>
-					)
+							</article>
+							<div className="progress-bar-container">
+								<ProgressBar
+									height="20px"
+									filledBackground="linear-gradient(to right, red, #49fd31ff)"
+									percent={questionNumber * 4}
+								>
+									<Step transition="scale">
+										{({ accomplished, index }) => (
+											<div
+												className={`transitionStep ${accomplished ? "accomplished" : null}`}
+											>
+												🎞️
+											</div>
+										)}
+									</Step>
+									<Step transition="scale">
+										{({ accomplished, index }) => (
+											<div
+												className={`transitionStep ${accomplished ? "accomplished" : null}`}
+											>
+												🍿
+											</div>
+										)}
+									</Step>
+									<Step transition="scale">
+										{({ accomplished, index }) => (
+											<div
+												className={`transitionStep ${accomplished ? "accomplished" : null}`}
+											>
+												🎬
+											</div>
+										)}
+									</Step>
+									<Step transition="scale">
+										{({ accomplished, index }) => (
+											<div
+												className={`transitionStep ${accomplished ? "accomplished" : null}`}
+											>
+												🏆
+											</div>
+										)}
+									</Step>
+								</ProgressBar>
+							</div>
+							<p className="body-text quiz-consignes">{encouragements}</p>
+						</section>
+					</>
 				) : (
 					<>
 						<section className="header-section-center quiz-hero">
@@ -265,7 +257,7 @@ export default function Quiz() {
 								type="button"
 								className="primary-button"
 								onClick={() => {
-									setQuizStarted(true);
+									setLaunch(true);
 								}}
 							>
 								Lance le quiz

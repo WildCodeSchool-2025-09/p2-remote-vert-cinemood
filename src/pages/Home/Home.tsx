@@ -1,12 +1,14 @@
 import "./Home.css";
 import "./Home-mobile.css";
 import { useEffect, useState } from "react";
+import { OrbitProgress } from "react-loading-indicators";
 import { Link } from "react-router";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
-import { OrbitProgress } from "react-loading-indicators";
+import { useLaunch } from "../../context/LaunchQuiz";
 
 function Home() {
 	const [popularMovies, setPopularMovies] = useState([]);
+	const { setLaunch } = useLaunch();
 
 	useEffect(() => {
 		fetch(`${import.meta.env.VITE_TMDB_API_URL}movie/popular?page=1`, {
@@ -32,11 +34,15 @@ function Home() {
 					personnalisées qui correspondent à ton humeur du moment.
 				</p>
 				<div className="buttons-container">
-					<Link to="/quiz" className="primary-button">
-						En savoir plus
+					<Link
+						to="/quiz"
+						className="primary-button"
+						onClick={() => setLaunch(true)}
+					>
+						Lance le quiz
 					</Link>
-					<Link to="/recommandations" className="primary-button btn-empty">
-						Film au hasard
+					<Link to="/quiz" className="primary-button btn-empty">
+						En savoir plus
 					</Link>
 				</div>
 			</header>
