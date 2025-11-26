@@ -10,7 +10,7 @@ import {
 } from "../../api";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import { SearchbarContext } from "../../components/Context/SearchBarContexts";
-import GenreButton from "../../components/Filters/genres";
+import Filters from "../../components/Filters/Filters";
 import MoviesSearchedModal from "../../components/MoviesSearchedModal/MoviesSearchedModal";
 
 function Catalog() {
@@ -57,7 +57,7 @@ function Catalog() {
 				<div className="cover-overly" />
 			</div>
 
-			<GenreButton
+			<Filters
 				genre={genre}
 				movies={allMovies}
 				setFilteredMovies={setFilteredMovies}

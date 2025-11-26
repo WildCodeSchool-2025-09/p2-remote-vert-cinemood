@@ -1,7 +1,7 @@
-import { useState } from "react";
-import "./genres.css";
+import { useState, useEffect } from "react";
+import "./Filters.css";
 
-function GenreButton({ genre, movies, setFilteredMovies, setIsOpen }) {
+function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 	const [open, setOpen] = useState(false);
 	const [yearOpen, setYearOpen] = useState(false);
 	const [combainedGenres, setCombainedGenres] = useState([]);
@@ -17,37 +17,34 @@ function GenreButton({ genre, movies, setFilteredMovies, setIsOpen }) {
 		}
 
 		setCombainedGenres(update);
-
-		const filtered =
-			update.length === 0
-				? movies
-				: movies.filter((movie) =>
-						update.every((id) => movie.genre_ids.includes(id)),
-					);
-
-		setFilteredMovies(filtered);
-		setIsOpen(true);
 	};
 
 	const handleYearChange = (min, max) => {
-		setIsOpen(true);
-		setMinYear(min);
-		setMaxYear(max);
+		setMinYear(min ? Number(min) : null);
+		setMaxYear(max ? Number(max) : null);
+	};
 
-		const minNum = min ? Number(min) : null;
-		const maxNum = max ? Number(max) : null;
+	useEffect(() => {
+		let results = [...movies];
 
-		const filtered = movies.filter((movie) => {
+		if (combainedGenres.length > 0) {
+			results = results.filter((movie) =>
+				combainedGenres.every((id) => movie.genre_ids.includes(id)),
+			);
+		}
+
+		results = results.filter((movie) => {
 			const year = Number(movie.release_date.slice(0, 4));
 
-			if (minNum != null && year < minNum) return false;
-			if (maxNum != null && year > maxNum) return false;
+			if (minYear != null && year < minYear) return false;
+			if (maxYear != null && year > maxYear) return false;
 
 			return true;
 		});
 
-		setFilteredMovies(filtered);
-	};
+		setFilteredMovies(results);
+		setIsOpen(true);
+	}, [combainedGenres, minYear, maxYear]);
 
 	return (
 		<>
@@ -102,8 +99,6 @@ function GenreButton({ genre, movies, setFilteredMovies, setIsOpen }) {
 							className="year-input"
 							type="button"
 							onClick={() => {
-								setCombainedGenres([]);
-								setFilteredMovies(movies);
 								setMinYear(1950);
 								setMaxYear(2025);
 							}}
@@ -121,6 +116,8 @@ function GenreButton({ genre, movies, setFilteredMovies, setIsOpen }) {
 							setCombainedGenres([]);
 							setFilteredMovies(movies);
 							setIsOpen(true);
+							setMinYear(1950);
+							setMaxYear(2025);
 						}}
 					>
 						Refresh
@@ -148,4 +145,4 @@ function GenreButton({ genre, movies, setFilteredMovies, setIsOpen }) {
 	);
 }
 
-export default GenreButton;
+export default Filters;
