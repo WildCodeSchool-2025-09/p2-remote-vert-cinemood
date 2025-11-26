@@ -13,6 +13,17 @@
 	.width-title-section {
 		width: 70%;
 	}
+
+	.catalog-preview-container{
+	flex-wrap: wrap;
+	}
+
+	.catalog-preview{
+		width: 45%;
+	}
+
+
+
 }
 
 @media (max-width: 480px) {
@@ -31,9 +42,34 @@
 		flex-direction: column;
 		gap: 1rem;
 	}
+
+	#selection-de-la-semaine {
+		padding: 3rem 0;
+	}
+	
 	.home-secondary-title {
 		width: 50%;
 		margin: 0 auto;
 		padding: 1rem 0;
+	}
+
+	.random-section {
+  		height: 250px;
+		padding: 0 2rem;
+	}
+
+	.home-genres-section{
+		padding: 3rem 0;
+	}
+
+	.catalog-preview-container{
+		gap: 1rem;
+		width: 100%;
+		padding: 1rem 0;
+	}
+
+	.catalog-preview{
+		max-width: 50%;
+		height: 100px;
 	}
 }
