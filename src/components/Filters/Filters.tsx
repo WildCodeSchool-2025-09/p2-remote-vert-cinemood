@@ -7,6 +7,11 @@ function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 	const [combainedGenres, setCombainedGenres] = useState([]);
 	const [minYear, setMinYear] = useState(1950);
 	const [maxYear, setMaxYear] = useState(2025);
+	const [ratingOpen, setRatingOpen] = useState(false);
+	const [minRating, setMinRating] = useState(1);
+	const [maxRating, setMaxRating] = useState(10);
+
+	console.log(movies);
 
 	const selectGenre = (g) => {
 		let update = [];
@@ -24,6 +29,11 @@ function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 		setMaxYear(max ? Number(max) : null);
 	};
 
+	const handleRatingChange = (min, max) => {
+		setMinRating(min ? Number(min) : null);
+		setMaxRating(max ? Number(max) : null);
+	};
+
 	useEffect(() => {
 		let results = [...movies];
 
@@ -34,17 +44,22 @@ function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 		}
 
 		results = results.filter((movie) => {
-			const year = Number(movie.release_date.slice(0, 4));
+			const rating = Number(movie.vote_average);
+			if (minRating != null && rating < minRating) return false;
+			if (maxRating != null && rating > maxRating) return false;
+			return true;
+		});
 
+		results = results.filter((movie) => {
+			const year = Number(movie.release_date.slice(0, 4));
 			if (minYear != null && year < minYear) return false;
 			if (maxYear != null && year > maxYear) return false;
-
 			return true;
 		});
 
 		setFilteredMovies(results);
 		setIsOpen(true);
-	}, [combainedGenres, minYear, maxYear]);
+	}, [combainedGenres, minYear, maxYear, minRating, maxRating]);
 
 	return (
 		<>
@@ -107,6 +122,45 @@ function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 						</button>
 					</div>
 				</div>
+
+				<div className="dropdown" onMouseLeave={() => setRatingOpen(false)}>
+					<button
+						className="dropdown-btn"
+						type="button"
+						onMouseEnter={() => setRatingOpen(true)}
+					>
+						Rating
+					</button>
+					<div className={`rating-content ${ratingOpen ? "show-rating" : ""}`}>
+						<input
+							type="number"
+							value={minRating}
+							min={1}
+							max={10}
+							className="rating-input"
+							onChange={(e) => handleRatingChange(e.target.value, maxRating)}
+						/>
+						<input
+							type="number"
+							value={maxRating}
+							min={1}
+							max={10}
+							className="rating-input"
+							onChange={(e) => handleRatingChange(minRating, e.target.value)}
+						/>
+						<button
+							className="rating-input"
+							type="button"
+							onClick={() => {
+								setMinRating(1);
+								setMaxRating(10);
+							}}
+						>
+							Rafraîchir
+						</button>
+					</div>
+				</div>
+
 				<div>
 					<button
 						className="dropdown-btn"
