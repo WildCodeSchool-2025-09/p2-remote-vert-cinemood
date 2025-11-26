@@ -12,7 +12,7 @@ function Home() {
 
 	const representativeMovies = [
 	{ genre: "Action", id: 76341 },    
-	{ genre: "Drama", id: 157336, },        
+	{ genre: "Science-fiction", id: 157336, },        
 	{ genre: "Thriller", id: 27205 },    
 	{ genre: "Familial", id: 552524 },  
 	];
@@ -111,18 +111,22 @@ function Home() {
 				</section>
 
 				<section className="header-section-center home-genres-section">
-					<h2 className="secondary-title">Popular Genres</h2>
+					<h2 className="secondary-title">Catégories populaires</h2>
 					{/* <button type="button" className="primary-button">Voir tout</button> */}
 					
 					<div className="catalog-preview-container">
 						{representativeMovies.map(({ genre }) => (
+
+							// <Link to="/catalogue">
 							<div className="catalog-preview">
 								<img key={genre} src={genreImages[genre]} alt={genre} />
-								{console.log(genreImages[genre])}
-								{/* <div>
-									<p className="body-text">{genreImages[genre]}</p>
-								</div> */}
+							
+								<div>
+									<p className="primary-button show-genre">{genre}</p>
+								</div>
 							</div>
+							// </Link>
+
 						))}
 					</div>
 		
