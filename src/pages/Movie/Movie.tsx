@@ -2,7 +2,7 @@ import "./Movie.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import { useFavoritesMovies } from "../../Contexts/TagFavoriteContext";
+import { useFavoriteMovies } from "../../Contexts/FavoriteMovieContext";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import type { MovieData } from "../../types/MovieType";
 import avatar from "./../../assets/images/avatar-utilisateur.jpg";
@@ -56,7 +56,7 @@ function Movie() {
 	const [hoverNote, setHoverNote] = useState(0); // note au survol
 	const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 	const apiUrl = import.meta.env.VITE_TMDB_API_URL;
-	const { TagFavorite, setTagFavorite } = useFavoritesMovies();
+	const { FavoriteMovies, setFavoriteMovies } = useFavoriteMovies();
 	const handleTrailerClick = () => setShowTrailer((prev) => !prev);
 
 	useEffect(() => {
@@ -257,10 +257,10 @@ function Movie() {
 		setPseudo("");
 	}
 
-	function OnOffTagFavorite() {
+	function OnOffFavoriteMovies() {
 		if (!movie) return;
 
-		setTagFavorite((prev) => {
+		setFavoriteMovies((prev) => {
 			const exists = prev.some((fav) => fav.id === movie.id);
 
 			if (exists) {
@@ -270,7 +270,7 @@ function Movie() {
 		});
 	}
 
-	const isFavorite = TagFavorite.some((fav) => fav.id === movie.id);
+	const isFavorite = FavoriteMovies.some((fav) => fav.id === movie.id);
 	function resizeImage({ url, width, height }: ResizeParams): Promise<string> {
 		return new Promise((resolve, reject) => {
 			const img = new Image();
@@ -342,10 +342,10 @@ function Movie() {
 						<i
 							className={`bi bi-suit-heart ${isFavorite ? "heart-favorite" : ""}`}
 							id="tag"
-							onClick={OnOffTagFavorite}
+							onClick={OnOffFavoriteMovies}
 							onKeyDown={(e) => {
 								if (e.key === "Enter" || e.key === " ") {
-									OnOffTagFavorite();
+									OnOffFavoriteMovies();
 								}
 							}}
 							role="button"

@@ -3,18 +3,18 @@ import { RouterProvider } from "react-router";
 import router from "./router";
 import "./css/reset.css";
 import "./css/variables.css";
-import TagFavoriteProvider from "./Contexts/TagFavoriteContext";
+import FavoriteMoviesProvider from "./Contexts/FavoriteMovieContext";
 import QuizProvider from "./context/QuizContext";
 
 const rootElement = document.getElementById("root");
 
 if (rootElement != null) {
 	ReactDOM.createRoot(rootElement).render(
-		<TagFavoriteProvider>
+		<FavoriteMoviesProvider>
 			<QuizProvider>
 				<RouterProvider router={router} />
 			</QuizProvider>
 			,
-		</TagFavoriteProvider>,
+		</FavoriteMoviesProvider>,
 	);
 }
