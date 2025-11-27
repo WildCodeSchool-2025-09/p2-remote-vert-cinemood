@@ -5,7 +5,6 @@
 	border: none;
 	font-size: 0.1rem;
 	outline: none;
-	/* transition: background 0.25s ease, box-shadow 0.25s ease; */
 }
 
 search-input::placeholder {
@@ -27,4 +26,37 @@ search-input::placeholder {
 
 .search-btn:active {
 	transform: scale(0.97);
+}
+
+.movieprop-dropdown {
+	position: absolute;
+	display: none;
+	background: white;
+	max-height: 200px;
+	overflow-y: auto;
+	width: 100%;
+	z-index: 10;
+	padding: 5px;
+}
+
+.show-prop {
+	display: grid;
+	justify-items: start;
+}
+
+.prop-text {
+	background: none;
+	outline: none;
+	font: inherit;
+	color: #333;
+	text-align: left;
+	cursor: pointer;
+	display: block;
+	padding: 10px 14px;
+	width: 100%;
+}
+
+.prop-text:hover {
+	font-size: 1.1rem;
+	color: #393232;
 }

@@ -10,3 +10,8 @@
 	gap: 20px;
 	padding-top: 20px;
 }
+
+.resurch-no-results {
+	position: absolute;
+	top: 50%;
+}

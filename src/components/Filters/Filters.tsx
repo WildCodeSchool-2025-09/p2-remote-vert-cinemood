@@ -8,10 +8,7 @@ function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 	const [minYear, setMinYear] = useState(1950);
 	const [maxYear, setMaxYear] = useState(2025);
 	const [ratingOpen, setRatingOpen] = useState(false);
-	const [minRating, setMinRating] = useState(1);
-	const [maxRating, setMaxRating] = useState(10);
-
-	console.log(movies);
+	const [rating, setRating] = useState(null);
 
 	const selectGenre = (g) => {
 		let update = [];
@@ -29,11 +26,6 @@ function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 		setMaxYear(max ? Number(max) : null);
 	};
 
-	const handleRatingChange = (min, max) => {
-		setMinRating(min ? Number(min) : null);
-		setMaxRating(max ? Number(max) : null);
-	};
-
 	useEffect(() => {
 		let results = [...movies];
 
@@ -44,9 +36,8 @@ function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 		}
 
 		results = results.filter((movie) => {
-			const rating = Number(movie.vote_average);
-			if (minRating != null && rating < minRating) return false;
-			if (maxRating != null && rating > maxRating) return false;
+			const movieRating = Number(movie.vote_average);
+			if (movieRating != null && rating >= movieRating) return false;
 			return true;
 		});
 
@@ -59,7 +50,7 @@ function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 
 		setFilteredMovies(results);
 		setIsOpen(true);
-	}, [combainedGenres, minYear, maxYear, minRating, maxRating]);
+	}, [combainedGenres, minYear, maxYear, rating]);
 
 	return (
 		<>
@@ -134,30 +125,21 @@ function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 					<div className={`rating-content ${ratingOpen ? "show-rating" : ""}`}>
 						<input
 							type="number"
-							value={minRating}
+							value={rating}
 							min={1}
 							max={10}
 							className="rating-input"
-							onChange={(e) => handleRatingChange(e.target.value, maxRating)}
+							onChange={(e) => setRating(Number(e.target.value))}
 						/>
-						<input
-							type="number"
-							value={maxRating}
-							min={1}
-							max={10}
-							className="rating-input"
-							onChange={(e) => handleRatingChange(minRating, e.target.value)}
-						/>
-						<button
+						{/* <button
 							className="rating-input"
 							type="button"
 							onClick={() => {
-								setMinRating(1);
-								setMaxRating(10);
+								setRating(7)
 							}}
 						>
 							Rafraîchir
-						</button>
+						</button> */}
 					</div>
 				</div>
 
@@ -172,6 +154,7 @@ function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 							setIsOpen(true);
 							setMinYear(1950);
 							setMaxYear(2025);
+							setRating(null);
 						}}
 					>
 						Refresh

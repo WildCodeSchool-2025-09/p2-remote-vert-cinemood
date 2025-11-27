@@ -9,7 +9,9 @@ function MoviesSearchedModal({ filteredMovies }) {
 					<MovieCard key={movie.id} movie={movie} />
 				))
 			) : (
-				<h1>Empty</h1>
+				<h1 className="secondary-title resurch-no-results">
+					Aucun résultat n'a été trouvé pour votre recherche.
+				</h1>
 			)}
 		</div>
 	);
