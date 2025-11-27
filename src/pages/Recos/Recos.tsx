@@ -80,12 +80,6 @@ export default function Recos() {
 				{quizTaken ? (
 					<>
 						<div className="link-center-container">
-							<p className="body-text">
-								Pas tout à fait ce que tu ressens ? <br />
-								Clique sur plus d'images pour obtenir des résultats qui
-								reflètent mieux ton humeur.
-							</p>
-
 							<Link to="/quiz" className="primary-button low-emphasis-button">
 								Redémarrer le quiz
 							</Link>
