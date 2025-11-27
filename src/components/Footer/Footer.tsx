@@ -12,10 +12,10 @@ function Footer() {
 				<p className="body-text footer">
 					EXPLORER
 					<ul>
-						<Link to="/quiz">
+						<Link to="/quiz" className="link">
 							<li>Quiz</li>
 						</Link>
-						<li>Profil</li>
+						<li className="link">Profil</li>
 						<Link to="/catalogue">
 							<li>Catalogue</li>
 						</Link>
@@ -24,17 +24,17 @@ function Footer() {
 				<p className="body-text footer">
 					SOCIÉTÉ
 					<ul>
-						<li>A propos</li>
-						<li>Contact</li>
-						<li>Actualités</li>
+						<li className="link">A propos</li>
+						<li className="link">Contact</li>
+						<li className="link">Actualités</li>
 					</ul>
 				</p>
 				<p className="body-text footer">
 					LÉGAL
 					<ul>
-						<li>Mentions légales</li>
-						<li>Politique de confidentialité</li>
-						<li>Conditions d'utilisation</li>
+						<li className="link">Mentions légales</li>
+						<li className="link">Politique de confidentialité</li>
+						<li className="link">Conditions d'utilisation</li>
 					</ul>
 				</p>
 				<p className="body-text footer">
