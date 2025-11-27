@@ -1,50 +1,51 @@
 import { Link } from "react-router";
-// import SearchInput from "../SearchInput/SearchInput";
 import "./NavBar.css";
-//import { useLaunch } from "../../context/LaunchQuiz";
-// import { useContext, useState } from "react";
-// import { SearchbarContext } from "../Context/SearchBarContexts";
+import { useLaunch } from "../../context/LaunchQuiz";
 
 function NavBar() {
-	// const { allMovies, setMovies, setFilteredMovies, isOpen, setIsOpen } =
-	// 	useContext(SearchbarContext);
-	// const [quizStarted, setQuizStarted] = useState(false);
-	//const { setLaunch } = useLaunch();
+	const { setLaunch } = useLaunch();
 
 	return (
-		<div className="navbar">
+		<nav className="navbar">
 			<div className="links-container">
 				<Link to="/">
 					<img
-						src="logo-black-background.webp"
+						src="/logo-cine-mood-black.png"
 						alt="CinéMood"
 						className="logo"
 					/>
 				</Link>
-				<div className="nav-links-container">
-					<Link to="/" className="nav-button">
-						À propos
-					</Link>
-					<Link to="/catalogue" className="nav-button">
-						Catalogue
-					</Link>
-					{/* <SearchInput
-					isOpen={isOpen}
-					setFilteredMovies={setFilteredMovies}
-					movieData={allMovies}
-					setIsOpen={setIsOpen}
-				/> */}
-					<input type="text" className="search-bar" placeholder="Recherche" />
-					<Link
-						to="/quiz"
-						className="primary-button quiz-nav-button"
-						//onClick={() => setLaunch(true)}
-					>
-						Lance le Quiz
-					</Link>
-				</div>
+
+				<button type="button" className="burger-button burger">
+					&#9776;
+				</button>
+
+				<ul className="nav-links-container nav-links">
+					<li>
+						<Link to="/" className="nav-button">
+							À propos
+						</Link>
+					</li>
+					<li>
+						<Link to="/catalogue" className="nav-button">
+							Catalogue
+						</Link>
+					</li>
+					<li>
+						<input type="text" className="search-bar" placeholder="Recherche" />
+					</li>
+					<li>
+						<Link
+							to="/quiz"
+							className="primary-button quiz-nav-button"
+							onClick={() => setLaunch(true)}
+						>
+							Lance le Quiz
+						</Link>
+					</li>
+				</ul>
 			</div>
-		</div>
+		</nav>
 	);
 }
 

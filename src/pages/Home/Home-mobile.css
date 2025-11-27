@@ -14,16 +14,13 @@
 		width: 70%;
 	}
 
-	.catalog-preview-container{
-	flex-wrap: wrap;
+	.catalog-preview-container {
+		flex-wrap: wrap;
 	}
 
-	.catalog-preview{
+	.catalog-preview {
 		width: 45%;
 	}
-
-
-
 }
 
 @media (max-width: 480px) {
@@ -46,7 +43,7 @@
 	#selection-de-la-semaine {
 		padding: 3rem 0;
 	}
-	
+
 	.home-secondary-title {
 		width: 50%;
 		margin: 0 auto;
@@ -54,21 +51,21 @@
 	}
 
 	.random-section {
-  		height: 250px;
+		height: 250px;
 		padding: 0 2rem;
 	}
 
-	.home-genres-section{
+	.home-genres-section {
 		padding: 3rem 0;
 	}
 
-	.catalog-preview-container{
+	.catalog-preview-container {
 		gap: 1rem;
 		width: 100%;
 		padding: 1rem 0;
 	}
 
-	.catalog-preview{
+	.catalog-preview {
 		max-width: 50%;
 		height: 100px;
 	}
