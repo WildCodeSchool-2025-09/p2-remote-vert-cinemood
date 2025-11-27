@@ -11,7 +11,18 @@ import { useLaunch } from "../../context/LaunchQuiz";
 import { useQuiz } from "../../context/QuizContext";
 import quizPicturesData from "./QuizPicturesData";
 
-function createImageQuestions(imagesData, nbQuestions) {
+type QuizPicturesData = QuizPictureObject[];
+
+type QuizPictureObject = {
+	id: string;
+	genres: number[];
+	description: string;
+};
+
+function createImageQuestions(
+	imagesData: QuizPicturesData,
+	nbQuestions: number,
+) {
 	const usedImages = new Set();
 	const questions = [];
 	const totalImages = imagesData.length;
@@ -47,10 +58,10 @@ export default function Quiz() {
 	const [popularMovies, setPopularMovies] = useState([]);
 	const { setQuizAnswers } = useQuiz();
 	const [questionNumber, setQuestionNumber] = useState(0);
-	const [genreSelection, setGenreSelection] = useState([]);
+	const [genreSelection, setGenreSelection] = useState<number[]>([]);
 	const navigate = useNavigate();
-	const [timeLeftAnalysis, setTimeLeftAnalysis] = useState(2);
-	const [quizEnded, setQuizEnded] = useState(false);
+	const [timeLeftAnalysis, setTimeLeftAnalysis] = useState<number>(2);
+	const [quizEnded, setQuizEnded] = useState<boolean>(false);
 	const imageQuestions = useMemo(
 		() => createImageQuestions(quizPicturesData, 27),
 		[],
@@ -76,15 +87,15 @@ export default function Quiz() {
 		return () => clearInterval(timer);
 	}, [quizEnded, timeLeftAnalysis, navigate]);
 
-	function selectGenres(genresArray) {
+	function selectGenres(genresArray: number[]) {
 		setGenreSelection((prev) => [...prev, ...genresArray]);
 		if (questionNumber + 1 < imageQuestions.length) {
 			setQuestionNumber((question) => question + 1);
 		}
 	}
 
-	const countGenre = useMemo(() => {
-		return genreSelection.reduce((acc, curr) => {
+	const countGenre = useMemo<Record<number, number>>(() => {
+		return genreSelection.reduce<Record<number, number>>((acc, curr) => {
 			acc[curr] = (acc[curr] || 0) + 1;
 			return acc;
 		}, {});
@@ -92,14 +103,14 @@ export default function Quiz() {
 
 	useEffect(() => {
 		let maxCount = 0;
-		const result = [];
+		const result: number[] = [];
 
 		for (const genre in countGenre) {
 			if (countGenre[genre] > maxCount) maxCount = countGenre[genre];
 		}
 
 		for (const genre in countGenre) {
-			if (countGenre[genre] >= maxCount - 1) result.push(genre);
+			if (countGenre[genre] >= maxCount - 1) result.push(Number(genre));
 		}
 
 		if (result.length > 1) {
@@ -109,19 +120,6 @@ export default function Quiz() {
 			setQuizAnswers(result);
 		}
 	}, [countGenre, setQuizAnswers]);
-
-	useEffect(() => {
-		fetch(`${import.meta.env.VITE_TMDB_API_URL}movie/popular?page=5`, {
-			headers: {
-				Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
-				"Content-Type": "application/json;charset=utf-8",
-			},
-		})
-			.then((response) => response.json())
-			.then((movies) => {
-				setPopularMovies(movies.results);
-			});
-	}, []);
 
 	let encouragements = "";
 	switch (true) {
@@ -138,6 +136,19 @@ export default function Quiz() {
 			encouragements = "Plus qu'une question, tu es presque arrivé !";
 			break;
 	}
+
+	useEffect(() => {
+		fetch(`${import.meta.env.VITE_TMDB_API_URL}movie/popular?page=5`, {
+			headers: {
+				Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
+				"Content-Type": "application/json;charset=utf-8",
+			},
+		})
+			.then((response) => response.json())
+			.then((movies) => {
+				setPopularMovies(movies.results);
+			});
+	}, []);
 
 	return (
 		<>
@@ -184,7 +195,7 @@ export default function Quiz() {
 										key={currentQuestion.imageA.id}
 									/>
 								</div>
-								
+
 								<div className="image-container">
 									<img
 										src={`/quizImages/${currentQuestion.imageB.id}.jpg`}
@@ -204,7 +215,7 @@ export default function Quiz() {
 									percent={questionNumber * 4}
 								>
 									<Step transition="scale">
-										{({ accomplished }) => (
+										{({ accomplished }: { accomplished: boolean }) => (
 											<div
 												className={`transitionStep ${accomplished ? "accomplished" : null}`}
 											>
@@ -213,7 +224,7 @@ export default function Quiz() {
 										)}
 									</Step>
 									<Step transition="scale">
-										{({ accomplished }) => (
+										{({ accomplished }: { accomplished: boolean }) => (
 											<div
 												className={`transitionStep ${accomplished ? "accomplished" : null}`}
 											>
@@ -222,7 +233,7 @@ export default function Quiz() {
 										)}
 									</Step>
 									<Step transition="scale">
-										{({ accomplished }) => (
+										{({ accomplished }: { accomplished: boolean }) => (
 											<div
 												className={`transitionStep ${accomplished ? "accomplished" : null}`}
 											>
@@ -231,7 +242,7 @@ export default function Quiz() {
 										)}
 									</Step>
 									<Step transition="scale">
-										{({ accomplished }) => (
+										{({ accomplished }: { accomplished: boolean }) => (
 											<div
 												className={`transitionStep ${accomplished ? "accomplished" : null}`}
 											>
@@ -266,9 +277,11 @@ export default function Quiz() {
 								Lance le quiz
 							</button>
 						</section>
+
 						<section className="quiz-section">
 							<HowItWorks />
 						</section>
+
 						<section className="quiz-section quiz-carousel-section">
 							<h2 className="secondary-title">
 								Le plaisir

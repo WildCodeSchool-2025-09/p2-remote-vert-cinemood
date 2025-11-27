@@ -2,7 +2,7 @@ import { type ReactNode, createContext, useContext, useState } from "react";
 
 type QuizState = {
 	quizAnswers: number[];
-	setQuizAnswers: React.Dispatch<React.SetStateAction<string[]>>;
+	setQuizAnswers: React.Dispatch<React.SetStateAction<number[]>>;
 };
 
 const QuizContext = createContext<QuizState>({
@@ -11,7 +11,7 @@ const QuizContext = createContext<QuizState>({
 });
 
 export default function QuizProvider({ children }: { children: ReactNode }) {
-	const [quizAnswers, setQuizAnswers] = useState<string[]>([]);
+	const [quizAnswers, setQuizAnswers] = useState<number[]>([]);
 
 	return (
 		<QuizContext.Provider value={{ quizAnswers, setQuizAnswers }}>

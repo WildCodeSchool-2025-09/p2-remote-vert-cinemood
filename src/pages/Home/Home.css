@@ -28,7 +28,7 @@
 	background-color: transparent;
 }
 
-#selection-de-la-semaine {
+.selection-de-la-semaine {
 	padding: 3rem 0 6rem 0;
 }
 
@@ -38,40 +38,37 @@
 }
 
 .random-section {
-  height: 350px;
-  background: url("../../assets/images/film-reel-purple-background.jpg");
-  background-size: cover;
+	height: 350px;
+	background: url("../../assets/images/film-reel-purple-background.jpg");
+	background-size: cover;
 }
 
-.home-genres-section{
+.home-genres-section {
 	padding: 6rem 0;
 }
 
-.catalog-preview-container{
+.catalog-preview-container {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
-		justify-content: center;
+	justify-content: center;
 	gap: 2rem;
 	width: 80%;
 	padding: 3rem 0;
 	margin: 0 auto;
-	/* border: 2px solid red; */
-
 }
 
-.catalog-preview{
+.catalog-preview {
 	width: 25%;
-	/* border: 2px solid white; */
 	border-radius: 1.2rem;
 	overflow: hidden;
 	height: 200px;
 	position: relative;
 }
 
-.catalog-preview img{
+.catalog-preview img {
 	height: 100%;
-	width: 100%; 
+	width: 100%;
 	object-fit: cover;
 	transition: 0.6s ease;
 	cursor: pointer;
