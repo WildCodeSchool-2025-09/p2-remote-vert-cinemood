@@ -1,12 +1,23 @@
-@media screen and (max-width: 800px) {
-	#how-it-works {
-		gap: 50px;
+@media (max-width: 768px) {
+	.steps-container {
+		flex-wrap: wrap;
+		width: 60%;
+		gap: 1rem;
 	}
 
-	.steps-container {
-		flex-direction: column;
-	}
 	.step {
-		flex: auto;
+		width: 100%;
+	}
+}
+
+@media (max-width: 480px) {
+	.steps-container {
+		flex-wrap: wrap;
+		width: 90%;
+		gap: 1rem;
+	}
+
+	.step {
+		padding: 1rem;
 	}
 }

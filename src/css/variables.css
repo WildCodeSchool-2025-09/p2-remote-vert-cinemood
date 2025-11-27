@@ -3,7 +3,7 @@
 :root {
 	--black: #0d1117;
 	--white: #f8f9fb;
-	--dark-purple: #28035c;
+	--dark-purple: rgb(40, 3, 92);
 	--light-purple: #88289a;
 	--light-blue: #05a6d6;
 	--font-size-h1: 2.75rem;

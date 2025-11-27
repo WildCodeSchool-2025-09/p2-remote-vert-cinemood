@@ -5,6 +5,7 @@ import "./css/reset.css";
 import "./css/variables.css";
 import FavoritesMoviesProvider from "./Contexts/FavoritesMoviesContext";
 import WatchListMoviesProvider from "./Contexts/WatchListMoviesContext";
+import LaunchProvider from "./context/LaunchQuiz";
 import QuizProvider from "./context/QuizContext";
 
 const rootElement = document.getElementById("root");
@@ -13,10 +14,13 @@ if (rootElement != null) {
 	ReactDOM.createRoot(rootElement).render(
 		<WatchListMoviesProvider>
 			<FavoritesMoviesProvider>
-				<QuizProvider>
-					<RouterProvider router={router} />
-				</QuizProvider>
-				,
+				<LaunchProvider>
+					<QuizProvider>
+						<RouterProvider router={router} />
+					</QuizProvider>
+					,
+				</LaunchProvider>
+				, ,
 			</FavoritesMoviesProvider>
 			,
 		</WatchListMoviesProvider>,
