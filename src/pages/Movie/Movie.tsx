@@ -2,8 +2,8 @@ import "./Movie.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import { useFavoritesMovies } from "../../Contexts/TagFavoriteContext";
-import { useTagWatchLater } from "../../Contexts/TagWatchLaterContext";
+import { useFavoritesMovies } from "../../Contexts/FavoritesMoviesContext";
+import { useWatchListMovies } from "../../Contexts/WatchListMoviesContext";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import type { MovieData } from "../../types/MovieType";
 import avatar from "./../../assets/images/avatar-utilisateur.jpg";
@@ -54,11 +54,11 @@ function Movie() {
 	const [similarMovies, setSimilarMovies] = useState([]);
 	const [loadingSimilar, setLoadingSimilar] = useState(false);
 	const [note, setNote] = useState(0);
-	const { TagWatchLater, setTagWatchLater } = useTagWatchLater();
+	const { WatchListMovies, setWatchListMovies } = useWatchListMovies();
 	const [hoverNote, setHoverNote] = useState(0); // note au survol
 	const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 	const apiUrl = import.meta.env.VITE_TMDB_API_URL;
-	const { TagFavorite, setTagFavorite } = useFavoritesMovies();
+	const { FavoritesMovies, setFavoritesMovies } = useFavoritesMovies();
 	const handleTrailerClick = () => setShowTrailer((prev) => !prev);
 
 	useEffect(() => {
@@ -247,8 +247,10 @@ function Movie() {
 				return undefined;
 		}
 	};
-	const isFavorite = TagFavorite.some((favorite) => favorite.id === movie.id);
-	const isWatchLater = TagWatchLater.some(
+	const isFavorite = FavoritesMovies.some(
+		(favorite) => favorite.id === movie.id,
+	);
+	const isWatchLater = WatchListMovies.some(
 		(WatchLater) => WatchLater.id === movie.id,
 	);
 
@@ -263,10 +265,10 @@ function Movie() {
 		setPseudo("");
 	}
 
-	function OnOffTagFavorite() {
+	function OnOffFavoritesMovies() {
 		if (!movie) return;
 
-		setTagFavorite((prev) => {
+		setFavoritesMovies((prev) => {
 			const exists = prev.some((favorite) => favorite.id === movie.id);
 
 			if (exists) {
@@ -276,10 +278,10 @@ function Movie() {
 		});
 	}
 
-	function OnOffTagWatchLater() {
+	function OnOffWatchListMovies() {
 		if (!movie) return;
 
-		setTagWatchLater((prev) => {
+		setWatchListMovies((prev) => {
 			const exists = prev.some((WatchLater) => WatchLater.id === movie.id);
 
 			if (exists) {
@@ -360,10 +362,10 @@ function Movie() {
 						<i
 							className={`bi bi-suit-heart ${isFavorite ? "Tag-On" : ""}`}
 							id="tag"
-							onClick={OnOffTagFavorite}
+							onClick={OnOffFavoritesMovies}
 							onKeyDown={(e) => {
 								if (e.key === "Enter" || e.key === " ") {
-									OnOffTagFavorite();
+									OnOffFavoritesMovies();
 								}
 							}}
 							role="button"
@@ -372,10 +374,10 @@ function Movie() {
 						<i
 							className={`bi bi-plus-circle ${isWatchLater ? "Tag-On" : ""}`}
 							id="tag"
-							onClick={OnOffTagWatchLater}
+							onClick={OnOffWatchListMovies}
 							onKeyDown={(e) => {
 								if (e.key === "Enter" || e.key === " ") {
-									OnOffTagWatchLater();
+									OnOffWatchListMovies();
 								}
 							}}
 							role="button"
