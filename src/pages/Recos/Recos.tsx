@@ -2,10 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import RecosCarousel from "../../components/RecosCarousel/RecosCarousel";
 import "./Recos.css";
 import { Link } from "react-router";
+import { useQuiz } from "../../context/QuizContext";
+import type { Movie } from "../../types/MovieType";
 
 export default function Recos() {
-	const quizTaken = false;
-
+	const { quizAnswers } = useQuiz();
+	const quizTaken = quizAnswers.length > 0;
 	const [movieRecos, setMovieRecos] = useState<Movie[]>([]);
 	const randomStartIndex = Math.floor(Math.random() * 14);
 
@@ -13,7 +15,7 @@ export default function Recos() {
 		const randomPage = Math.floor(Math.random() * 500) + 1;
 
 		const url = quizTaken
-			? null
+			? `${import.meta.env.VITE_TMDB_API_URL}discover/movie?page=1&language=fr-FR&with_genres=${quizAnswers.join(",")}`
 			: `${import.meta.env.VITE_TMDB_API_URL}discover/movie?include_adult=false&include_video=false&language=fr-FR&vote_average.gte=5&primary_release_date.gte=1960-01-01&vote_count.gte=100&page=${randomPage}`;
 
 		const options = {
@@ -32,7 +34,7 @@ export default function Recos() {
 				setMovieRecos(movies.results.filter((movie) => movie.poster_path)),
 			)
 			.catch(console.error);
-	}, []);
+	}, [quizTaken, quizAnswers]);
 
 	useEffect(() => {
 		fetchMovie();
@@ -44,7 +46,7 @@ export default function Recos() {
 				<section className="header-section-center">
 					{quizTaken ? (
 						<>
-							<h1 className="secondary-title">
+							<h1 className="primary-title">
 								Découvre ta sélection ciné
 								<span className="body-text-blue"> personnalisée</span> !
 							</h1>
@@ -56,7 +58,7 @@ export default function Recos() {
 						</>
 					) : (
 						<>
-							<h1 className="secondary-title ">
+							<h1 className="primary-title">
 								Six films<span className="body-text-blue"> au hasard</span>
 								<br />
 								rien que pour toi !
@@ -76,11 +78,13 @@ export default function Recos() {
 				/>
 
 				{quizTaken ? (
-					<div className="link-center-container">
-						<Link to="/quiz" className="primary-button low-emphasis-button">
-							Redémarrer le quiz
-						</Link>
-					</div>
+					<>
+						<div className="link-center-container">
+							<Link to="/quiz" className="primary-button low-emphasis-button">
+								Redémarrer le quiz
+							</Link>
+						</div>
+					</>
 				) : (
 					<div className="link-center-container">
 						<button

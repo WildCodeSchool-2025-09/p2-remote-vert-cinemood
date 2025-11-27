@@ -1,54 +1,54 @@
-#how-it-works {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	gap: 30px;
-	width: 100%;
-	padding-top: 50px;
-}
-
 .steps-container {
 	display: flex;
-	gap: 50px;
-	justify-content: center;
-	flex-wrap: wrap;
-	margin-bottom: 60px;
+	flex-direction: row;
+	flex-wrap: nowrap;
 	width: 80%;
+	gap: 2rem;
+	padding: 2rem 0;
 }
+
 .step {
-	display: flex;
-	flex-direction: column;
-	flex: 1;
-	justify-content: center;
-	align-items: center;
-	gap: 10px;
-	padding: 20px;
+	width: 33%;
+	padding: 2rem;
 	border-radius: 20px;
 	background-color: rgba(248, 249, 251, 0.2);
 	text-align: center;
 	border: transparent 3px solid;
 }
+
+.step-content {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 10px;
+	transition: 0.6s ease;
+}
+
 .step:hover {
 	box-shadow: var(--blue-shadow);
 	border: var(--blue-border);
 }
 
+.step:hover .step-content {
+	transform: scale(1.1);
+}
+
 .sphere {
-	width: 60px;
-	height: 60px;
+	width: 70px;
+	height: 70px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	border-radius: 50%;
-	background: radial-gradient(circle, #fff 0%, #4d376f 60%, #4d376f 100%);
+	background: radial-gradient(circle, var(--white) 0%, transparent 60%);
 	position: relative;
-	margin: 15px;
 }
 
 .number {
 	color: #4d376f;
 	font-weight: bold;
-	font-size: var(--font-size-text);
+	font-size: 1.5rem;
 	font-family: var(--font-family-text);
 }
