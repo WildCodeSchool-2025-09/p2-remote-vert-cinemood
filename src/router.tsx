@@ -5,6 +5,7 @@ import Home from "./pages/Home/Home.tsx";
 import Movie from "./pages/Movie/Movie.tsx";
 import Quiz from "./pages/Quiz/Quiz.tsx";
 import Recos from "./pages/Recos/Recos.tsx";
+import UserProfile from "./pages/UserProfile/UserProfile.tsx";
 
 const router = createBrowserRouter([
 	{
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
 			{
 				path: "/recommandations",
 				element: <Recos />,
+			},
+			{
+				path: "/profile",
+				element: <UserProfile />,
 			},
 		],
 	},
