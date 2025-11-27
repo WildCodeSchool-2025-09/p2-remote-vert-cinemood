@@ -2,7 +2,7 @@ import "./Movie.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import { useTagFavorite } from "../../Contexts/TagFavoriteContext";
+import { useFavoritesMovies } from "../../Contexts/TagFavoriteContext";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import type { MovieData } from "../../types/MovieType";
 import avatar from "./../../assets/images/avatar-utilisateur.jpg";
@@ -56,7 +56,7 @@ function Movie() {
 	const [hoverNote, setHoverNote] = useState(0); // note au survol
 	const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 	const apiUrl = import.meta.env.VITE_TMDB_API_URL;
-	const { TagFavorite, setTagFavorite } = useTagFavorite();
+	const { TagFavorite, setTagFavorite } = useFavoritesMovies();
 	const handleTrailerClick = () => setShowTrailer((prev) => !prev);
 
 	useEffect(() => {
