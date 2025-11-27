@@ -195,55 +195,53 @@ function Movie() {
 		<>
 			<header className="header-details">
 				<div className="all-page header-frontend-container">
-					<img
-						className="affiche-details"
-						src={posterUrl}
-						alt={movie.title}
-						width="50%"
-					/>
-					<article className="info-details">
-						<h1 className="primary-title">{movie.title}</h1>
-						<p className="body-text infos">
-							{fullYear}&nbsp;{runtime}min&nbsp;★{rating}/10
-						</p>
-						<div className="tag-list">
-							<i className="bi bi-suit-heart" />
-							<i className="bi bi-plus-circle" />
-							<i className="bi bi-eye" />
-						</div>
-						<button
-							type="button"
-							className="primary-button bouton-trailer-details"
-							id="bouton-trailer-details"
-							onClick={handleTrailerClick}
-						>
-							Bande annonce
-						</button>
-					</article>
-				</div>
-				<div className="all-page providers-container">
-					<p className="disponibilité-details body-text">
-						Disponible sur :
-						{streamingProvidersLogos.length > 0 ? (
-							streamingProvidersLogos.map((p) => (
-								<a
-									href={p.url ?? "#"}
-									key={p.name}
-									target="_blank"
-									rel="noopener noreferrer"
+					<div className="test">
+						<img
+							className="affiche-details"
+							src={posterUrl}
+							alt={movie.title}
+							width="50%"
+						/>
+						<article className="info-details">
+							<div>
+								<h1 className="primary-title">{movie.title}</h1>
+								<p className="body-text infos">
+									{fullYear}&nbsp;{runtime}min&nbsp;★{rating}/10
+								</p>
+							</div>
+							<div>
+								<div className="tag-list">
+									<i className="bi bi-suit-heart tag" />
+									<i className="bi bi-plus-circle tag" />
+									<i className="bi bi-eye tag" />
+								</div>
+								<button
+									type="button"
+									className="primary-button bouton-trailer-details"
+									id="bouton-trailer-details"
+									onClick={handleTrailerClick}
 								>
-									<img
-										src={p.logo}
-										alt={p.name}
-										title={p.name}
+									Bande annonce
+								</button>
+							</div>
+						</article>
+					</div>
+					<div className="all-page providers-container">
+						<p className="disponibilité-details body-text">
+							{streamingProvidersLogos.length > 0 &&
+								streamingProvidersLogos.map((p) => (
+									<a
+										href={p.url ?? "#"}
+										key={p.name}
+										target="_blank"
+										rel="noopener noreferrer"
 										className="provider-logo"
-									/>
-								</a>
-							))
-						) : (
-							<p>Aucune plateforme actuellement</p>
-						)}
-					</p>
+									>
+										<img src={p.logo} alt={p.name} title={p.name} />
+									</a>
+								))}
+						</p>
+					</div>
 				</div>
 			</header>
 			<div className="primary-background">
