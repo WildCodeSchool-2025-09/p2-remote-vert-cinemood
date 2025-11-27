@@ -6,14 +6,12 @@
 .header-frontend-container {
 	display: flex;
 	justify-content: flex-start;
-	gap: 20px;
 	border: yellow 2px solid;
 }
 
 .header-details {
 	background-size: cover;
 	background-position: center;
-
 	color: var(--white);
 	border: red 2px solid;
 	padding: 20px 0 20px 0;
@@ -30,9 +28,11 @@
 }
 
 .test {
+	border: white 2px solid;
 	display: flex;
 	justify-content: space-between;
 }
+
 .affiche-details {
 	width: 50%;
 }
@@ -46,7 +46,7 @@
 }
 
 .infos {
-	margin-top: 20px;
+	margin: 20px;
 	text-align: left;
 	font-size: 1rem;
 }
@@ -56,7 +56,7 @@
 	flex-direction: column;
 	justify-content: space-between;
 	gap: 20px;
-	border: paleturquoise 2px solid;
+	border: rgb(255, 141, 217) 2px solid;
 }
 
 .providers-container {
