@@ -1,51 +1,66 @@
 import { Link } from "react-router";
 import "./NavBar.css";
+import { useState } from "react";
 import { useLaunch } from "../../context/LaunchQuiz";
 
 function NavBar() {
 	const { setLaunch } = useLaunch();
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const toggleMenu = () => {
+		setIsMenuOpen(!isMenuOpen);
+	};
 
 	return (
-		<nav className="navbar">
-			<div className="links-container">
+		<>
+			<nav className={`navbar ${isMenuOpen ? "show-navbar" : ""}`}>
 				<Link to="/">
 					<img
 						src="/logo-cine-mood-black.png"
 						alt="CinéMood"
-						className="logo"
+						className={`logo navbar-list ${isMenuOpen ? "" : "show"}`}
 					/>
 				</Link>
-
-				<button type="button" className="burger-button burger">
-					&#9776;
-				</button>
-
-				<ul className="nav-links-container nav-links">
-					<li>
-						<Link to="/" className="nav-button">
+				<div
+					className="navbar-burger"
+					onClick={toggleMenu}
+					onKeyUp={toggleMenu}
+				>
+					☰
+				</div>
+				<ul className={`navbar-list ${isMenuOpen ? "show" : ""}`}>
+					<li className="navbar-item">
+						<Link to="/" onClick={toggleMenu} className="nav-button">
 							À propos
 						</Link>
 					</li>
-					<li>
-						<Link to="/catalogue" className="nav-button">
+					<li className="navbar-item">
+						<Link to="/profil" onClick={toggleMenu} className="nav-button">
+							Mon profil
+						</Link>
+					</li>
+					<li className="navbar-item">
+						<Link to="/catalogue" className="nav-button" onClick={toggleMenu}>
 							Catalogue
 						</Link>
 					</li>
-					<li>
+					<li className="navbar-item">
 						<input type="text" className="search-bar" placeholder="Recherche" />
 					</li>
-					<li>
+					<li className="navbar-item">
 						<Link
 							to="/quiz"
 							className="primary-button quiz-nav-button"
-							onClick={() => setLaunch(true)}
+							onClick={() => {
+								setLaunch(true);
+								toggleMenu();
+							}}
 						>
 							Lance le Quiz
 						</Link>
 					</li>
 				</ul>
-			</div>
-		</nav>
+			</nav>
+		</>
 	);
 }
 
