@@ -4,7 +4,7 @@
 	}
 }
 
-@media (max-width: 1042px) {
+@media (max-width: 1440px) {
 	.slick-track {
 		padding: 2rem 0;
 	}
@@ -20,11 +20,9 @@
 	.slick-prev:before {
 		margin: 0 0 0 -30px;
 	}
-}
 
-@media (max-width: 768px) {
 	.recos-slider-container {
-		width: 80%;
+		width: 50%;
 	}
 }
 
