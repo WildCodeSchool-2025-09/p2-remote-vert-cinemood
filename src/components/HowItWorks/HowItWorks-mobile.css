@@ -1,25 +1,23 @@
 @media (max-width: 768px) {
-.steps-container {
-	flex-wrap: wrap;
-	width: 60%;
-	gap: 1rem;
-}
+	.steps-container {
+		flex-wrap: wrap;
+		width: 60%;
+		gap: 1rem;
+	}
 
-.step {
-	width: 100%;
-}
-
+	.step {
+		width: 100%;
+	}
 }
 
 @media (max-width: 480px) {
+	.steps-container {
+		flex-wrap: wrap;
+		width: 90%;
+		gap: 1rem;
+	}
 
-.steps-container {
-	flex-wrap: wrap;
-	width: 90%;
-	gap: 1rem;
-}
-
-.step {
-	padding: 1rem;
-}
+	.step {
+		padding: 1rem;
+	}
 }

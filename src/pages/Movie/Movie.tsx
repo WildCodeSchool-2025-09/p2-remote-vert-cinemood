@@ -2,23 +2,10 @@ import "./Movie.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
+import { useFavoriteMovies } from "../../Contexts/FavoriteMovieContext";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
+import type { MovieData } from "../../types/MovieType";
 import avatar from "./../../assets/images/avatar-utilisateur.jpg";
-
-interface MovieData {
-	title: string;
-	release_date: string;
-	vote_average: number;
-	runtime: number;
-	overview: string;
-	poster_path: string;
-	backdrop_path: string;
-	production_countries: { name: string }[];
-	production_companies: { name: string }[];
-	genres: { name: string }[];
-	certification: string;
-	release_dates: { results: ReleaseCountry[] };
-}
 
 interface CreditData {
 	crew: { job: string; name: string }[];
@@ -51,16 +38,6 @@ interface StarRatingProps {
 	onClick: (i: number) => void;
 }
 
-interface ReleaseDate {
-	certification: string;
-	release_date: string;
-}
-
-interface ReleaseCountry {
-	iso_3166_1: string;
-	release_dates: ReleaseDate[];
-}
-
 function Movie() {
 	const [messages, setMessages] = useState<
 		{ pseudo: string; text: string; note: number }[]
@@ -79,6 +56,7 @@ function Movie() {
 	const [hoverNote, setHoverNote] = useState(0); // note au survol
 	const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 	const apiUrl = import.meta.env.VITE_TMDB_API_URL;
+	const { FavoriteMovies, setFavoriteMovies } = useFavoriteMovies();
 	const handleTrailerClick = () => setShowTrailer((prev) => !prev);
 
 	useEffect(() => {
@@ -94,40 +72,28 @@ function Movie() {
 			{ headers },
 		)
 			.then((res) => res.json())
-			.then(
-				(
-					movieDetails: Partial<MovieData> & {
-						release_dates?: { results: ReleaseCountry[] };
-					},
-				) => {
-					let certification = "";
+			.then((movieDetails: MovieData) => {
+				let certification = "";
 
-					const frRelease = movieDetails.release_dates?.results?.find(
-						(rc) => rc.iso_3166_1 === "FR",
-					);
+				const frRelease = movieDetails.release_dates?.results?.find(
+					(rc) => rc.iso_3166_1 === "FR",
+				);
 
-					const nonEmpty = frRelease?.release_dates?.find(
-						(rd) => rd.certification?.trim() !== "",
-					);
+				const nonEmpty = frRelease?.release_dates?.find(
+					(rd) => rd.certification?.trim() !== "",
+				);
 
-					if (nonEmpty) certification = nonEmpty.certification;
+				if (nonEmpty) certification = nonEmpty.certification;
 
-					setMovie({
-						title: movieDetails.title ?? "Titre inconnu",
-						release_date: movieDetails.release_date ?? "",
-						vote_average: movieDetails.vote_average ?? 0,
-						runtime: movieDetails.runtime ?? 0,
-						overview: movieDetails.overview ?? "Pas de description disponible",
-						poster_path: movieDetails.poster_path ?? "",
-						backdrop_path: movieDetails.backdrop_path ?? "",
-						production_countries: movieDetails.production_countries ?? [],
-						production_companies: movieDetails.production_companies ?? [],
-						genres: movieDetails.genres ?? [],
-						release_dates: movieDetails.release_dates ?? { results: [] },
-						certification,
-					});
-				},
-			)
+				setMovie({
+					...movieDetails,
+					certification,
+					production_companies: movieDetails.production_companies ?? [],
+					production_countries: movieDetails.production_countries ?? [],
+					genres: movieDetails.genres ?? [],
+					release_dates: movieDetails.release_dates ?? { results: [] },
+				});
+			})
 
 			.catch((err) =>
 				console.error("Erreur lors de la récupération du film :", err),
@@ -291,6 +257,20 @@ function Movie() {
 		setPseudo("");
 	}
 
+	function OnOffFavoriteMovies() {
+		if (!movie) return;
+
+		setFavoriteMovies((prev) => {
+			const exists = prev.some((fav) => fav.id === movie.id);
+
+			if (exists) {
+				return prev.filter((fav) => fav.id !== movie.id);
+			}
+			return [...prev, movie];
+		});
+	}
+
+	const isFavorite = FavoriteMovies.some((fav) => fav.id === movie.id);
 	function resizeImage({ url, width, height }: ResizeParams): Promise<string> {
 		return new Promise((resolve, reject) => {
 			const img = new Image();
@@ -359,7 +339,19 @@ function Movie() {
 					</p>
 					<p className="header-text">{renderStars(rating)}</p>
 					<div className="tag-list">
-						<i className="bi bi-suit-heart" />
+						<i
+							className={`bi bi-suit-heart ${isFavorite ? "heart-favorite" : ""}`}
+							id="tag"
+							onClick={OnOffFavoriteMovies}
+							onKeyDown={(e) => {
+								if (e.key === "Enter" || e.key === " ") {
+									OnOffFavoriteMovies();
+								}
+							}}
+							role="button"
+							tabIndex={0}
+						/>
+
 						<i className="bi bi-plus-circle" />
 						<i className="bi bi-eye" />
 					</div>

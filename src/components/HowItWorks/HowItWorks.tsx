@@ -6,9 +6,10 @@ function HowItWorks() {
 		<>
 			<section className="header-section-center">
 				<h2 className="secondary-title">Comment ça marche ?</h2>
-				<p className="body-text">Trois étapes simples pour découvrir ton prochain film préféré</p>
-				<div className="steps-container">	
-					
+				<p className="body-text">
+					Trois étapes simples pour découvrir ton prochain film préféré
+				</p>
+				<div className="steps-container">
 					<article className="step">
 						<div className="step-content">
 							<div className="sphere">
@@ -24,7 +25,7 @@ function HowItWorks() {
 							</p>
 						</div>
 					</article>
-					
+
 					<article className="step">
 						<div className="step-content">
 							<div className="sphere">

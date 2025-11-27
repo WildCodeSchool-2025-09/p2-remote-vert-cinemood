@@ -16,7 +16,6 @@
 	.image-container {
 		width: 250px;
 	}
-
 }
 
 @media (max-width: 480px) {
@@ -50,5 +49,4 @@
 	.transitionStep {
 		font-size: 2rem;
 	}
-
 }

@@ -61,6 +61,10 @@
 .tag-list {
 	display: flex;
 	gap: 40px;
+}
+
+#tag {
+	cursor: grab;
 	font-size: 3em;
 }
 
@@ -95,6 +99,10 @@
 .stars {
 	color: gold;
 	font-size: 1.5em;
+}
+
+.heart-favorite {
+	color: var(--light-blue);
 }
 
 .trailer-article {
