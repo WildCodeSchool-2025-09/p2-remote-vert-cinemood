@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./RecosCarousel.css";
 import "./Recos-mobile.css";
+import { OrbitProgress } from "react-loading-indicators";
 import { Link } from "react-router";
 
 export default function RecosCarousel({
@@ -56,11 +57,14 @@ export default function RecosCarousel({
 					</Slider>
 				</div>
 			) : (
-				<div className="recos-loading-screen">
-					<img
-						className="loading-icon"
-						src="/logo-transparent.png"
-						alt="Chargement…"
+				<div className="loading-movies">
+					<OrbitProgress
+						variant="track-disc"
+						color="#05a6d6"
+						dense
+						size="medium"
+						text=""
+						textColor=""
 					/>
 				</div>
 			)}

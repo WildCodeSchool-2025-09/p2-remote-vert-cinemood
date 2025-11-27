@@ -2,7 +2,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import "./CarouselMovie.css";
-import type { Movie } from "../../types";
+import type { Movie } from "../../types/MovieType";
 
 type CarouselProps = {
 	movies: Movie[];
@@ -22,7 +22,6 @@ function CarouselMovie({ movies }: CarouselProps) {
 		return () => emblaApi.off("select", onSelect);
 	}, [emblaApi]);
 
-	// if (!movies?.length) return <p>Aucun film à afficher</p>;
 	if (!movies && movies.length < 1) return <p>Aucun film à afficher</p>;
 
 	return (
@@ -60,7 +59,9 @@ function CarouselMovie({ movies }: CarouselProps) {
 						<button
 							type="button"
 							key={movies.id}
-							className={position === selectedIndex ? "dot active" : "dot"}
+							className={
+								position === selectedIndex ? "dot active" : "dot-carousel"
+							}
 							onClick={() => emblaApi?.scrollTo(position)}
 						/>
 					))}

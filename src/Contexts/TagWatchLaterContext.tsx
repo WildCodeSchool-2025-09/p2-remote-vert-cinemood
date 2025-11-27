@@ -1,5 +1,5 @@
 import { type ReactNode, createContext, useContext, useState } from "react";
-import type { MovieData } from "../pages/Movie/Movie";
+import type { MovieData } from "../types/MovieType";
 
 type TagWatchLaterState = {
 	TagWatchLater: MovieData[];
