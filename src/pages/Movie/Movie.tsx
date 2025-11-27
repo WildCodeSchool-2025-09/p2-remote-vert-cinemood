@@ -1,4 +1,5 @@
 import "./Movie.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
@@ -116,14 +117,14 @@ function Movie() {
 		? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
 		: "../../assets/images/no-poster.jpg";
 
-	const releaseDate = movie.release_date ?? "N/A";
+	const releaseDate = movie.release_date ?? "";
+	const fullYear = releaseDate.slice(0, 4);
 	const originCountry =
-		movie.production_countries?.map((c) => c.name).join(", ") || "N/A";
+		movie.production_countries?.map((c) => c.name).join(", ") || "";
 	const productionCompanies =
-		movie.production_companies?.map((c) => c.name).join(", ") || "N/A";
+		movie.production_companies?.map((c) => c.name).join(", ") || "";
 
-	const director =
-		credits?.crew?.find((c) => c.job === "Director")?.name || "N/A";
+	const director = credits?.crew?.find((c) => c.job === "Director")?.name || "";
 	const producers =
 		credits?.crew
 			?.filter((c) => c.job === "Producer")
@@ -193,138 +194,155 @@ function Movie() {
 	return (
 		<>
 			<header className="header-details">
-				<img className="affiche-details" src={posterUrl} alt={movie.title} />
-				<article className="info-details">
-					<h1 className="primary-title">{movie.title}</h1>
-					<p className="body-text">Date de sortie : {releaseDate}</p>
-					<p className="body-text">Durée : {runtime} min</p>
-					<p className="body-text">
-						Note : {rating}/10 {renderStars(rating)}
-					</p>
-					<button
-						type="button"
-						className="primary-button bouton-trailer-details"
-						id="bouton-trailer-details"
-						onClick={handleTrailerClick}
-					>
-						Bande annonce
-					</button>
-				</article>
-				<p className="disponibilité-details body-text">
-					Disponible sur :
-					{streamingProvidersLogos.length > 0 ? (
-						streamingProvidersLogos.map((p) => (
-							<a
-								href={p.url ?? "#"}
-								key={p.name}
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								<img
-									src={p.logo}
-									alt={p.name}
-									title={p.name}
-									className="provider-logo"
-								/>
-							</a>
-						))
-					) : (
-						<p>Aucune plateforme actuellement</p>
-					)}
-				</p>
-			</header>
-			<div className="primary-background">
-				<section>
-					{showTrailer && trailerUrl && (
-						<article className="trailer-article">
-							<iframe
-								width="560"
-								height="315"
-								src={trailerUrl.replace("watch?v=", "embed/")}
-								title="Bande annonce"
-								frameBorder="0"
-								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-								allowFullScreen
-							/>
-						</article>
-					)}
-					<article className="description-details">
-						<p className="overview-details body-text"> {movie.overview} </p>
-						<article className="information-details">
-							<p className="p-information-details body-text">
-								<span className="body-text-blue">Réalisé par</span> : {director}
-							</p>
-							<p className="p-information-details body-text">
-								<span className="body-text-blue">Produit par</span> :{" "}
-								{producers}
-							</p>
-							<p className="p-information-details body-text">
-								<span className="body-text-blue">Casting</span> : {actors}
-							</p>
-							<p className="p-information-details body-text">
-								<span className="body-text-blue">Origine</span> :{" "}
-								{originCountry}
-							</p>
-							<p className="p-information-details body-text">
-								<span className="body-text-blue">Societé de production</span> :{" "}
-								{productionCompanies}
-							</p>
-						</article>
-					</article>
-				</section>
-				<section className="films-similaire">
-					<h2 className="secondary-title center padding-30">Films similaire</h2>
-					{loadingSimilar ? (
-						<p>Chargement...</p>
-					) : (
-						<CarouselMovie movies={similarMovies} />
-					)}
-				</section>
-				<section className="commentaires">
-					<h2 className="secondary-title">Commentaires</h2>
-					<article className="commentaire-box">
-						<label htmlFor="pseudo" className="body-text">
-							Pseudo :
-						</label>
-						<input
-							className="pseudo"
-							type="text"
-							id="pseudo"
-							value={pseudo}
-							onChange={getPseudo}
-						/>
-						<label htmlFor="comment" className="body-text">
-							Commentaire :
-						</label>
-						<input
-							className="comment"
-							type="text"
-							id="comment"
-							value={newMessage}
-							onChange={typeNewMessage}
-						/>
-						<br />
+				<div className="all-page header-frontend-container">
+					<img
+						className="affiche-details"
+						src={posterUrl}
+						alt={movie.title}
+						width="50%"
+					/>
+					<article className="info-details">
+						<h1 className="primary-title">{movie.title}</h1>
+						<p className="body-text infos">
+							{fullYear}&nbsp;{runtime}min&nbsp;★{rating}/10
+						</p>
+						<div className="tag-list">
+							<i className="bi bi-suit-heart" />
+							<i className="bi bi-plus-circle" />
+							<i className="bi bi-eye" />
+						</div>
 						<button
 							type="button"
-							className="primary-button"
-							id="bouton-commentaire-details"
-							onClick={sendMessage}
+							className="primary-button bouton-trailer-details"
+							id="bouton-trailer-details"
+							onClick={handleTrailerClick}
 						>
-							Envoyer
+							Bande annonce
 						</button>
-						<div className="tous-les-commentaires">
-							<article>
-								{messages.map((msg) => {
-									return (
-										<div className="last-commentaire" key={msg.pseudo}>
-											<strong>{msg.pseudo}</strong> a écrit : {msg.text}
-										</div>
-									);
-								})}
-							</article>
-						</div>
 					</article>
-				</section>
+				</div>
+				<div className="all-page providers-container">
+					<p className="disponibilité-details body-text">
+						Disponible sur :
+						{streamingProvidersLogos.length > 0 ? (
+							streamingProvidersLogos.map((p) => (
+								<a
+									href={p.url ?? "#"}
+									key={p.name}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									<img
+										src={p.logo}
+										alt={p.name}
+										title={p.name}
+										className="provider-logo"
+									/>
+								</a>
+							))
+						) : (
+							<p>Aucune plateforme actuellement</p>
+						)}
+					</p>
+				</div>
+			</header>
+			<div className="primary-background">
+				<div className="all-page">
+					<section>
+						{showTrailer && trailerUrl && (
+							<article className="trailer-article">
+								<iframe
+									width="560"
+									height="315"
+									src={trailerUrl.replace("watch?v=", "embed/")}
+									title="Bande annonce"
+									frameBorder="0"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+									allowFullScreen
+								/>
+							</article>
+						)}
+						<article className="description-details">
+							<p className="overview-details body-text"> {movie.overview} </p>
+							<article className="information-details">
+								<p className="p-information-details body-text">
+									<span className="body-text-blue">Réalisé par</span> :{" "}
+									{director}
+								</p>
+								<p className="p-information-details body-text">
+									<span className="body-text-blue">Produit par</span> :{" "}
+									{producers}
+								</p>
+								<p className="p-information-details body-text">
+									<span className="body-text-blue">Casting</span> : {actors}
+								</p>
+								<p className="p-information-details body-text">
+									<span className="body-text-blue">Origine</span> :{" "}
+									{originCountry}
+								</p>
+								<p className="p-information-details body-text">
+									<span className="body-text-blue">Societé de production</span>{" "}
+									: {productionCompanies}
+								</p>
+							</article>
+						</article>
+					</section>
+					<section className="films-similaire">
+						<h2 className="secondary-title center padding-30">
+							Films similaire
+						</h2>
+						{loadingSimilar ? (
+							<p>Chargement...</p>
+						) : (
+							<CarouselMovie movies={similarMovies} />
+						)}
+					</section>
+					<section className="commentaires">
+						<h2 className="secondary-title">Commentaires</h2>
+						<article className="commentaire-box">
+							<label htmlFor="pseudo" className="body-text">
+								Pseudo :
+							</label>
+							<input
+								className="pseudo"
+								type="text"
+								id="pseudo"
+								value={pseudo}
+								onChange={getPseudo}
+							/>
+							<label htmlFor="comment" className="body-text">
+								Commentaire :
+							</label>
+							<input
+								className="comment"
+								type="text"
+								id="comment"
+								value={newMessage}
+								onChange={typeNewMessage}
+							/>
+							<br />
+							<button
+								type="button"
+								className="primary-button"
+								id="bouton-commentaire-details"
+								onClick={sendMessage}
+							>
+								Envoyer
+							</button>
+							<div className="tous-les-commentaires">
+								<article>
+									{messages.map((msg) => {
+										return (
+											<div className="last-commentaire" key={msg.pseudo}>
+												<strong>{msg.pseudo}</strong> a écrit : {msg.text}
+											</div>
+										);
+									})}
+								</article>
+							</div>
+						</article>
+					</section>
+				</div>
 			</div>
 		</>
 	);

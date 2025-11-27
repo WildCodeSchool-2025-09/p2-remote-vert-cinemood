@@ -1,11 +1,21 @@
+.all-page {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.header-frontend-container {
+	display: flex;
+	justify-content: flex-start;
+	gap: 20px;
+	border: yellow 2px solid;
+}
+
 .header-details {
 	background-size: cover;
 	background-position: center;
 	height: 50vh;
-	display: grid;
-	grid-template-columns: 4fr 4fr 6fr 5fr;
-	grid-template-rows: 2fr 8fr 2fr 2fr;
 	color: var(--white);
+	border: red 2px solid;
 }
 .header-details::before {
 	content: "";
@@ -19,31 +29,30 @@
 }
 
 .affiche-details {
-	grid-column: 1 / 2;
-	grid-row: 1 / 5;
-	width: 75%;
-	padding: 20px 0 20px 20px;
+	width: 20%;
 }
 
+.infos {
+	text-align: left;
+	font-size: 1rem;
+}
 .info-details {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-around;
-	grid-column: 2 / 3;
+	justify-content: flex-start;
 	gap: 20px;
-	grid-row: 2 / 4;
+	border: paleturquoise 2px solid;
 }
-
+.providers-container {
+	border: 2px solid blue;
+}
 .bouton-trailer-details {
 	text-decoration: none;
 }
 
 .disponibilité-details {
 	display: flex;
-	justify-content: space-evenly;
-	align-items: center;
-	grid-column: 4 / 5;
-	grid-row: 3 / 4;
+	justify-content: flex-end;
 }
 
 .stars {
