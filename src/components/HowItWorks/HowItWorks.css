@@ -1,0 +1,54 @@
+.steps-container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	width: 80%;
+	gap: 2rem;
+	padding: 2rem 0;
+}
+
+.step {
+	width: 33%;
+	padding: 2rem;
+	border-radius: 20px;
+	background-color: rgba(248, 249, 251, 0.2);
+	text-align: center;
+	border: transparent 3px solid;
+}
+
+.step-content {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 10px;
+	transition: 0.6s ease;
+}
+
+.step:hover {
+	box-shadow: var(--blue-shadow);
+	border: var(--blue-border);
+}
+
+.step:hover .step-content {
+	transform: scale(1.1);
+}
+
+.sphere {
+	width: 70px;
+	height: 70px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: radial-gradient(circle, var(--white) 0%, transparent 60%);
+	position: relative;
+}
+
+.number {
+	color: #4d376f;
+	font-weight: bold;
+	font-size: 1.5rem;
+	font-family: var(--font-family-text);
+}
