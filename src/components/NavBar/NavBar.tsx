@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 // import SearchInput from "../SearchInput/SearchInput";
 import "./NavBar.css";
+//import { useLaunch } from "../../context/LaunchQuiz";
 // import { useContext, useState } from "react";
 // import { SearchbarContext } from "../Context/SearchBarContexts";
 
@@ -8,6 +9,7 @@ function NavBar() {
 	// const { allMovies, setMovies, setFilteredMovies, isOpen, setIsOpen } =
 	// 	useContext(SearchbarContext);
 	// const [quizStarted, setQuizStarted] = useState(false);
+	//const { setLaunch } = useLaunch();
 
 	return (
 		<div className="navbar">
@@ -36,7 +38,7 @@ function NavBar() {
 					<Link
 						to="/quiz"
 						className="primary-button quiz-nav-button"
-						// onClick={() => setQuizStarted(true)}
+						//onClick={() => setLaunch(true)}
 					>
 						Lance le Quiz
 					</Link>
