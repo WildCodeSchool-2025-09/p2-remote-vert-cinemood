@@ -4,12 +4,17 @@ import router from "./router";
 import "./css/reset.css";
 import "./css/variables.css";
 import TagFavoriteProvider from "./Contexts/TagFavoriteContext";
+import QuizProvider from "./context/QuizContext";
+
 const rootElement = document.getElementById("root");
 
 if (rootElement != null) {
 	ReactDOM.createRoot(rootElement).render(
 		<TagFavoriteProvider>
-			<RouterProvider router={router} />
+			<QuizProvider>
+				<RouterProvider router={router} />
+			</QuizProvider>
+			,
 		</TagFavoriteProvider>,
 	);
 }
