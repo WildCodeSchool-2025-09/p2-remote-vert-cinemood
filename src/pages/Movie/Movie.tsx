@@ -7,6 +7,7 @@ import { useFavoriteMovies } from "../../Contexts/FavoriteMovieContext";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import type { MovieData } from "../../types/MovieType";
 import avatar from "./../../assets/images/avatar-utilisateur.jpg";
+import { OrbitProgress } from "react-loading-indicators";
 
 interface CreditData {
 	crew: { job: string; name: string }[];
@@ -52,7 +53,6 @@ function Movie() {
 	const [providers, setProviders] = useState<ProvidersData | null>(null);
 	const [showTrailer, setShowTrailer] = useState(false);
 	const [similarMovies, setSimilarMovies] = useState([]);
-	const [loadingSimilar, setLoadingSimilar] = useState(false);
 	const [note, setNote] = useState(0);
 	const [hoverNote, setHoverNote] = useState(0); // note au survol
 	const apiKey = import.meta.env.VITE_TMDB_API_KEY;
@@ -121,9 +121,7 @@ function Movie() {
 			.then((res) => res.json())
 			.then((movieSimilar) => {
 				setSimilarMovies(movieSimilar.results?.slice(0, 8));
-				setLoadingSimilar(true);
 			})
-			.catch(() => setLoadingSimilar(false));
 	}, [id]);
 
 	useEffect(() => {
@@ -396,7 +394,7 @@ function Movie() {
 						)}
 					</section>
 					<section className="description-details">
-						<p className="movie-description body-text">
+						<p className="movie-description-container body-text">
 							{movie.overview ? (
 								movie.overview
 							) : (
@@ -419,55 +417,41 @@ function Movie() {
 						</p>
 						<section className="information-details">
 							<p className="p-information-details body-text">
-								<span className="body-text-blue">Réalisé par</span> : {director}
+								<span className="body-text-blue bold">Réalisé par : </span>{director}
 							</p>
 							<p className="p-information-details body-text">
-								<span className="body-text-blue">Produit par</span> :{" "}
+								<span className="body-text-blue bold">Produit par :</span>{" "}
 								{producers}
 							</p>
 							<p className="p-information-details body-text">
-								<span className="body-text-blue">Casting</span> : {actors}
+								<span className="body-text-blue bold">Casting: </span> {actors}
 							</p>
 							<p className="p-information-details body-text">
-								<span className="body-text-blue">Origine</span> :{" "}
+								<span className="body-text-blue bold">Origine :</span>{" "}
 								{originCountry}
 							</p>
 							<p className="p-information-details body-text">
-								<span className="body-text-blue">Societé de production</span> :{" "}
+								<span className="body-text-blue bold">Societé de production :</span>{" "}
 								{productionCompanies}
 							</p>
 						</section>
-						{/* <p className="overview-details body-text">
-							{movie.overview ? (
-								movie.overview
-							) : (
-								<>
-									<p>Cette fiche ne contient pas encore de description.</p>
-									<p>
-										🎬 Mais pas de panique ! Clique ci-dessous pour lancer le
-										quiz interactif et découvrir une sélection de films rien que
-										pour toi.
-									</p>
-									<Link
-										to="/quiz"
-										className="primary-button primary-button-home"
-										id="button-quiz"
-									>
-										Lance le quiz
-									</Link>
-								</>
-							)}
-						</p> */}
 					</section>
 				</div>
 				<section className="films-similaire">
 					<h2 className="secondary-title title-similar-movies">
 						Cela pourrait aussi t'intéresser
 					</h2>
-					{loadingSimilar ? (
+					{similarMovies && similarMovies.length > 0 ? (
 						<CarouselMovie movies={similarMovies} />
 					) : (
-						<p>Chargement...</p>
+						<div className="loading-movies">
+							<OrbitProgress
+								variant="track-disc"
+								color="#05a6d6"
+								dense
+								size="medium"
+							/>
+						</div>
 					)}
 				</section>
 				<section className="commentaires">

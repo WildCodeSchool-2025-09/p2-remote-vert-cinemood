@@ -48,12 +48,13 @@
 		aspect-ratio: 1 / 1;
 		border-radius: 20px;
 		overflow: hidden;
+        border-radius: 10px;
 	}
 }
 
 @media (max-width: 480px) {
 	.background-poster {
-		height: 80vh;
+		height: 85vh;
 	}
 
 	.header-width-container {
@@ -82,11 +83,41 @@
 		font-size: 0.875rem;
 	}
 
-	/* .header-button-container {
-		display: none;
+    .icon {
+        font-size: 1.5rem;
+    }
+
+    .info-details {
+		justify-content: flex-start;
+		gap: 2rem;
+	}
+
+	.providers-container {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.8rem;
 	}
 
 	.providers-container div {
-		display: none;
-	} */
+		max-width: 50px;
+		aspect-ratio: 1 / 1;
+		border-radius: 10px;
+		overflow: hidden;
+	}
+
+    .body-width-container {
+        width: 85%;
+        padding: 1rem 0 0 0;
+    }
+
+    .description-details {
+        gap: 1rem;
+    }
+    
+    .title-similar-movies {
+        text-align: center;
+        padding: 2rem 0 1rem;
+        width: 60%;
+        margin: 0 auto;
+    }
 }

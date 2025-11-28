@@ -5,7 +5,6 @@
 	overflow: visible;
 	position: relative;
 	display: flex;
-	/* border: 2px solid red; */
 }
 
 .background-poster::before {
@@ -41,14 +40,12 @@
 .header-width-container {
 	width: 70%;
 	margin: 3rem auto 0;
-	border: 2px solid green;
 	display: flex;
 	flex-direction: row;
 	gap: 3rem;
 }
 
 .movie-poster-details-container {
-	/* border: 2px solid blue; */
 	max-height: 100%;
 	aspect-ratio: 3 / 4;
 	border-radius: 1.2rem;
@@ -62,7 +59,6 @@
 }
 
 .info-details {
-	border: 2px solid rgb(255, 0, 149);
 	flex: 1;
 	display: flex;
 	flex-direction: column;
@@ -70,7 +66,6 @@
 }
 
 .info-details-top {
-	/* border: 2px solid rgb(59, 216, 59); */
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
@@ -104,21 +99,25 @@
 }
 
 .header-button-container {
-	/* border: 2px solid pink; */
 	display: flex;
 	flex-direction: column;
-	gap: 1rem;
 }
 
 .tag-list {
 	display: flex;
-	/* border: 2px solid yellow; */
 }
 
 .icon {
 	color: var(--white);
 	font-size: 2rem;
-	margin: 0.5rem 1rem;
+	margin: 0 1rem 1rem 1rem;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.icon:hover {
+	color: var(--light-blue);
+	transform: scale(1.2);
 }
 
 .bouton-trailer-details {
@@ -137,7 +136,12 @@
 	max-width: 70px;
 	aspect-ratio: 1 / 1;
 	border-radius: 20px;
-	overflow: hidden;
+	overflow: hidden;	
+	transition: all 0.2s ease;
+}
+
+.providers-container div:hover {
+	transform: scale(1.2);
 }
 
 .provider-logo {
@@ -160,7 +164,6 @@
 	width: 70%;
 	margin: 0 auto;
 	padding: 3rem 0 0 0;
-	border: 5px solid white;
 }
 
 .description-details {
@@ -169,7 +172,6 @@
 	flex-direction: row;
 	flex-wrap: nowrap;
 	gap: 3rem;
-	/* border: 5px solid red; */
 }
 
 #button-quiz {
@@ -177,12 +179,11 @@
 	width: 15vw;
 }
 
-.movie-description {
-	/* border: 5px solid orange; */
+.movie-description-container {
+
 }
 
 .information-details {
-	/* border: 5px solid aqua; */
 	min-width: 30%;
 }
 
@@ -190,45 +191,48 @@
 	padding-bottom: 1rem;
 }
 
+.bold{
+	font-weight: bold;
+}
+
 .title-similar-movies {
 	text-align: center;
 	padding: 3rem 0 2rem;
 }
 
+.films-similaire {
+	margin-bottom: 3rem;;
+}
+
 .commentaires {
+	margin: 0 auto;
+	padding-bottom: 6rem;;
+	width: 70%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	gap: 20px;
-	width: 100%;
 }
 
 .commentaire-box {
-	width: 100%;
-	margin: auto;
+	margin: 0 auto;
 	display: flex;
+	flex-wrap: wrap;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	gap: 20px;
-	width: 100%;
+
 }
+
 #bouton-commentaire-details {
-	border-radius: 40px;
-	margin: 10px;
 	width: 160px;
-	height: 50px;
-	padding: 15px;
-	text-decoration: none;
-	font-size: 1rem;
-}
-#bouton-commentaire-details:hover {
-	zoom: 1.1;
 }
 
 .pseudo-note {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
 	gap: 50px;
 }
@@ -243,10 +247,6 @@
 
 #nouveau-commentaire {
 	text-align: center;
-}
-
-.films-similaire {
-	margin-bottom: 50px;
 }
 
 #last-commentaire {
