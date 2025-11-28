@@ -1,4 +1,4 @@
-.about {
+.about-page {
 	color: var(--white);
 	padding: 50px;
 }
@@ -7,7 +7,7 @@ h1 {
 	text-align: center;
 }
 
-article {
+.about {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;

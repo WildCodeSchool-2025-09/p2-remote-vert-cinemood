@@ -3,8 +3,8 @@ import "./About.css";
 function About() {
 	return (
 		<>
-			<section className="primary-background about">
-				<article>
+			<section className="primary-background about-page">
+				<article className="about">
 					<h1 className="primary-title">A propos</h1>
 					<p>
 						Bienvenue sur Ciné Mood, notre projet web réalisé par Clarissa,
