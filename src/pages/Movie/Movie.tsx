@@ -132,7 +132,7 @@ function Movie() {
 			.then((res) => res.json())
 			.then((movieSimilar) => {
 				setSimilarMovies(movieSimilar.results?.slice(0, 8));
-			})
+			});
 	}, [id]);
 
 	useEffect(() => {
@@ -375,7 +375,12 @@ function Movie() {
 							<div className="tag-list">
 								<div className="icon">
 									<i
-										className={`bi bi-suit-heart ${isFavorite ? "heart-favorite" : ""}`}
+										className={
+											isFavorite
+												? "bi bi-suit-heart-fill tag-on"
+												: "bi bi-suit-heart"
+										}
+										id="tag"
 										onClick={OnOffFavoriteMovies}
 										onKeyDown={(e) => {
 											if (e.key === "Enter" || e.key === " ") {
@@ -386,10 +391,42 @@ function Movie() {
 										tabIndex={0}
 									/>
 								</div>
-
-								<i className="bi bi-plus-circle icon" />
-								<i className="bi bi-eye icon" />
+								<div className="icon">
+									<i
+										className={
+											isWatchList
+												? "bi bi-plus-circle-fill tag-on"
+												: "bi bi-plus-circle"
+										}
+										id="tag"
+										onClick={OnOffWatchListMovies}
+										onKeyDown={(e) => {
+											if (e.key === "Enter" || e.key === " ") {
+												OnOffWatchListMovies();
+											}
+										}}
+										role="button"
+										tabIndex={0}
+									/>
+								</div>
+								<div className="icon">
+									<i
+										className={
+											isAlreadySeen ? "bi bi-eye-fill tag-on" : "bi bi-eye"
+										}
+										id="tag"
+										onClick={OnOffAlreadySeenMovies}
+										onKeyDown={(e) => {
+											if (e.key === "Enter" || e.key === " ") {
+												OnOffAlreadySeenMovies();
+											}
+										}}
+										role="button"
+										tabIndex={0}
+									/>
+								</div>
 							</div>
+
 							{trailerUrl !== null && (
 								<button
 									type="button"
@@ -463,7 +500,8 @@ function Movie() {
 						</p>
 						<section className="information-details">
 							<p className="p-information-details body-text">
-								<span className="body-text-blue bold">Réalisé par : </span>{director}
+								<span className="body-text-blue bold">Réalisé par : </span>
+								{director}
 							</p>
 							<p className="p-information-details body-text">
 								<span className="body-text-blue bold">Produit par :</span>{" "}
@@ -477,7 +515,9 @@ function Movie() {
 								{originCountry}
 							</p>
 							<p className="p-information-details body-text">
-								<span className="body-text-blue bold">Societé de production :</span>{" "}
+								<span className="body-text-blue bold">
+									Societé de production :
+								</span>{" "}
 								{productionCompanies}
 							</p>
 						</section>
