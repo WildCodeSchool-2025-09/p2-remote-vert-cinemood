@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./Filters.css";
 
 function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
@@ -50,7 +50,15 @@ function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 
 		setFilteredMovies(results);
 		setIsOpen(true);
-	}, [combainedGenres, minYear, maxYear, rating]);
+	}, [
+		combainedGenres,
+		minYear,
+		maxYear,
+		rating,
+		setIsOpen,
+		setFilteredMovies,
+		movies,
+	]);
 
 	return (
 		<>
@@ -131,35 +139,30 @@ function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 							className="rating-input"
 							onChange={(e) => setRating(Number(e.target.value))}
 						/>
-						{/* <button
-							className="rating-input"
-							type="button"
-							onClick={() => {
-								setRating(7)
-							}}
-						>
-							Rafraîchir
-						</button> */}
 					</div>
 				</div>
 
-				<div>
-					<button
-						className="dropdown-btn"
-						id="refresh-button"
-						type="button"
-						onClick={() => {
-							setCombainedGenres([]);
-							setFilteredMovies(movies);
-							setIsOpen(true);
-							setMinYear(1950);
-							setMaxYear(2025);
-							setRating(null);
-						}}
-					>
-						Refresh
-					</button>
-				</div>
+				<button
+					className="dropdown-btn"
+					id="refresh-button"
+					type="button"
+					onClick={() => {
+						setCombainedGenres([]);
+						setFilteredMovies(movies);
+						setMinYear(1950);
+						setMaxYear(2025);
+						setRating(null);
+					}}
+				>
+					Refresh
+				</button>
+				<button
+					type="button"
+					className="close-btn"
+					onClick={() => setIsOpen(false)}
+				>
+					X
+				</button>
 			</div>
 			<div className="selected-genres">
 				{combainedGenres.map((id) => {

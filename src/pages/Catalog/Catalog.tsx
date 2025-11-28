@@ -9,9 +9,9 @@ import {
 	getUpcomingMovies,
 } from "../../api";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
-import { SearchbarContext } from "../../components/Context/SearchBarContexts";
 import Filters from "../../components/Filters/Filters";
 import MoviesSearchedModal from "../../components/MoviesSearchedModal/MoviesSearchedModal";
+import { SearchbarContext } from "../../context/SearchBarContext";
 
 function Catalog() {
 	const [genre, setGenre] = useState([]);
@@ -19,9 +19,10 @@ function Catalog() {
 	const [topRatedMovies, setTopRatedMovies] = useState([]);
 	const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
 	const [upcomingMovies, setUpcomingMovies] = useState([]);
-	const { allMovies, filteredMovies, setFilteredMovies, isOpen, setIsOpen } =
-		useContext(SearchbarContext);
+	const { getAllMovies } = useContext(SearchbarContext);
 	const [currentIndex, setCurrentIndex] = useState(0);
+	const [filteredMovies, setFilteredMovies] = useState([]);
+	const [isOpen, setIsOpen] = useState(false);
 
 	useEffect(() => {
 		getGenresMovies().then(setGenre);
@@ -32,20 +33,20 @@ function Catalog() {
 	}, []);
 
 	useEffect(() => {
-		if (!allMovies || allMovies.length === 0) return;
+		if (!getAllMovies || getAllMovies.length === 0) return;
 
 		const interval = setInterval(() => {
-			const randomIndex = Math.floor(Math.random() * allMovies.length);
+			const randomIndex = Math.floor(Math.random() * getAllMovies.length);
 			setCurrentIndex(randomIndex);
 		}, 10000);
 
 		return () => clearInterval(interval);
-	}, [allMovies]);
+	}, [getAllMovies]);
 
-	if (!allMovies || allMovies.length === 0) return <div>Loading...</div>;
+	if (!getAllMovies || getAllMovies.length === 0) return <div>Loading...</div>;
 
-	const coverUrl = allMovies[currentIndex].backdrop_path
-		? `https://image.tmdb.org/t/p/original${allMovies[currentIndex].backdrop_path}`
+	const coverUrl = getAllMovies[currentIndex].backdrop_path
+		? `https://image.tmdb.org/t/p/original${getAllMovies[currentIndex].backdrop_path}`
 		: "https://via.placeholder.com/500x750?text=No+Image";
 
 	return (
@@ -59,7 +60,7 @@ function Catalog() {
 
 			<Filters
 				genre={genre}
-				movies={allMovies}
+				movies={getAllMovies}
 				setFilteredMovies={setFilteredMovies}
 				setIsOpen={setIsOpen}
 			/>

@@ -2,10 +2,10 @@ import { Link } from "react-router";
 import SearchInput from "../SearchInput/SearchInput";
 import "./NavBar.css";
 import { useContext } from "react";
-import { SearchbarContext } from "../Context/SearchBarContexts";
+import { SearchbarContext } from "../../context/SearchBarContext";
 
 function NavBar() {
-	const { allMovies, setMovies, setFilteredMovies, isOpen, setIsOpen } =
+	const { getAllMovies, searchValue, setSearchValue } =
 		useContext(SearchbarContext);
 
 	return (
@@ -18,12 +18,7 @@ function NavBar() {
 				<Link to="/catalogue" className="primary-button nav-links-size">
 					Catalogue
 				</Link>
-				<SearchInput
-					isOpen={isOpen}
-					setFilteredMovies={setFilteredMovies}
-					movieData={allMovies}
-					setIsOpen={setIsOpen}
-				/>
+				<SearchInput movieData={getAllMovies} search />
 				<Link to="/quiz" className="primary-button" id="quiz-link">
 					Lance le Quiz
 				</Link>

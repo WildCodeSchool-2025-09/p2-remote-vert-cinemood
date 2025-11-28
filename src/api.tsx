@@ -9,8 +9,8 @@ const options = {
 	},
 };
 
-export async function getMoviesPage1() {
-	const url = `${apiUrl}discover/movie?&include_adult=false&include_video=false&language=fr-FR&vote_average.gte=5&primary_release_date.gte=1960-01-01&vote_count.gte=100&page=1`;
+async function getMoviesByPage(page) {
+	const url = `${apiUrl}discover/movie?&include_adult=false&include_video=false&language=fr-FR&vote_average.gte=5&primary_release_date.gte=1960-01-01&vote_count.gte=100&page=${page}`;
 	try {
 		const res = await fetch(url, options);
 		const data = await res.json();
@@ -21,53 +21,20 @@ export async function getMoviesPage1() {
 	}
 }
 
-export async function getMoviesPage2() {
-	const url = `${apiUrl}discover/movie?&include_adult=false&include_video=false&language=fr-FR&vote_average.gte=5&primary_release_date.gte=1960-01-01&vote_count.gte=100&page=2`;
-	try {
-		const res = await fetch(url, options);
-		const data = await res.json();
-		return data.results || [];
-	} catch (err) {
-		console.error("rror fetching movies:", err);
-		return [];
-	}
+const nbMovie = 200;
+const totalPages = Math.ceil(nbMovie / 20);
+const colectMovies = [];
+
+for (let page = 1; totalPages >= page; page++) {
+	const movie = await getMoviesByPage(page);
+	colectMovies.push(...movie);
 }
 
-export async function getMoviesPage3() {
-	const url = `${apiUrl}discover/movie?&include_adult=false&include_video=false&language=fr-FR&vote_average.gte=5&primary_release_date.gte=1960-01-01&vote_count.gte=100&page=3`;
-	try {
-		const res = await fetch(url, options);
-		const data = await res.json();
-		return data.results || [];
-	} catch (err) {
-		console.error("rror fetching movies:", err);
-		return [];
-	}
-}
+const moviesWithoutDuplicats = [...colectMovies.slice(0, nbMovie)];
 
-export async function getMoviesPage4() {
-	const url = `${apiUrl}discover/movie?&include_adult=false&include_video=false&language=fr-FR&vote_average.gte=5&primary_release_date.gte=1960-01-01&vote_count.gte=100&page=4`;
-	try {
-		const res = await fetch(url, options);
-		const data = await res.json();
-		return data.results || [];
-	} catch (err) {
-		console.error("rror fetching movies:", err);
-		return [];
-	}
-}
-
-export async function getMoviesPage5() {
-	const url = `${apiUrl}discover/movie?&include_adult=false&include_video=false&language=fr-FR&vote_average.gte=5&primary_release_date.gte=1960-01-01&vote_count.gte=100&page=5`;
-	try {
-		const res = await fetch(url, options);
-		const data = await res.json();
-		return data.results || [];
-	} catch (err) {
-		console.error("rror fetching movies:", err);
-		return [];
-	}
-}
+export const getAllMovies = moviesWithoutDuplicats.filter(
+	(movie, index, self) => index === self.findIndex((m) => m.id === movie.id),
+);
 
 export async function getGenresMovies() {
 	const urlGenre = "https://api.themoviedb.org/3/genre/movie/list";
