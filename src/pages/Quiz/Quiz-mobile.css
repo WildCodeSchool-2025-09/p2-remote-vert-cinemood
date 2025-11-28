@@ -2,6 +2,7 @@
 	.quiz-hero {
 		width: 50%;
 	}
+
 	.quiz-container {
 		max-width: 100%;
 	}
@@ -11,37 +12,41 @@
 	.quiz-hero {
 		width: 80%;
 	}
+
 	.image-container {
 		width: 250px;
-	}
-	.quiz-images {
-		max-width: 250px;
 	}
 }
 
 @media (max-width: 480px) {
 	.quiz-hero {
-		width: 100%;
-	}
-	.quiz-container h1 {
-		font-size: 1.5rem;
+		width: 80%;
+		padding: 5rem 0;
 	}
 
 	.quiz-container .header-section-center {
-		padding: 0;
-		gap: 1rem;
+		padding: 1rem;
 	}
 
 	.quiz-container {
-		padding: 1rem 1rem;
+		padding: 1rem;
 		gap: 1rem;
 	}
 
 	.question-container {
+		flex-wrap: wrap;
 		gap: 1rem;
 	}
 
-	.quiz-timer {
+	.image-container {
+		width: 220px;
+	}
+
+	.progress-bar-container {
 		margin: 1rem auto;
+	}
+
+	.transitionStep {
+		font-size: 2rem;
 	}
 }
