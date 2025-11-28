@@ -1,4 +1,5 @@
 import "./Movie.css";
+import "./Movie-mobile.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
@@ -128,7 +129,7 @@ function Movie() {
 	useEffect(() => {
 		if (!movie) return;
 
-		const header = document.querySelector(".header-details") as HTMLElement;
+		const header = document.querySelector(".background-poster") as HTMLElement;
 		if (!header) return;
 
 		if (movie.backdrop_path) {
@@ -151,9 +152,12 @@ function Movie() {
 	const posterUrl = movie.poster_path
 		? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
 		: "/no-poster.jpg";
-	const releaseDate = movie.release_date
-		? new Date(movie.release_date).getFullYear()
+
+	const releaseYear = movie.release_date
+		? `${movie.release_date.slice(0, 4)} · `
 		: "";
+	const certification = movie.certification ? `${movie.certification} · ` : "";
+
 	const originCountry =
 		movie.production_countries?.map((country) => country.name).join(", ") || "";
 	const productionCompanies =
@@ -171,8 +175,16 @@ function Movie() {
 			?.slice(0, 5)
 			.map((actor) => actor.name)
 			.join(", ") || "";
+
 	const rating = movie.vote_average ?? "";
-	const runtime = movie.runtime ?? "";
+
+	const runtimeInHours = (movie) => {
+		const hours = Math.floor(movie.runtime / 60);
+		const mins = movie.runtime - hours * 60;
+		return `${hours}h${mins}`;
+	};
+	const runtime = runtimeInHours(movie) ?? "";
+
 	const trailer = videos?.results?.find(
 		(video) => video.type === "Trailer" && video.site === "YouTube",
 	)?.key;
@@ -204,6 +216,7 @@ function Movie() {
 			logo: `https://image.tmdb.org/t/p/w92${p.logo_path}`,
 			url: PROVIDER_URLS[p.provider_name] || null,
 		})) || [];
+
 	const renderStars = (rating: number | "") => {
 		if (rating === "") return "";
 		const stars = Math.round((rating / 2) * 2) / 2;
@@ -211,39 +224,11 @@ function Movie() {
 		const halfStar = stars % 1 !== 0;
 		const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
 		let starIcons = "★".repeat(fullStars);
-		if (halfStar) starIcons += "⯨";
+		if (halfStar) {
+			starIcons += "⯪";
+		}
 		starIcons += "☆".repeat(emptyStars);
 		return <span className="stars">{starIcons}</span>;
-	};
-	const renderGenres = (movie: MovieData) => {
-		return (
-			<>
-				{movie.genres?.map((g) => (
-					<p className="genre-movie" key={g.name}>
-						{g.name}
-					</p>
-				))}
-			</>
-		);
-	};
-
-	const pegiIcon = (certification?: string) => {
-		switch (certification) {
-			case "U":
-				return "/pegi/logopublic.png";
-			case "6":
-				return "/pegi/logo6.png";
-			case "10":
-				return "/pegi/logo10.png";
-			case "12":
-				return "/pegi/logo12.png";
-			case "16":
-				return "/pegi/logo16.png";
-			case "18":
-				return "/pegi/logo18.png";
-			default:
-				return undefined;
-		}
 	};
 
 	function sendMessage() {
@@ -320,112 +305,119 @@ function Movie() {
 
 	return (
 		<>
-			<header className="header-details">
-				<img className="affiche-details" src={posterUrl} alt={movie.title} />
-				<article className="info-details">
-					<h1 className="primary-title">{movie.title}</h1>
-					<p className="header-text">
-						{releaseDate} &nbsp; &nbsp; &nbsp; &nbsp;
-						{runtime} min
-					</p>
-					<p className="header-text">
-						{movie.certification && (
-							<img
-								src={pegiIcon(movie.certification)}
-								alt={`PEGI ${movie.certification}`}
-								className="pegi-logo"
-							/>
-						)}
-					</p>
-					<p className="header-text">{renderStars(rating)}</p>
-					<div className="tag-list">
-						<i
-							className={`bi bi-suit-heart ${isFavorite ? "heart-favorite" : ""}`}
-							id="tag"
-							onClick={OnOffFavoriteMovies}
-							onKeyDown={(e) => {
-								if (e.key === "Enter" || e.key === " ") {
-									OnOffFavoriteMovies();
-								}
-							}}
-							role="button"
-							tabIndex={0}
-						/>
-
-						<i className="bi bi-plus-circle" />
-						<i className="bi bi-eye" />
+			<header className="background-poster">
+				<div className="header-width-container">
+					<div className="movie-poster-details-container">
+						<img src={posterUrl} alt={movie.title} />
 					</div>
-					{trailerUrl !== null && (
-						<button
-							type="button"
-							className="primary-button bouton-trailer-details"
-							onClick={handleTrailerClick}
-						>
-							Bande annonce
-						</button>
-					)}
-				</article>
-
-				<p className="disponibilité-details-logo body-text">
-					{streamingProvidersLogos.length > 0 &&
-						streamingProvidersLogos.map((p) => (
-							<a
-								href={p.url ?? "#"}
-								key={p.name}
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								<img
-									src={p.logo}
-									alt={p.name}
-									title={p.name}
-									className="provider-logo"
-								/>
-							</a>
-						))}
-				</p>
-			</header>
-			<div className="primary-background">
-				<section>
-					{showTrailer && trailerUrl && (
-						<article className="trailer-article">
-							<iframe
-								width="560"
-								height="315"
-								src={trailerUrl.replace("watch?v=", "embed/")}
-								title="Bande annonce"
-								frameBorder="0"
-								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-								allowFullScreen
-							/>
-						</article>
-					)}
-					<article className="description-details">
-						<article>
-							<article className="genres">{renderGenres(movie)}</article>
-							<p className="overview-details body-text">
-								{movie.overview ? (
-									movie.overview
-								) : (
-									<>
-										<p>Cette fiche ne contient pas encore de description.</p>
-										<p>
-											🎬 Mais pas de panique ! Clique ci-dessous pour lancer le
-											quiz interactif et découvrir une sélection de films rien
-											que pour toi.
-										</p>
-										<Link
-											to="/quiz"
-											className="primary-button primary-button-home"
-											id="button-quiz"
-										>
-											Lance le quiz
-										</Link>
-									</>
-								)}
+					<article className="info-details">
+						<div className="info-details-top">
+							<h1 className="primary-title">{movie.title}</h1>
+							<p className="sub-movie-title-text">{`Titre original : ${movie.original_title}`}</p>
+							<p className="sub-movie-title-text">
+								{releaseYear} {certification} {runtime}
 							</p>
-						</article>
-						<article className="information-details">
+							<p>{renderStars(rating)}</p>
+
+							<div className="genres-container">
+								{movie.genres?.map((genre) => (
+									<p className="genre-movie" key={genre.name}>
+										{genre.name}
+									</p>
+								))}
+							</div>
+						</div>
+						<div className="header-button-container">
+							<div className="tag-list">
+								<div className="icon">
+									<i
+										className={`bi bi-suit-heart ${isFavorite ? "heart-favorite" : ""}`}
+										onClick={OnOffFavoriteMovies}
+										onKeyDown={(e) => {
+											if (e.key === "Enter" || e.key === " ") {
+												OnOffFavoriteMovies();
+											}
+										}}
+										role="button"
+										tabIndex={0}
+									/>
+								</div>
+
+								<i className="bi bi-plus-circle icon" />
+								<i className="bi bi-eye icon" />
+							</div>
+							{trailerUrl !== null && (
+								<button
+									type="button"
+									className="primary-button bouton-trailer-details"
+									onClick={handleTrailerClick}
+								>
+									Bande annonce
+								</button>
+							)}
+						</div>
+						<div className="providers-container">
+							{streamingProvidersLogos.length > 0 &&
+								streamingProvidersLogos.map((p) => (
+									<div key={p.name}>
+										<a
+											href={p.url ?? "#"}
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											<img
+												src={p.logo}
+												alt={p.name}
+												title={p.name}
+												className="provider-logo"
+											/>
+										</a>
+									</div>
+								))}
+						</div>
+					</article>
+				</div>
+			</header>
+
+			<div className="primary-background">
+				<div className="body-width-container">
+					<section>
+						{showTrailer && trailerUrl && (
+							<div className="trailer">
+								<iframe
+									width="560"
+									height="315"
+									src={trailerUrl.replace("watch?v=", "embed/")}
+									title="Bande annonce"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+									allowFullScreen
+								/>
+							</div>
+						)}
+					</section>
+					<section className="description-details">
+						<p className="movie-description body-text">
+							{movie.overview ? (
+								movie.overview
+							) : (
+								<>
+									<p>Cette fiche ne contient pas encore de description.</p>
+									<p>
+										🎬 Mais pas de panique ! Clique ci-dessous pour lancer le
+										quiz interactif et découvrir une sélection de films rien que
+										pour toi.
+									</p>
+									<Link
+										to="/quiz"
+										className="primary-button primary-button-home"
+										id="button-quiz"
+									>
+										Lance le quiz
+									</Link>
+								</>
+							)}
+						</p>
+						<section className="information-details">
 							<p className="p-information-details body-text">
 								<span className="body-text-blue">Réalisé par</span> : {director}
 							</p>
@@ -444,11 +436,32 @@ function Movie() {
 								<span className="body-text-blue">Societé de production</span> :{" "}
 								{productionCompanies}
 							</p>
-						</article>
-					</article>
-				</section>
+						</section>
+						{/* <p className="overview-details body-text">
+							{movie.overview ? (
+								movie.overview
+							) : (
+								<>
+									<p>Cette fiche ne contient pas encore de description.</p>
+									<p>
+										🎬 Mais pas de panique ! Clique ci-dessous pour lancer le
+										quiz interactif et découvrir une sélection de films rien que
+										pour toi.
+									</p>
+									<Link
+										to="/quiz"
+										className="primary-button primary-button-home"
+										id="button-quiz"
+									>
+										Lance le quiz
+									</Link>
+								</>
+							)}
+						</p> */}
+					</section>
+				</div>
 				<section className="films-similaire">
-					<h2 className="secondary-title center padding-30">
+					<h2 className="secondary-title title-similar-movies">
 						Cela pourrait aussi t'intéresser
 					</h2>
 					{loadingSimilar ? (
