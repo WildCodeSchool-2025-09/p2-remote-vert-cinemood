@@ -2,11 +2,17 @@ import "./Movie.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import { useAlreadySeenMoviesList } from "../../Contexts/AlreadySeenMoviesListContext";
+import { useAlreadySeenMovieList } from "../../Contexts/AlreadySeenMovieListContext";
 import { useFavoriteMoviesList } from "../../Contexts/FavoriteMovieListContext";
+import avatar from "../../assets/images/avatar-utilisateur.jpg";
+import logo6 from "../../assets/images/pegi/logo6.png";
+import logo10 from "../../assets/images/pegi/logo10.png";
+import logo12 from "../../assets/images/pegi/logo12.png";
+import logo16 from "../../assets/images/pegi/logo16.png";
+import logo18 from "../../assets/images/pegi/logo18.png";
+import toutpublic from "../../assets/images/pegi/logopublic.png";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import type { MovieData } from "../../types/MovieType";
-import avatar from "./../../assets/images/avatar-utilisateur.jpg";
 
 interface CreditData {
 	crew: { job: string; name: string }[];
@@ -54,8 +60,8 @@ function Movie() {
 	const [similarMovies, setSimilarMovies] = useState([]);
 	const [loadingSimilar, setLoadingSimilar] = useState(false);
 	const [note, setNote] = useState(0);
-	const { AlreadySeenMoviesList, setAlreadySeenMoviesList } =
-		useAlreadySeenMoviesList();
+	const { AlreadySeenMovieList, setAlreadySeenMovieList } =
+		useAlreadySeenMovieList();
 	const [hoverNote, setHoverNote] = useState(0); // note au survol
 	const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 	const apiUrl = import.meta.env.VITE_TMDB_API_URL;
@@ -232,18 +238,20 @@ function Movie() {
 
 	const pegiIcon = (certification?: string) => {
 		switch (certification) {
+			case "TP":
+				return toutpublic;
 			case "U":
-				return "/pegi/logopublic.png";
+				return toutpublic;
 			case "6":
-				return "/pegi/logo6.png";
+				return logo6;
 			case "10":
-				return "/pegi/logo10.png";
+				return logo10;
 			case "12":
-				return "/pegi/logo12.png";
+				return logo12;
 			case "16":
-				return "/pegi/logo16.png";
+				return logo16;
 			case "18":
-				return "/pegi/logo18.png";
+				return logo18;
 			default:
 				return undefined;
 		}
@@ -252,7 +260,7 @@ function Movie() {
 	const isFavorite = FavoriteMoviesList.some(
 		(favorite) => favorite.id === movie.id,
 	);
-	const isAlreadySeen = AlreadySeenMoviesList.some(
+	const isAlreadySeen = AlreadySeenMovieList.some(
 		(AlreadySeen) => AlreadySeen.id === movie.id,
 	);
 
@@ -283,7 +291,7 @@ function Movie() {
 	function OnOffAlreadySeenMovies() {
 		if (!movie) return;
 
-		setAlreadySeenMoviesList((prev) => {
+		setAlreadySeenMovieList((prev) => {
 			const exists = prev.some((AlreadySeen) => AlreadySeen.id === movie.id);
 
 			if (exists) {
