@@ -2,8 +2,8 @@ import "./Movie.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import { useFavoriteMovies } from "../../Contexts/FavoriteMovieContext";
-import { useTagAlreadySeen } from "../../Contexts/TagAlreadySeenContext";
+import { useAlreadySeenMoviesList } from "../../Contexts/AlreadySeenMoviesListContext";
+import { useFavoriteMoviesList } from "../../Contexts/FavoriteMovieListContext";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import type { MovieData } from "../../types/MovieType";
 import avatar from "./../../assets/images/avatar-utilisateur.jpg";
@@ -54,11 +54,12 @@ function Movie() {
 	const [similarMovies, setSimilarMovies] = useState([]);
 	const [loadingSimilar, setLoadingSimilar] = useState(false);
 	const [note, setNote] = useState(0);
-	const { setTagAlreadySeen } = useTagAlreadySeen();
+	const { AlreadySeenMoviesList, setAlreadySeenMoviesList } =
+		useAlreadySeenMoviesList();
 	const [hoverNote, setHoverNote] = useState(0); // note au survol
 	const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 	const apiUrl = import.meta.env.VITE_TMDB_API_URL;
-	const { FavoriteMovies, setFavoriteMovies } = useFavoriteMovies();
+	const { FavoriteMoviesList, setFavoriteMoviesList } = useFavoriteMoviesList();
 	const handleTrailerClick = () => setShowTrailer((prev) => !prev);
 
 	useEffect(() => {
@@ -248,6 +249,13 @@ function Movie() {
 		}
 	};
 
+	const isFavorite = FavoriteMoviesList.some(
+		(favorite) => favorite.id === movie.id,
+	);
+	const isAlreadySeen = AlreadySeenMoviesList.some(
+		(AlreadySeen) => AlreadySeen.id === movie.id,
+	);
+
 	function sendMessage() {
 		if (!newMessage.trim()) return;
 		if (!pseudo.trim()) return;
@@ -262,17 +270,29 @@ function Movie() {
 	function OnOffFavoriteMovies() {
 		if (!movie) return;
 
-		setFavoriteMovies((prev) => {
-			const exists = prev.some((fav) => fav.id === movie.id);
+		setFavoriteMoviesList((prev) => {
+			const exists = prev.some((favorite) => favorite.id === movie.id);
 
 			if (exists) {
-				return prev.filter((fav) => fav.id !== movie.id);
+				return prev.filter((favorite) => favorite.id !== movie.id);
 			}
 			return [...prev, movie];
 		});
 	}
 
-	const isFavorite = FavoriteMovies.some((fav) => fav.id === movie.id);
+	function OnOffAlreadySeenMovies() {
+		if (!movie) return;
+
+		setAlreadySeenMoviesList((prev) => {
+			const exists = prev.some((AlreadySeen) => AlreadySeen.id === movie.id);
+
+			if (exists) {
+				return prev.filter((AlreadySeen) => AlreadySeen.id !== movie.id);
+			}
+			return [...prev, movie];
+		});
+	}
+
 	function resizeImage({ url, width, height }: ResizeParams): Promise<string> {
 		return new Promise((resolve, reject) => {
 			const img = new Image();
@@ -342,7 +362,9 @@ function Movie() {
 					<p className="header-text">{renderStars(rating)}</p>
 					<div className="tag-list">
 						<i
-							className={`bi bi-suit-heart ${isFavorite ? "heart-favorite" : ""}`}
+							className={
+								isFavorite ? "bi bi-suit-heart-fill tag-on" : "bi bi-suit-heart"
+							}
 							id="tag"
 							onClick={OnOffFavoriteMovies}
 							onKeyDown={(e) => {
@@ -353,9 +375,19 @@ function Movie() {
 							role="button"
 							tabIndex={0}
 						/>
-
 						<i className="bi bi-plus-circle" />
-						<i className="bi bi-eye" />
+						<i
+							className={`bi bi-eye ${isAlreadySeen ? "tag-on" : ""}`}
+							id="tag"
+							onClick={OnOffAlreadySeenMovies}
+							onKeyDown={(e) => {
+								if (e.key === "Enter" || e.key === " ") {
+									OnOffAlreadySeenMovies();
+								}
+							}}
+							role="button"
+							tabIndex={0}
+						/>
 					</div>
 					{trailerUrl !== null && (
 						<button
