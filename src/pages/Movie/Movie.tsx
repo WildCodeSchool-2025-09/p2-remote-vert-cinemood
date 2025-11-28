@@ -3,7 +3,6 @@ import "./Movie-mobile.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import avatar from "../../assets/images/avatar-utilisateur.jpg";
 import logo6 from "../../assets/images/pegi/logo6.png";
 import logo10 from "../../assets/images/pegi/logo10.png";
 import logo12 from "../../assets/images/pegi/logo12.png";
