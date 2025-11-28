@@ -14,6 +14,7 @@ import { useAlreadySeenMovieList } from "../../context/AlreadySeenMovieListConte
 import { useFavoriteMoviesList } from "../../context/FavoriteMovieListContext";
 import { useWatchListMovies } from "../../context/WatchListMoviesContext";
 import type { MovieData } from "../../types/MovieType";
+import type { Movie as MovieType } from "../../types/MovieType";
 
 interface CreditData {
 	crew: { job: string; name: string }[];
@@ -58,12 +59,12 @@ function Movie() {
 	const [videos, setVideos] = useState<VideoData | null>(null);
 	const [providers, setProviders] = useState<ProvidersData | null>(null);
 	const [showTrailer, setShowTrailer] = useState(false);
-	const [similarMovies, setSimilarMovies] = useState([]);
+	const [similarMovies, setSimilarMovies] = useState<MovieType[]>([]);
 	const [loadingSimilar, setLoadingSimilar] = useState(false);
 	const [note, setNote] = useState(0);
 	const { AlreadySeenMovieList, setAlreadySeenMovieList } =
 		useAlreadySeenMovieList();
-	const [hoverNote, setHoverNote] = useState(0); // note au survol
+	const [hoverNote, setHoverNote] = useState(0);
 	const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 	const apiUrl = import.meta.env.VITE_TMDB_API_URL;
 	const { FavoriteMoviesList, setFavoriteMoviesList } = useFavoriteMoviesList();
@@ -289,7 +290,7 @@ function Movie() {
 			if (exists) {
 				return prev.filter((favorite) => favorite.id !== movie.id);
 			}
-			return [...prev, movie];
+			return [...prev, toMovie(movie)];
 		});
 	}
 
@@ -302,7 +303,7 @@ function Movie() {
 			if (exists) {
 				return prev.filter((watchlist) => watchlist.id !== movie.id);
 			}
-			return [...prev, movie];
+			return [...prev, toMovie(movie)];
 		});
 	}
 
@@ -315,7 +316,7 @@ function Movie() {
 			if (exists) {
 				return prev.filter((AlreadySeen) => AlreadySeen.id !== movie.id);
 			}
-			return [...prev, movie];
+			return [...prev, toMovie(movie)];
 		});
 	}
 
@@ -364,6 +365,14 @@ function Movie() {
 			);
 		}
 		return <div className="star-rating">{stars}</div>;
+	}
+
+	function toMovie(data: MovieData): MovieType {
+		return {
+			id: data.id,
+			poster_path: data.poster_path ?? "/no-poster.jpg",
+			title: data.title ?? "Titre inconnu",
+		};
 	}
 
 	return (

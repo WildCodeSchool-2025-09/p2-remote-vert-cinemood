@@ -1,9 +1,9 @@
 import { type ReactNode, createContext, useContext, useState } from "react";
-import type { MovieData } from "../types/MovieType";
+import type { Movie } from "../types/MovieType";
 
 type AlreadySeenMovieListState = {
-	AlreadySeenMovieList: MovieData[];
-	setAlreadySeenMovieList: React.Dispatch<React.SetStateAction<MovieData[]>>;
+	AlreadySeenMovieList: Movie[];
+	setAlreadySeenMovieList: React.Dispatch<React.SetStateAction<Movie[]>>;
 };
 
 const AlreadySeenMovieListContext = createContext<AlreadySeenMovieListState>({
@@ -14,9 +14,7 @@ const AlreadySeenMovieListContext = createContext<AlreadySeenMovieListState>({
 export default function AlreadySeenMovieListProvider({
 	children,
 }: { children: ReactNode }) {
-	const [AlreadySeenMovieList, setAlreadySeenMovieList] = useState<MovieData[]>(
-		[],
-	);
+	const [AlreadySeenMovieList, setAlreadySeenMovieList] = useState<Movie[]>([]);
 
 	return (
 		<AlreadySeenMovieListContext.Provider

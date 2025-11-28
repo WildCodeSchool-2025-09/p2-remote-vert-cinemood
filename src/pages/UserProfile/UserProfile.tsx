@@ -1,8 +1,13 @@
 import "./UserProfile.css";
-import { useTagFavorite } from "../../Contexts/TagFavoriteContext";
+import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
+import { useAlreadySeenMovieList } from "../../context/AlreadySeenMovieListContext";
+import { useFavoriteMoviesList } from "../../context/FavoriteMovieListContext";
+import { useWatchListMovies } from "../../context/WatchListMoviesContext";
 import profile from "./../../assets/images/patron_incognito.png";
 
-const { TagFavorite } = useTagFavorite();
+const { FavoriteMoviesList } = useFavoriteMoviesList();
+const { AlreadySeenMovieList } = useAlreadySeenMovieList();
+const { WatchListMovies } = useWatchListMovies();
 
 function UserProfile() {
 	return (
@@ -23,6 +28,15 @@ function UserProfile() {
 					<p>mail : mickaëllambert@gmail.Com</p>
 				</article>
 				<img src={profile} alt="mickaël&simon" />
+			</article>
+			<article>
+				<CarouselMovie movies={FavoriteMoviesList} />
+			</article>
+			<article>
+				<CarouselMovie movies={AlreadySeenMovieList} />
+			</article>
+			<article>
+				<CarouselMovie movies={WatchListMovies} />
 			</article>
 		</>
 	);
