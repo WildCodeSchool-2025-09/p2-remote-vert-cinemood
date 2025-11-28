@@ -14,86 +14,54 @@
 	z-index: 1000;
 	top: 0;
 	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 1.5rem;
+}
+
+.navbar-burger {
+	cursor: pointer;
+	display: none;
+	font-size: 1.5rem;
+	color: var(--white);
+}
+
+.navbar-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-around;
 	align-items: center;
+	gap: 1.5rem;
+}
 
-	.navbar-burger {
-		cursor: pointer;
-		display: none;
-		font-size: 1.5em;
+.navbar-list li {
+	position: relative;
+}
 
-		@media screen and (max-width: 768px) {
-			display: block;
-			color: var(--white);
-		}
-	}
+.navbar-list li a {
+	color: var(--white);
+	text-decoration: none;
+}
 
-	.navbar-list {
-		list-style: none;
-		margin: 0;
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-around;
-		align-items: center;
+.navbar-list li:hover {
+	display: flex;
+	flex-direction: column;
+}
 
-		@media screen and (max-width: 768px) {
-			flex-direction: column;
-			width: 100%;
-			background-color: var(--black);
-			z-index: 1;
-			display: none;
-
-			&.show {
-				display: flex;
-
-				img {
-					padding: 0;
-				}
-			}
-		}
-
-		li {
-			position: relative;
-			padding: 1rem;
-
-			&:hover {
-				display: flex;
-				flex-direction: column;
-			}
-
-			a {
-				color: var(--white);
-				text-decoration: none;
-			}
-		}
-
-		.active {
-			color: #ff9900;
-			padding: 0.2em;
-			background-color: #ff990018;
-			box-shadow: 0 0 30px #75553f;
-		}
-
-		/* Responsive styles */
-		@media screen and (max-width: 768px) {
-			flex-direction: column;
-
-			li {
-				padding: 0.5rem;
-				position: relative;
-
-				a {
-					padding: 0.3rem;
-				}
-			}
-		}
-	}
+.navbar-list .active {
+	color: #ff9900;
+	padding: 0.2em;
+	background-color: #ff990018;
+	box-shadow: 0 0 30px #75553f;
 }
 
 .logo {
 	display: block;
 	height: 80px;
-	width: auto;
+	width: 144px;
 }
 
 .nav-button {
@@ -101,7 +69,7 @@
 	font-family: var(--font-family-text);
 	font-size: var(--font-size-text);
 	font-weight: var(--font-weight-text-normal);
-	padding: 0.35em;
+	padding: 0.35em 0.8em;
 	border: none;
 	border-radius: 40px;
 	text-decoration: none;
@@ -122,7 +90,7 @@
 	font-size: var(--font-size-text);
 	font-weight: var(--font-weight-text-normal);
 	border-radius: 40px;
-	padding: 0.35em;
+	padding: 0.35em 0.8em;
 }
 
 .search-bar {
@@ -133,5 +101,5 @@
 	font-size: var(--font-size-text);
 	font-weight: var(--font-weight-text-normal);
 	border-radius: 40px;
-	padding: 0.25em;
+	padding: 0.25em 0.8em;
 }

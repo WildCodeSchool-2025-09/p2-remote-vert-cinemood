@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import "./NavBar.css";
+import "./NavBar-mobile.css";
 import { useState } from "react";
 import { useLaunch } from "../../context/LaunchQuiz";
 
@@ -12,12 +13,12 @@ function NavBar() {
 
 	return (
 		<>
-			<nav className={`navbar ${isMenuOpen ? "show-navbar" : ""}`}>
+			<nav className="navbar">
 				<Link to="/">
 					<img
 						src="/logo-cine-mood-black.png"
 						alt="CinéMood"
-						className={`logo navbar-list ${isMenuOpen ? "" : "show"}`}
+						className={`logo ${isMenuOpen ? "" : "show"}`}
 					/>
 				</Link>
 				<div
@@ -44,6 +45,7 @@ function NavBar() {
 						</Link>
 					</li>
 					<li className="navbar-item">
+						{/*Fonctionnalités de la barre de recherche sur une autre US*/}
 						<input type="text" className="search-bar" placeholder="Recherche" />
 					</li>
 					<li className="navbar-item">
