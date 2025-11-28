@@ -2,8 +2,6 @@ import "./Movie.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import { useAlreadySeenMovieList } from "../../Contexts/AlreadySeenMovieListContext";
-import { useFavoriteMoviesList } from "../../Contexts/FavoriteMovieListContext";
 import avatar from "../../assets/images/avatar-utilisateur.jpg";
 import logo6 from "../../assets/images/pegi/logo6.png";
 import logo10 from "../../assets/images/pegi/logo10.png";
@@ -12,6 +10,9 @@ import logo16 from "../../assets/images/pegi/logo16.png";
 import logo18 from "../../assets/images/pegi/logo18.png";
 import toutpublic from "../../assets/images/pegi/logopublic.png";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
+import { useAlreadySeenMovieList } from "../../context/AlreadySeenMovieListContext";
+import { useFavoriteMoviesList } from "../../context/FavoriteMovieListContext";
+import { useWatchListMovies } from "../../context/WatchListMoviesContext";
 import type { MovieData } from "../../types/MovieType";
 
 interface CreditData {
@@ -66,6 +67,7 @@ function Movie() {
 	const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 	const apiUrl = import.meta.env.VITE_TMDB_API_URL;
 	const { FavoriteMoviesList, setFavoriteMoviesList } = useFavoriteMoviesList();
+	const { WatchListMovies, setWatchListMovies } = useWatchListMovies();
 	const handleTrailerClick = () => setShowTrailer((prev) => !prev);
 
 	useEffect(() => {
@@ -263,6 +265,9 @@ function Movie() {
 	const isAlreadySeen = AlreadySeenMovieList.some(
 		(AlreadySeen) => AlreadySeen.id === movie.id,
 	);
+	const isWatchList = WatchListMovies.some(
+		(WatchList) => WatchList.id === movie.id,
+	);
 
 	function sendMessage() {
 		if (!newMessage.trim()) return;
@@ -283,6 +288,19 @@ function Movie() {
 
 			if (exists) {
 				return prev.filter((favorite) => favorite.id !== movie.id);
+			}
+			return [...prev, movie];
+		});
+	}
+
+	function OnOffWatchListMovies() {
+		if (!movie) return;
+
+		setWatchListMovies((prev) => {
+			const exists = prev.some((watchlist) => watchlist.id === movie.id);
+
+			if (exists) {
+				return prev.filter((watchlist) => watchlist.id !== movie.id);
 			}
 			return [...prev, movie];
 		});
@@ -383,7 +401,18 @@ function Movie() {
 							role="button"
 							tabIndex={0}
 						/>
-						<i className="bi bi-plus-circle" />
+						<i
+							className={`bi bi-plus-circle ${isWatchList ? "tag-on" : ""}`}
+							id="tag"
+							onClick={OnOffWatchListMovies}
+							onKeyDown={(e) => {
+								if (e.key === "Enter" || e.key === " ") {
+									OnOffWatchListMovies();
+								}
+							}}
+							role="button"
+							tabIndex={0}
+						/>
 						<i
 							className={`bi bi-eye ${isAlreadySeen ? "tag-on" : ""}`}
 							id="tag"
