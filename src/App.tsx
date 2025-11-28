@@ -8,7 +8,7 @@ function App() {
 	return (
 		<>
 			<NavBar />
-			<main className="navbar-margin">
+			<main>
 				<Outlet />
 			</main>
 			<Footer />

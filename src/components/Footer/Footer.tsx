@@ -5,7 +5,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 function Footer() {
 	return (
 		<>
-			<footer className="bas-de-page">
+			<footer>
 				<Link to="/">
 					<img src="/logo-cine-mood-black.png" alt="logo" height="80px" />
 				</Link>
