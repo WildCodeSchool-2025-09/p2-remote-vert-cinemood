@@ -2,10 +2,17 @@ import "./Movie.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import { useFavoriteMovies } from "../../Contexts/FavoriteMovieContext";
+import { useAlreadySeenMovieList } from "../../Contexts/AlreadySeenMovieListContext";
+import { useFavoriteMoviesList } from "../../Contexts/FavoriteMovieListContext";
+import avatar from "../../assets/images/avatar-utilisateur.jpg";
+import logo6 from "../../assets/images/pegi/logo6.png";
+import logo10 from "../../assets/images/pegi/logo10.png";
+import logo12 from "../../assets/images/pegi/logo12.png";
+import logo16 from "../../assets/images/pegi/logo16.png";
+import logo18 from "../../assets/images/pegi/logo18.png";
+import toutpublic from "../../assets/images/pegi/logopublic.png";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import type { MovieData } from "../../types/MovieType";
-import avatar from "./../../assets/images/avatar-utilisateur.jpg";
 
 interface CreditData {
 	crew: { job: string; name: string }[];
@@ -53,10 +60,12 @@ function Movie() {
 	const [similarMovies, setSimilarMovies] = useState([]);
 	const [loadingSimilar, setLoadingSimilar] = useState(false);
 	const [note, setNote] = useState(0);
+	const { AlreadySeenMovieList, setAlreadySeenMovieList } =
+		useAlreadySeenMovieList();
 	const [hoverNote, setHoverNote] = useState(0); // note au survol
 	const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 	const apiUrl = import.meta.env.VITE_TMDB_API_URL;
-	const { FavoriteMovies, setFavoriteMovies } = useFavoriteMovies();
+	const { FavoriteMoviesList, setFavoriteMoviesList } = useFavoriteMoviesList();
 	const handleTrailerClick = () => setShowTrailer((prev) => !prev);
 
 	useEffect(() => {
@@ -229,22 +238,31 @@ function Movie() {
 
 	const pegiIcon = (certification?: string) => {
 		switch (certification) {
+			case "TP":
+				return toutpublic;
 			case "U":
-				return "/pegi/logopublic.png";
+				return toutpublic;
 			case "6":
-				return "/pegi/logo6.png";
+				return logo6;
 			case "10":
-				return "/pegi/logo10.png";
+				return logo10;
 			case "12":
-				return "/pegi/logo12.png";
+				return logo12;
 			case "16":
-				return "/pegi/logo16.png";
+				return logo16;
 			case "18":
-				return "/pegi/logo18.png";
+				return logo18;
 			default:
 				return undefined;
 		}
 	};
+
+	const isFavorite = FavoriteMoviesList.some(
+		(favorite) => favorite.id === movie.id,
+	);
+	const isAlreadySeen = AlreadySeenMovieList.some(
+		(AlreadySeen) => AlreadySeen.id === movie.id,
+	);
 
 	function sendMessage() {
 		if (!newMessage.trim()) return;
@@ -260,17 +278,29 @@ function Movie() {
 	function OnOffFavoriteMovies() {
 		if (!movie) return;
 
-		setFavoriteMovies((prev) => {
-			const exists = prev.some((fav) => fav.id === movie.id);
+		setFavoriteMoviesList((prev) => {
+			const exists = prev.some((favorite) => favorite.id === movie.id);
 
 			if (exists) {
-				return prev.filter((fav) => fav.id !== movie.id);
+				return prev.filter((favorite) => favorite.id !== movie.id);
 			}
 			return [...prev, movie];
 		});
 	}
 
-	const isFavorite = FavoriteMovies.some((fav) => fav.id === movie.id);
+	function OnOffAlreadySeenMovies() {
+		if (!movie) return;
+
+		setAlreadySeenMovieList((prev) => {
+			const exists = prev.some((AlreadySeen) => AlreadySeen.id === movie.id);
+
+			if (exists) {
+				return prev.filter((AlreadySeen) => AlreadySeen.id !== movie.id);
+			}
+			return [...prev, movie];
+		});
+	}
+
 	function resizeImage({ url, width, height }: ResizeParams): Promise<string> {
 		return new Promise((resolve, reject) => {
 			const img = new Image();
@@ -340,7 +370,9 @@ function Movie() {
 					<p className="header-text">{renderStars(rating)}</p>
 					<div className="tag-list">
 						<i
-							className={`bi bi-suit-heart ${isFavorite ? "heart-favorite" : ""}`}
+							className={
+								isFavorite ? "bi bi-suit-heart-fill tag-on" : "bi bi-suit-heart"
+							}
 							id="tag"
 							onClick={OnOffFavoriteMovies}
 							onKeyDown={(e) => {
@@ -351,9 +383,19 @@ function Movie() {
 							role="button"
 							tabIndex={0}
 						/>
-
 						<i className="bi bi-plus-circle" />
-						<i className="bi bi-eye" />
+						<i
+							className={`bi bi-eye ${isAlreadySeen ? "tag-on" : ""}`}
+							id="tag"
+							onClick={OnOffAlreadySeenMovies}
+							onKeyDown={(e) => {
+								if (e.key === "Enter" || e.key === " ") {
+									OnOffAlreadySeenMovies();
+								}
+							}}
+							role="button"
+							tabIndex={0}
+						/>
 					</div>
 					{trailerUrl !== null && (
 						<button
