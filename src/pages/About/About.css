@@ -1,0 +1,21 @@
+.about {
+	color: var(--white);
+	padding: 50px;
+}
+
+h1 {
+	text-align: center;
+}
+
+article {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	font-size: var(--font-size-text);
+	padding: 50px;
+	width: 55%;
+	margin: 20px auto;
+	background-color: rgba(248, 249, 251, 0.2);
+	border-radius: 20px;
+	line-height: 1.5;
+}
