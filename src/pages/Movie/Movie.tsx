@@ -326,18 +326,21 @@ function Movie() {
 						<div className="header-button-container">
 							<div className="tag-list">
 								<Tag
+									className="icon-large-blue"
 									list={FavoriteMoviesList}
 									setter={setFavoriteMoviesList}
 									icon="bi bi-suit-heart"
 									movie={movie}
 								/>
 								<Tag
+									className="icon-large-blue"
 									list={WatchListMovies}
 									setter={setWatchListMovies}
 									icon="bi bi-plus-circle"
 									movie={movie}
 								/>
 								<Tag
+									className="icon-large-blue"
 									list={AlreadySeenMovieList}
 									setter={setAlreadySeenMovieList}
 									icon="bi bi-eye"

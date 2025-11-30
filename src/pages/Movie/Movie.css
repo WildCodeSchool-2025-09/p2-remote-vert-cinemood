@@ -107,7 +107,7 @@
 	display: flex;
 }
 
-.icon {
+.icon-large-blue {
 	color: var(--white);
 	font-size: 2rem;
 	margin: 0 1rem 1rem 1rem;
@@ -115,7 +115,7 @@
 	transition: all 0.2s ease;
 }
 
-.icon:hover {
+.icon-large-blue:hover {
 	color: var(--light-blue);
 	transform: scale(1.2);
 }
@@ -136,7 +136,7 @@
 	max-width: 70px;
 	aspect-ratio: 1 / 1;
 	border-radius: 20px;
-	overflow: hidden;	
+	overflow: hidden;
 	transition: all 0.2s ease;
 }
 
@@ -179,10 +179,6 @@
 	width: 15vw;
 }
 
-.movie-description-container {
-
-}
-
 .information-details {
 	min-width: 30%;
 }
@@ -191,7 +187,7 @@
 	padding-bottom: 1rem;
 }
 
-.bold{
+.bold {
 	font-weight: bold;
 }
 
@@ -201,12 +197,12 @@
 }
 
 .films-similaire {
-	margin-bottom: 3rem;;
+	margin-bottom: 3rem;
 }
 
 .commentaires {
 	margin: 0 auto;
-	padding-bottom: 6rem;;
+	padding-bottom: 6rem;
 	width: 70%;
 	display: flex;
 	flex-direction: column;
@@ -223,7 +219,6 @@
 	align-items: center;
 	justify-content: center;
 	gap: 20px;
-
 }
 
 #bouton-commentaire-details {

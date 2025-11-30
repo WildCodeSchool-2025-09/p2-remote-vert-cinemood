@@ -1,4 +1,4 @@
-export default function Tag({ list, setter, icon, movie }) {
+export default function Tag({ className, list, setter, icon, movie }) {
 	const isActive = list.some((listItem) => listItem.id === movie.id);
 
 	function addtoList(setter, para) {
@@ -12,7 +12,7 @@ export default function Tag({ list, setter, icon, movie }) {
 	}
 
 	return (
-		<div className="icon">
+		<div className={className}>
 			<i
 				className={isActive ? `${icon}-fill tag-on` : icon}
 				onClick={() => {
