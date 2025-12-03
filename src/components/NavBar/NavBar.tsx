@@ -30,7 +30,7 @@ function NavBar() {
 				</div>
 				<ul className={`navbar-list ${isMenuOpen ? "show" : ""}`}>
 					<li className="navbar-item">
-						<Link to="/" onClick={toggleMenu} className="nav-button">
+						<Link to="/apropos" onClick={toggleMenu} className="nav-button">
 							À propos
 						</Link>
 					</li>

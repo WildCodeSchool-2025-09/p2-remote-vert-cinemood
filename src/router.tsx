@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import App from "./App.tsx";
+import About from "./pages/About/About.tsx";
 import Catalog from "./pages/Catalog/Catalog.tsx";
 import Home from "./pages/Home/Home.tsx";
 import Movie from "./pages/Movie/Movie.tsx";
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
 			{
 				path: "/recommandations",
 				element: <Recos />,
+			},
+			{
+				path: "/apropos",
+				element: <About />,
 			},
 		],
 	},
