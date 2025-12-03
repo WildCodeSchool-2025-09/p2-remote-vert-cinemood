@@ -2,6 +2,7 @@ import "./Movie.css";
 import "./Movie-mobile.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
+import { OrbitProgress } from "react-loading-indicators";
 import { Link, useParams } from "react-router";
 import logo6 from "../../assets/images/pegi/logo6.png";
 import logo10 from "../../assets/images/pegi/logo10.png";
@@ -10,13 +11,12 @@ import logo16 from "../../assets/images/pegi/logo16.png";
 import logo18 from "../../assets/images/pegi/logo18.png";
 import toutpublic from "../../assets/images/pegi/logopublic.png";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
+import Tag from "../../components/Tag/Tag";
 import { useAlreadySeenMovieList } from "../../context/AlreadySeenMovieListContext";
 import { useFavoriteMoviesList } from "../../context/FavoriteMovieListContext";
 import { useWatchListMovies } from "../../context/WatchListMoviesContext";
 import type { MovieData } from "../../types/MovieType";
 import avatar from "./../../assets/images/avatar-utilisateur.jpg";
-import { OrbitProgress } from "react-loading-indicators";
-import Tag from "../../components/Tag/Tag";
 
 interface CreditData {
 	crew: { job: string; name: string }[];
