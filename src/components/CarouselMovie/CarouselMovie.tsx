@@ -2,14 +2,22 @@ import useEmblaCarousel from "embla-carousel-react";
 import { Link } from "react-router";
 import "./CarouselMovie.css";
 import "./CarouselMovie-mobile.css";
-import type { Movie } from "../../types/MovieType";
+import type { MovieData } from "../../types/MovieType";
+import { useAlreadySeenMovieList } from "../../context/AlreadySeenMovieListContext";
+import { useFavoriteMoviesList } from "../../context/FavoriteMovieListContext";
+import { useWatchListMovies } from "../../context/WatchListMoviesContext";
+import Tag from "../Tag/Tag";
 
 type CarouselProps = {
-	movies: Movie[];
+	movies: MovieData[];
 };
 
 function CarouselMovie({ movies }: CarouselProps) {
 	const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+	const { AlreadySeenMovieList, setAlreadySeenMovieList } =
+		useAlreadySeenMovieList();
+	const { FavoriteMoviesList, setFavoriteMoviesList } = useFavoriteMoviesList();
+	const { WatchListMovies, setWatchListMovies } = useWatchListMovies();
 
 	return (
 		<div className="carousel-wrapper">
@@ -25,17 +33,45 @@ function CarouselMovie({ movies }: CarouselProps) {
 						.filter((movie) => movie.poster_path)
 						.map((movie) => (
 							<div className="embla__slide movie-poster" key={movie.id}>
-								<Link to={`/film/${movie.id}`}>
-									<img
-										src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-										alt={movie.title}
-									/>
-									<div>
-										<p className="primary-button show-mini-details">
-											{movie.title}
-										</p>
+								<div className="movie-poster-wrapper">
+									<Link
+										to={`/film/${movie.id}`}
+										onClick={() => {
+											window.scrollTo({ top: 0, left: 0 });
+										}}
+									>
+										<img
+											src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+											alt={movie.title}
+										/>
+									</Link>
+									<div className="show-mini-details">
+										<p className="title-small-carousel">{movie.title}</p>
+										<div className="tag-list-carousel">
+											<Tag
+												className="icon-small-carousel"
+												list={FavoriteMoviesList}
+												setter={setFavoriteMoviesList}
+												icon="bi bi-suit-heart"
+												movie={movie}
+											/>
+											<Tag
+												className="icon-small-carousel"
+												list={WatchListMovies}
+												setter={setWatchListMovies}
+												icon="bi bi-plus-circle"
+												movie={movie}
+											/>
+											<Tag
+												className="icon-small-carousel"
+												list={AlreadySeenMovieList}
+												setter={setAlreadySeenMovieList}
+												icon="bi bi-eye"
+												movie={movie}
+											/>
+										</div>
 									</div>
-								</Link>
+								</div>
 							</div>
 						))}
 				</div>

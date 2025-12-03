@@ -2,6 +2,7 @@ import "./Movie.css";
 import "./Movie-mobile.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
+import { OrbitProgress } from "react-loading-indicators";
 import { Link, useParams } from "react-router";
 import logo6 from "../../assets/images/pegi/logo6.png";
 import logo10 from "../../assets/images/pegi/logo10.png";
@@ -10,12 +11,12 @@ import logo16 from "../../assets/images/pegi/logo16.png";
 import logo18 from "../../assets/images/pegi/logo18.png";
 import toutpublic from "../../assets/images/pegi/logopublic.png";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
+import Tag from "../../components/Tag/Tag";
 import { useAlreadySeenMovieList } from "../../context/AlreadySeenMovieListContext";
 import { useFavoriteMoviesList } from "../../context/FavoriteMovieListContext";
 import { useWatchListMovies } from "../../context/WatchListMoviesContext";
 import type { MovieData } from "../../types/MovieType";
 import avatar from "./../../assets/images/avatar-utilisateur.jpg";
-import { OrbitProgress } from "react-loading-indicators";
 
 interface CreditData {
 	crew: { job: string; name: string }[];
@@ -240,16 +241,6 @@ function Movie() {
 		return <span className="stars">{starIcons}</span>;
 	};
 
-	const isFavorite = FavoriteMoviesList.some(
-		(favorite) => favorite.id === movie.id,
-	);
-	const isAlreadySeen = AlreadySeenMovieList.some(
-		(AlreadySeen) => AlreadySeen.id === movie.id,
-	);
-	const isWatchList = WatchListMovies.some(
-		(WatchList) => WatchList.id === movie.id,
-	);
-
 	function sendMessage() {
 		if (!newMessage.trim()) return;
 		if (!pseudo.trim()) return;
@@ -259,45 +250,6 @@ function Movie() {
 		setNote(0);
 		setNewMessage("");
 		setPseudo("");
-	}
-
-	function OnOffFavoriteMovies() {
-		if (!movie) return;
-
-		setFavoriteMoviesList((prev) => {
-			const exists = prev.some((favorite) => favorite.id === movie.id);
-
-			if (exists) {
-				return prev.filter((favorite) => favorite.id !== movie.id);
-			}
-			return [...prev, movie];
-		});
-	}
-
-	function OnOffWatchListMovies() {
-		if (!movie) return;
-
-		setWatchListMovies((prev) => {
-			const exists = prev.some((watchlist) => watchlist.id === movie.id);
-
-			if (exists) {
-				return prev.filter((watchlist) => watchlist.id !== movie.id);
-			}
-			return [...prev, movie];
-		});
-	}
-
-	function OnOffAlreadySeenMovies() {
-		if (!movie) return;
-
-		setAlreadySeenMovieList((prev) => {
-			const exists = prev.some((AlreadySeen) => AlreadySeen.id === movie.id);
-
-			if (exists) {
-				return prev.filter((AlreadySeen) => AlreadySeen.id !== movie.id);
-			}
-			return [...prev, movie];
-		});
 	}
 
 	function resizeImage({ url, width, height }: ResizeParams): Promise<string> {
@@ -373,58 +325,27 @@ function Movie() {
 						</div>
 						<div className="header-button-container">
 							<div className="tag-list">
-								<div className="icon">
-									<i
-										className={
-											isFavorite
-												? "bi bi-suit-heart-fill tag-on"
-												: "bi bi-suit-heart"
-										}
-										id="tag"
-										onClick={OnOffFavoriteMovies}
-										onKeyDown={(e) => {
-											if (e.key === "Enter" || e.key === " ") {
-												OnOffFavoriteMovies();
-											}
-										}}
-										role="button"
-										tabIndex={0}
-									/>
-								</div>
-								<div className="icon">
-									<i
-										className={
-											isWatchList
-												? "bi bi-plus-circle-fill tag-on"
-												: "bi bi-plus-circle"
-										}
-										id="tag"
-										onClick={OnOffWatchListMovies}
-										onKeyDown={(e) => {
-											if (e.key === "Enter" || e.key === " ") {
-												OnOffWatchListMovies();
-											}
-										}}
-										role="button"
-										tabIndex={0}
-									/>
-								</div>
-								<div className="icon">
-									<i
-										className={
-											isAlreadySeen ? "bi bi-eye-fill tag-on" : "bi bi-eye"
-										}
-										id="tag"
-										onClick={OnOffAlreadySeenMovies}
-										onKeyDown={(e) => {
-											if (e.key === "Enter" || e.key === " ") {
-												OnOffAlreadySeenMovies();
-											}
-										}}
-										role="button"
-										tabIndex={0}
-									/>
-								</div>
+								<Tag
+									className="icon-large-blue"
+									list={FavoriteMoviesList}
+									setter={setFavoriteMoviesList}
+									icon="bi bi-suit-heart"
+									movie={movie}
+								/>
+								<Tag
+									className="icon-large-blue"
+									list={WatchListMovies}
+									setter={setWatchListMovies}
+									icon="bi bi-plus-circle"
+									movie={movie}
+								/>
+								<Tag
+									className="icon-large-blue"
+									list={AlreadySeenMovieList}
+									setter={setAlreadySeenMovieList}
+									icon="bi bi-eye"
+									movie={movie}
+								/>
 							</div>
 
 							{trailerUrl !== null && (

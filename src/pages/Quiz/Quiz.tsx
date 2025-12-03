@@ -63,15 +63,16 @@ export default function Quiz() {
 	const [timeLeftAnalysis, setTimeLeftAnalysis] = useState<number>(2);
 	const [quizEnded, setQuizEnded] = useState<boolean>(false);
 	const imageQuestions = useMemo(
-		() => createImageQuestions(quizPicturesData, 12),
+		() => createImageQuestions(quizPicturesData, 22),
 		[],
 	);
 	const currentQuestion = imageQuestions[questionNumber];
 
 	useEffect(() => {
-		if (launch && questionNumber === 11) {
+		if (launch && questionNumber === 21) {
 			setQuizEnded(true);
 			setLaunch(false);
+			window.scrollTo({ top: 0, left: 0 })
 		}
 	}, [launch, questionNumber, setLaunch]);
 
@@ -123,16 +124,16 @@ export default function Quiz() {
 
 	let encouragements = "";
 	switch (true) {
-		case questionNumber < 4:
+		case questionNumber < 8:
 			encouragements = "Clique sur une image pour commencer !";
 			break;
-		case questionNumber < 7:
+		case questionNumber < 15:
 			encouragements = "Premier palier atteint, continue comme ça !";
 			break;
-		case questionNumber < 10:
+		case questionNumber < 20:
 			encouragements = "Dernière ligne droite, tu tiens le bon bout !";
 			break;
-		case questionNumber === 10:
+		case questionNumber === 20:
 			encouragements = "Plus qu'une question, tu es presque arrivé !";
 			break;
 	}
@@ -212,7 +213,7 @@ export default function Quiz() {
 								<ProgressBar
 									height="20px"
 									filledBackground="linear-gradient(to right, red, #49fd31ff)"
-									percent={questionNumber * 10}
+									percent={questionNumber * 5}
 								>
 									<Step transition="scale">
 										{({ accomplished }: { accomplished: boolean }) => (
@@ -270,9 +271,11 @@ export default function Quiz() {
 							<button
 								type="button"
 								className="primary-button"
-								onClick={() => {
-									setLaunch(true);
-								}}
+						onClick={() => {
+								setLaunch(true);
+								window.scrollTo({ top: 0, left: 0 });	
+							}
+						}
 							>
 								Lance le quiz
 							</button>
