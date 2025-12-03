@@ -1,4 +1,5 @@
 import "./MovieCard.css";
+import "./MovieCard-mobile.css";
 
 function MovieCard({ movie }) {
 	const imageUrl = movie.poster_path

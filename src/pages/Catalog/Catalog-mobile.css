@@ -1,0 +1,15 @@
+@media (max-width: 480px) {
+	.filters {
+		display: flex;
+		justify-content: center;
+		gap: 0.2rem;
+		background-color: var(--dark-purple);
+	}
+
+	.modal-catalog {
+		display: grid;
+		justify-content: space-evenly;
+		justify-items: center;
+		grid-template-columns: auto auto;
+	}
+}

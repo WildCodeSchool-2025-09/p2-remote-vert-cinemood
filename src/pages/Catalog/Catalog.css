@@ -47,6 +47,7 @@ body {
 	gap: 1rem;
 	padding: 1rem;
 	background-color: var(--dark-purple);
+	padding-top: 2rem;
 }
 
 .catalog-btn {

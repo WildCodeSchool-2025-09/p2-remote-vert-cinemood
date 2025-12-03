@@ -1,0 +1,9 @@
+@media (max-width: 480px) {
+	.dropdown-btn {
+		padding: 0.2rem 1rem;
+	}
+
+	.show {
+		grid-template-columns: auto auto;
+	}
+}

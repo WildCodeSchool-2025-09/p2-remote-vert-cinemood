@@ -21,7 +21,7 @@ async function getMoviesByPage(page) {
 	}
 }
 
-const nbMovie = 200;
+const nbMovie = 1000;
 const totalPages = Math.ceil(nbMovie / 20);
 const colectMovies = [];
 

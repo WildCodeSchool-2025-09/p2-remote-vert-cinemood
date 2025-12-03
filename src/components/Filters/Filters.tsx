@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Filters.css";
+import "./Filters-mobile.css";
 import { useSearchbar } from "../../context/SearchBarContext";
 
 function Filters({
@@ -7,6 +8,7 @@ function Filters({
 	movies,
 	filteredMovies,
 	setFilteredMovies,
+	isOpen,
 	setIsOpen,
 }) {
 	const [open, setOpen] = useState(false);
@@ -16,7 +18,7 @@ function Filters({
 	const [maxYear, setMaxYear] = useState(2025);
 	const [ratingOpen, setRatingOpen] = useState(false);
 	const [rating, setRating] = useState("");
-	const { searchValue, setSearchPropOpen } = useSearchbar();
+	const { searchValue, setSearchValue, setSearchPropOpen } = useSearchbar();
 
 	const selectGenre = (g) => {
 		let update = [];
@@ -81,130 +83,146 @@ function Filters({
 	return (
 		<>
 			<div className="filters">
-				<div onMouseLeave={() => setOpen(false)}>
+				{!isOpen && (
 					<button
 						type="button"
-						className="dropdown-btn"
-						onMouseEnter={() => setOpen(true)}
+						className="primary-button"
+						onClick={() => setIsOpen(true)}
 					>
-						Genre
+						Afficher les filtres
 					</button>
-					<div className={`dropdown-content ${open ? "show" : ""}`}>
-						{genre?.genres?.map((g) => (
+				)}
+
+				{isOpen && (
+					<>
+						<div onMouseLeave={() => setOpen(false)}>
 							<button
-								className={`genre-link ${combinedGenres.includes(g.id) ? "active" : ""}`}
 								type="button"
-								key={g.name}
-								onClick={() => {
-									setIsOpen(true);
-									selectGenre(g);
-								}}
+								className="dropdown-btn"
+								onMouseEnter={() => setOpen(true)}
+							>
+								Genre
+							</button>
+							<div className={`dropdown-content ${open ? "show" : ""}`}>
+								{genre?.genres?.map((g) => (
+									<button
+										className={`genre-link ${combinedGenres.includes(g.id) ? "active" : ""}`}
+										type="button"
+										key={g.name}
+										onClick={() => {
+											setIsOpen(true);
+											selectGenre(g);
+										}}
+									>
+										{g.name}
+									</button>
+								))}
+							</div>
+						</div>
+						<div className="dropdown" onMouseLeave={() => setYearOpen(false)}>
+							<button
+								type="button"
+								className="dropdown-btn"
+								onMouseEnter={() => setYearOpen(true)}
+							>
+								Annee
+							</button>
+							<div className={`year-content ${yearOpen ? "show-year" : ""}`}>
+								<input
+									type="number"
+									value={minYear}
+									min={1950}
+									max={2025}
+									className="year-input"
+									onChange={(e) => selectYear(e.target.value, maxYear)}
+								/>
+								<input
+									type="number"
+									value={maxYear}
+									min={1950}
+									max={2025}
+									className="year-input"
+									onChange={(e) => selectYear(minYear, e.target.value)}
+								/>
+								<button
+									className="year-input"
+									type="button"
+									onClick={() => {
+										setMinYear(1950);
+										setMaxYear(2025);
+									}}
+								>
+									Rafraîchir
+								</button>
+							</div>
+						</div>
+
+						<div className="dropdown" onMouseLeave={() => setRatingOpen(false)}>
+							<button
+								className="dropdown-btn"
+								type="button"
+								onMouseEnter={() => setRatingOpen(true)}
+							>
+								Rating
+							</button>
+							<div
+								className={`rating-content ${ratingOpen ? "show-rating" : ""}`}
+							>
+								<input
+									type="number"
+									value={rating}
+									min={1}
+									max={10}
+									className="rating-input"
+									onChange={(e) => {
+										setRating(Number(e.target.value));
+										setIsOpen(true);
+									}}
+								/>
+							</div>
+						</div>
+						<button
+							type="button"
+							className="close-btn"
+							onClick={() => {
+								setIsOpen(false);
+								setCombinedGenres([]);
+								setFilteredMovies(movies);
+								setMinYear(1950);
+								setMaxYear(2025);
+								setRating(null);
+								setSearchValue("");
+							}}
+						>
+							<img
+								src="../../../public/filterimages/close_btn_icon.png"
+								alt="X"
+								style={{ width: "18px" }}
+							/>
+						</button>
+					</>
+				)}
+			</div>
+
+			{isOpen && (
+				<div className="selected-genres">
+					{combinedGenres.map((id) => {
+						const g = genre?.genres?.find((item) => item.id === id);
+						if (!g) return null;
+
+						return (
+							<button
+								type="button"
+								className="selected-genre-btn"
+								key={id}
+								onClick={() => selectGenre(g)}
 							>
 								{g.name}
 							</button>
-						))}
-					</div>
+						);
+					})}
 				</div>
-				<div className="dropdown" onMouseLeave={() => setYearOpen(false)}>
-					<button
-						type="button"
-						className="dropdown-btn"
-						onMouseEnter={() => setYearOpen(true)}
-					>
-						Annee
-					</button>
-					<div className={`year-content ${yearOpen ? "show-year" : ""}`}>
-						<input
-							type="number"
-							value={minYear}
-							min={1950}
-							max={2025}
-							className="year-input"
-							onChange={(e) => selectYear(e.target.value, maxYear)}
-						/>
-						<input
-							type="number"
-							value={maxYear}
-							min={1950}
-							max={2025}
-							className="year-input"
-							onChange={(e) => selectYear(minYear, e.target.value)}
-						/>
-						<button
-							className="year-input"
-							type="button"
-							onClick={() => {
-								setMinYear(1950);
-								setMaxYear(2025);
-							}}
-						>
-							Rafraîchir
-						</button>
-					</div>
-				</div>
-
-				<div className="dropdown" onMouseLeave={() => setRatingOpen(false)}>
-					<button
-						className="dropdown-btn"
-						type="button"
-						onMouseEnter={() => setRatingOpen(true)}
-					>
-						Rating
-					</button>
-					<div className={`rating-content ${ratingOpen ? "show-rating" : ""}`}>
-						<input
-							type="number"
-							value={rating}
-							min={1}
-							max={10}
-							className="rating-input"
-							onChange={(e) => {
-								setRating(Number(e.target.value));
-								setIsOpen(true);
-							}}
-						/>
-					</div>
-				</div>
-
-				<button
-					className="dropdown-btn"
-					id="refresh-button"
-					type="button"
-					onClick={() => {
-						setCombinedGenres([]);
-						setFilteredMovies(movies);
-						setMinYear(1950);
-						setMaxYear(2025);
-						setRating(null);
-					}}
-				>
-					Refresh
-				</button>
-				<button
-					type="button"
-					className="close-btn"
-					onClick={() => setIsOpen(false)}
-				>
-					X
-				</button>
-			</div>
-			<div className="selected-genres">
-				{combinedGenres.map((id) => {
-					const g = genre?.genres?.find((item) => item.id === id);
-					if (!g) return null;
-
-					return (
-						<button
-							type="button"
-							className="selected-genre-btn"
-							key={id}
-							onClick={() => selectGenre(g)}
-						>
-							{g.name}
-						</button>
-					);
-				})}
-			</div>
+			)}
 		</>
 	);
 }

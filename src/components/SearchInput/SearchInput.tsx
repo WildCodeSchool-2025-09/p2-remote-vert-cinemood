@@ -29,6 +29,7 @@ function SearchInput() {
 		>
 			<form className="search-wraper">
 				<input
+					value={searchValue}
 					type="text"
 					className="search-text"
 					onChange={(e) => setSearchValue(e.target.value)}

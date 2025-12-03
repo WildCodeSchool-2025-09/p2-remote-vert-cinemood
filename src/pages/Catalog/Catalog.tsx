@@ -1,4 +1,5 @@
 import "./Catalog.css";
+import "./Catalog-mobile.css";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import {
@@ -62,6 +63,7 @@ function Catalog() {
 				movies={getAllMovies}
 				filteredMovies={setFilteredMovies}
 				setFilteredMovies={setFilteredMovies}
+				isOpen={isOpen}
 				setIsOpen={setIsOpen}
 			/>
 
