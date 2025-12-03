@@ -1,29 +1,23 @@
 import useEmblaCarousel from "embla-carousel-react";
-import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import "./CarouselMovie.css";
-import type { Movie } from "../../types";
+import "./CarouselMovie-mobile.css";
+import { useAlreadySeenMovieList } from "../../context/AlreadySeenMovieListContext";
+import { useFavoriteMoviesList } from "../../context/FavoriteMovieListContext";
+import { useWatchListMovies } from "../../context/WatchListMoviesContext";
+import type { MovieData } from "../../types/MovieType";
+import Tag from "../Tag/Tag";
 
 type CarouselProps = {
-	movies: Movie[];
+	movies: MovieData[];
 };
 
 function CarouselMovie({ movies }: CarouselProps) {
 	const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-	const [selectedIndex, setSelectedIndex] = useState(0);
-
-	useEffect(() => {
-		if (!emblaApi) return;
-		const onSelect = () => {
-			setSelectedIndex(emblaApi.selectedScrollSnap());
-		};
-		emblaApi.on("select", onSelect);
-		onSelect();
-		return () => emblaApi.off("select", onSelect);
-	}, [emblaApi]);
-
-	// if (!movies?.length) return <p>Aucun film à afficher</p>;
-	if (!movies && movies.length < 1) return <p>Aucun film à afficher</p>;
+	const { AlreadySeenMovieList, setAlreadySeenMovieList } =
+		useAlreadySeenMovieList();
+	const { FavoriteMoviesList, setFavoriteMoviesList } = useFavoriteMoviesList();
+	const { WatchListMovies, setWatchListMovies } = useWatchListMovies();
 
 	return (
 		<div className="carousel-wrapper">
@@ -32,39 +26,62 @@ function CarouselMovie({ movies }: CarouselProps) {
 				className="carousel-arrow left"
 				onClick={() => emblaApi?.scrollPrev()}
 			/>
+
 			<div className="embla" ref={emblaRef}>
 				<div className="embla__container">
 					{movies
 						.filter((movie) => movie.poster_path)
 						.map((movie) => (
-							<div className="embla__slide" key={movie.id}>
-								<Link to={`/film/${movie.id}`}>
-									<img
-										src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-										alt={movie.title}
-									/>
-								</Link>
+							<div className="embla__slide movie-poster" key={movie.id}>
+								<div className="movie-poster-wrapper">
+									<Link
+										to={`/film/${movie.id}`}
+										onClick={() => {
+											window.scrollTo({ top: 0, left: 0 });
+										}}
+									>
+										<img
+											src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+											alt={movie.title}
+										/>
+									</Link>
+									<div className="show-mini-details">
+										<p className="title-small-carousel">{movie.title}</p>
+										<div className="tag-list-carousel">
+											<Tag
+												className="icon-small-carousel"
+												list={FavoriteMoviesList}
+												setter={setFavoriteMoviesList}
+												icon="bi bi-suit-heart"
+												movie={movie}
+											/>
+											<Tag
+												className="icon-small-carousel"
+												list={WatchListMovies}
+												setter={setWatchListMovies}
+												icon="bi bi-plus-circle"
+												movie={movie}
+											/>
+											<Tag
+												className="icon-small-carousel"
+												list={AlreadySeenMovieList}
+												setter={setAlreadySeenMovieList}
+												icon="bi bi-eye"
+												movie={movie}
+											/>
+										</div>
+									</div>
+								</div>
 							</div>
 						))}
 				</div>
 			</div>
+
 			<button
 				type="button"
 				className="carousel-arrow right"
 				onClick={() => emblaApi?.scrollNext()}
 			/>
-			<div className="embla__dots">
-				{movies
-					.filter((movie) => movie.poster_path)
-					.map((_, position) => (
-						<button
-							type="button"
-							key={movies.id}
-							className={position === selectedIndex ? "dot active" : "dot"}
-							onClick={() => emblaApi?.scrollTo(position)}
-						/>
-					))}
-			</div>
 		</div>
 	);
 }

@@ -43,8 +43,9 @@
 	box-shadow: var(--blue-shadow);
 }
 
-.slick-center .recos-movie-poster:hover {
-	transform: scale(1.1);
+.recos-img-wrapper:hover .show-mini-details {
+	transform: translateY(0);
+	opacity: 1;
 }
 
 .link-movie-details {
