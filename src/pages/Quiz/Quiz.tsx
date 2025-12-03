@@ -63,13 +63,13 @@ export default function Quiz() {
 	const [timeLeftAnalysis, setTimeLeftAnalysis] = useState<number>(2);
 	const [quizEnded, setQuizEnded] = useState<boolean>(false);
 	const imageQuestions = useMemo(
-		() => createImageQuestions(quizPicturesData, 27),
+		() => createImageQuestions(quizPicturesData, 12),
 		[],
 	);
 	const currentQuestion = imageQuestions[questionNumber];
 
 	useEffect(() => {
-		if (launch && questionNumber === 26) {
+		if (launch && questionNumber === 11) {
 			setQuizEnded(true);
 			setLaunch(false);
 		}
@@ -123,16 +123,16 @@ export default function Quiz() {
 
 	let encouragements = "";
 	switch (true) {
-		case questionNumber < 9:
+		case questionNumber < 4:
 			encouragements = "Clique sur une image pour commencer !";
 			break;
-		case questionNumber < 17:
+		case questionNumber < 7:
 			encouragements = "Premier palier atteint, continue comme ça !";
 			break;
-		case questionNumber < 25:
+		case questionNumber < 10:
 			encouragements = "Dernière ligne droite, tu tiens le bon bout !";
 			break;
-		case questionNumber === 25:
+		case questionNumber === 10:
 			encouragements = "Plus qu'une question, tu es presque arrivé !";
 			break;
 	}
@@ -212,7 +212,7 @@ export default function Quiz() {
 								<ProgressBar
 									height="20px"
 									filledBackground="linear-gradient(to right, red, #49fd31ff)"
-									percent={questionNumber * 4}
+									percent={questionNumber * 10}
 								>
 									<Step transition="scale">
 										{({ accomplished }: { accomplished: boolean }) => (
