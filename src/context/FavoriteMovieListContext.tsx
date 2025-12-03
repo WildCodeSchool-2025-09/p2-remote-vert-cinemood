@@ -1,30 +1,30 @@
 import { type ReactNode, createContext, useContext, useState } from "react";
 import type { Movie } from "../types/MovieType";
 
-type FavoriteMoviesListState = {
-	FavoriteMoviesList: Movie[];
-	setFavoriteMoviesList: React.Dispatch<React.SetStateAction<Movie[]>>;
+type FavoriteMovieListState = {
+	FavoriteMovieList: Movie[];
+	setFavoriteMovieList: React.Dispatch<React.SetStateAction<Movie[]>>;
 };
 
-const FavoriteMoviesListContext = createContext<FavoriteMoviesListState>({
-	FavoriteMoviesList: [],
-	setFavoriteMoviesList: () => {},
+const FavoriteMovieListContext = createContext<FavoriteMovieListState>({
+	FavoriteMovieList: [],
+	setFavoriteMovieList: () => {},
 });
 
-export default function FavoriteMoviesListProvider({
+export default function FavoriteMovieListProvider({
 	children,
 }: { children: ReactNode }) {
-	const [FavoriteMoviesList, setFavoriteMoviesList] = useState<Movie[]>([]);
+	const [FavoriteMovieList, setFavoriteMovieList] = useState<Movie[]>([]);
 
 	return (
-		<FavoriteMoviesListContext.Provider
-			value={{ FavoriteMoviesList, setFavoriteMoviesList }}
+		<FavoriteMovieListContext.Provider
+			value={{ FavoriteMovieList, setFavoriteMovieList }}
 		>
 			{children}
-		</FavoriteMoviesListContext.Provider>
+		</FavoriteMovieListContext.Provider>
 	);
 }
 
-export const useFavoriteMoviesList = () => {
-	return useContext(FavoriteMoviesListContext);
+export const useFavoriteMovieList = () => {
+	return useContext(FavoriteMovieListContext);
 };

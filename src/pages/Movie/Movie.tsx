@@ -11,8 +11,8 @@ import logo18 from "../../assets/images/pegi/logo18.png";
 import toutpublic from "../../assets/images/pegi/logopublic.png";
 import CarouselMovie from "../../components/CarouselMovie/CarouselMovie";
 import { useAlreadySeenMovieList } from "../../context/AlreadySeenMovieListContext";
-import { useFavoriteMoviesList } from "../../context/FavoriteMovieListContext";
-import { useWatchListMovies } from "../../context/WatchListMoviesContext";
+import { useFavoriteMovieList } from "../../context/FavoriteMovieListContext";
+import { useWatchListMovie } from "../../context/WatchListMovieContext";
 import type { MovieData } from "../../types/MovieType";
 import type { Movie as MovieType } from "../../types/MovieType";
 
@@ -59,7 +59,7 @@ function Movie() {
 	const [videos, setVideos] = useState<VideoData | null>(null);
 	const [providers, setProviders] = useState<ProvidersData | null>(null);
 	const [showTrailer, setShowTrailer] = useState(false);
-	const [similarMovies, setSimilarMovies] = useState<MovieType[]>([]);
+	const [similarMovie, setSimilarMovie] = useState<MovieType[]>([]);
 	const [loadingSimilar, setLoadingSimilar] = useState(false);
 	const [note, setNote] = useState(0);
 	const { AlreadySeenMovieList, setAlreadySeenMovieList } =
@@ -67,8 +67,8 @@ function Movie() {
 	const [hoverNote, setHoverNote] = useState(0);
 	const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 	const apiUrl = import.meta.env.VITE_TMDB_API_URL;
-	const { FavoriteMoviesList, setFavoriteMoviesList } = useFavoriteMoviesList();
-	const { WatchListMovies, setWatchListMovies } = useWatchListMovies();
+	const { FavoriteMovieList, setFavoriteMovieList } = useFavoriteMovieList();
+	const { WatchListMovie, setWatchListMovie } = useWatchListMovie();
 	const handleTrailerClick = () => setShowTrailer((prev) => !prev);
 
 	useEffect(() => {
@@ -130,8 +130,8 @@ function Movie() {
 			headers,
 		})
 			.then((res) => res.json())
-			.then((movieSimilar) => {
-				setSimilarMovies(movieSimilar.results?.slice(0, 8));
+			.then((Movieimilar) => {
+				setSimilarMovie(Movieimilar.results?.slice(0, 8));
 				setLoadingSimilar(true);
 			})
 			.catch(() => setLoadingSimilar(false));
@@ -205,7 +205,7 @@ function Movie() {
 		"Canal+": "https://www.canalplus.com",
 		"Paramount Plus": "https://www.paramountplus.com",
 		Crunchyroll: "https://www.crunchyroll.com",
-		"Google Play Movies": "https://play.google.com/store/movies",
+		"Google Play Movie": "https://play.google.com/store/Movie",
 		"YouTube Premium": "https://www.youtube.com/premium",
 		"Rakuten TV": "https://rakuten.tv",
 		"INA  madelen Amazon Channel": "https://www.primevideo.com",
@@ -260,13 +260,13 @@ function Movie() {
 		}
 	};
 
-	const isFavorite = FavoriteMoviesList.some(
+	const isFavorite = FavoriteMovieList.some(
 		(favorite) => favorite.id === movie.id,
 	);
 	const isAlreadySeen = AlreadySeenMovieList.some(
 		(AlreadySeen) => AlreadySeen.id === movie.id,
 	);
-	const isWatchList = WatchListMovies.some(
+	const isWatchList = WatchListMovie.some(
 		(WatchList) => WatchList.id === movie.id,
 	);
 
@@ -281,10 +281,18 @@ function Movie() {
 		setPseudo("");
 	}
 
-	function OnOffFavoriteMovies() {
+	function toMovie(data: MovieData): MovieType {
+		return {
+			id: data.id,
+			poster_path: data.poster_path ?? "/no-poster.jpg",
+			title: data.title ?? "Titre inconnu",
+		};
+	}
+
+	function OnOffFavoriteMovie() {
 		if (!movie) return;
 
-		setFavoriteMoviesList((prev) => {
+		setFavoriteMovieList((prev) => {
 			const exists = prev.some((favorite) => favorite.id === movie.id);
 
 			if (exists) {
@@ -294,10 +302,10 @@ function Movie() {
 		});
 	}
 
-	function OnOffWatchListMovies() {
+	function OnOffWatchListMovie() {
 		if (!movie) return;
 
-		setWatchListMovies((prev) => {
+		setWatchListMovie((prev) => {
 			const exists = prev.some((watchlist) => watchlist.id === movie.id);
 
 			if (exists) {
@@ -307,7 +315,7 @@ function Movie() {
 		});
 	}
 
-	function OnOffAlreadySeenMovies() {
+	function OnOffAlreadySeenMovie() {
 		if (!movie) return;
 
 		setAlreadySeenMovieList((prev) => {
@@ -367,14 +375,6 @@ function Movie() {
 		return <div className="star-rating">{stars}</div>;
 	}
 
-	function toMovie(data: MovieData): MovieType {
-		return {
-			id: data.id,
-			poster_path: data.poster_path ?? "/no-poster.jpg",
-			title: data.title ?? "Titre inconnu",
-		};
-	}
-
 	return (
 		<>
 			<header className="header-details">
@@ -401,10 +401,10 @@ function Movie() {
 								isFavorite ? "bi bi-suit-heart-fill tag-on" : "bi bi-suit-heart"
 							}
 							id="tag"
-							onClick={OnOffFavoriteMovies}
+							onClick={OnOffFavoriteMovie}
 							onKeyDown={(e) => {
 								if (e.key === "Enter" || e.key === " ") {
-									OnOffFavoriteMovies();
+									OnOffFavoriteMovie();
 								}
 							}}
 							role="button"
@@ -413,10 +413,10 @@ function Movie() {
 						<i
 							className={`bi bi-plus-circle ${isWatchList ? "tag-on" : ""}`}
 							id="tag"
-							onClick={OnOffWatchListMovies}
+							onClick={OnOffWatchListMovie}
 							onKeyDown={(e) => {
 								if (e.key === "Enter" || e.key === " ") {
-									OnOffWatchListMovies();
+									OnOffWatchListMovie();
 								}
 							}}
 							role="button"
@@ -425,10 +425,10 @@ function Movie() {
 						<i
 							className={`bi bi-eye ${isAlreadySeen ? "tag-on" : ""}`}
 							id="tag"
-							onClick={OnOffAlreadySeenMovies}
+							onClick={OnOffAlreadySeenMovie}
 							onKeyDown={(e) => {
 								if (e.key === "Enter" || e.key === " ") {
-									OnOffAlreadySeenMovies();
+									OnOffAlreadySeenMovie();
 								}
 							}}
 							role="button"
@@ -532,7 +532,7 @@ function Movie() {
 						Cela pourrait aussi t'intéresser
 					</h2>
 					{loadingSimilar ? (
-						<CarouselMovie movies={similarMovies} />
+						<CarouselMovie movies={similarMovie} />
 					) : (
 						<p>Chargement...</p>
 					)}
