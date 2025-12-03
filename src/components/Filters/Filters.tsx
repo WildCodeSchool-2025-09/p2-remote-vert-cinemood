@@ -128,32 +128,33 @@ function Filters({
 								Annee
 							</button>
 							<div className={`year-content ${yearOpen ? "show-year" : ""}`}>
-								<input
-									type="number"
+								<select
+									className="year-select"
 									value={minYear}
-									min={1950}
-									max={2025}
-									className="year-input"
 									onChange={(e) => selectYear(e.target.value, maxYear)}
-								/>
-								<input
-									type="number"
-									value={maxYear}
-									min={1950}
-									max={2025}
-									className="year-input"
-									onChange={(e) => selectYear(minYear, e.target.value)}
-								/>
-								<button
-									className="year-input"
-									type="button"
-									onClick={() => {
-										setMinYear(1950);
-										setMaxYear(2025);
-									}}
 								>
-									Rafraîchir
-								</button>
+									{Array.from({ length: 2025 - 1950 + 1 }, (_, i) => {
+										const year = 1950 + i;
+										return (
+											<option key={year} value={year}>
+												{year}
+											</option>
+										);
+									})}
+								</select>
+								<select
+									className="year-select"
+									value={maxYear}
+									onChange={(e) => selectYear(minYear, e.target.value)}
+								>
+									{Array.from({ length: 2025 - 1950 + 1 }, (_, i) => 1950 + i)
+										.reverse()
+										.map((year) => (
+											<option key={year} value={year}>
+												{year}
+											</option>
+										))}
+								</select>
 							</div>
 						</div>
 
@@ -163,22 +164,27 @@ function Filters({
 								type="button"
 								onMouseEnter={() => setRatingOpen(true)}
 							>
-								Rating
+								Note minimale
 							</button>
 							<div
 								className={`rating-content ${ratingOpen ? "show-rating" : ""}`}
 							>
-								<input
-									type="number"
+								<select
+									className="rating-select"
 									value={rating}
-									min={1}
-									max={10}
-									className="rating-input"
 									onChange={(e) => {
 										setRating(Number(e.target.value));
 										setIsOpen(true);
 									}}
-								/>
+								>
+									{Array.from({ length: 10 }, (_, i) => i + 1)
+										.reverse()
+										.map((num) => (
+											<option key={num} value={num}>
+												{num}
+											</option>
+										))}
+								</select>
 							</div>
 						</div>
 						<button
