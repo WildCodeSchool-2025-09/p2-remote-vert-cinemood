@@ -34,7 +34,12 @@ function CarouselMovie({ movies }: CarouselProps) {
 						.map((movie) => (
 							<div className="embla__slide movie-poster" key={movie.id}>
 								<div className="movie-poster-wrapper">
-									<Link to={`/film/${movie.id}`}>
+									<Link
+										to={`/film/${movie.id}`}
+										onClick={() => {
+											window.scrollTo({ top: 0, left: 0 });
+										}}
+									>
 										<img
 											src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
 											alt={movie.title}
