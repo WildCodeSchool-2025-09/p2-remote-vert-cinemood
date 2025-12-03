@@ -1,94 +1,51 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./SearchInput.css";
+import { useSearchbar } from "../../context/SearchBarContext";
+import type { Movie } from "../../types/MovieType";
 
-function SearchInput({ setFilteredMovies, movieData, setIsOpen, isOpen }) {
-	const [placeholder, setPlaceholder] = useState("Recherceh...");
-	const [inputValue, setInputValue] = useState("");
-	const [searchProposition, setSearchProposition] = useState([]);
-	const [propOpen, setPropOpen] = useState(false);
-
-	function refreshCatalog(movieData) {
-		setFilteredMovies(movieData);
-		setInputValue("");
-		setPlaceholder("Recherche...");
-		setSearchProposition([]);
-		setPropOpen(false);
-	}
+function SearchInput() {
+	const [searchTitleProp, setSearchTitleProp] = useState<Movie[]>([]);
+	const {
+		searchValue,
+		setSearchValue,
+		searchPropOpen,
+		setSearchPropOpen,
+		getAllMovies,
+		setFilteredMovies,
+	} = useSearchbar();
 
 	useEffect(() => {
-		if (!inputValue.trim()) {
-			setSearchProposition([]);
-			setPropOpen(false);
-			return;
-		}
-
-		const results = movieData
-			.filter((movie) => {
-				return movie.title.toLowerCase().includes(inputValue.toLowerCase());
-			})
-			.slice(0, 20);
-
-		setSearchProposition(results);
-		results.length > 0 ? setPropOpen(true) : setPropOpen(false);
-	}, [inputValue, movieData]);
+		setSearchTitleProp(
+			getAllMovies.filter((movie) =>
+				movie.title.toLowerCase().includes(searchValue.toLowerCase()),
+			),
+		);
+	}, [searchValue, getAllMovies]);
 
 	return (
-		<div>
-			<form
-				className="search-wraper"
-				onSubmit={(p) => {
-					p.preventDefault();
-					p.stopPropagation();
-				}}
-			>
+		<div
+			onMouseLeave={() => setSearchPropOpen(false)}
+			onMouseEnter={() => searchValue.length !== 0 && setSearchPropOpen(true)}
+		>
+			<form className="search-wraper">
 				<input
-					className="search-text"
 					type="text"
-					placeholder={placeholder}
-					value={inputValue}
-					onChange={(e) => {
-						const value = e.target.value;
-
-						setInputValue(value);
-						setFilteredMovies(
-							movieData.filter((e) => {
-								return e.title.toLowerCase().includes(value.toLowerCase());
-							}),
-						);
-					}}
-					onClick={(e) => {
-						setFilteredMovies(movieData);
-						setIsOpen(true);
-					}}
+					className="search-text"
+					onChange={(e) => setSearchValue(e.target.value)}
 				/>
-				<button
-					className="search-btn"
-					type="button"
-					onClick={() => {
-						refreshCatalog(movieData);
-						setIsOpen(false);
-					}}
-				>
-					X
-				</button>
 			</form>
-			<div className={`movieprop-dropdown ${propOpen ? "show-prop" : ""}`}>
-				{searchProposition.map((movie) => (
+			<div
+				className={`movieprop-dropdown ${searchPropOpen ? "show-prop" : ""}`}
+			>
+				{searchTitleProp.map((movie) => (
 					<p
-						key={movie.title}
+						key={movie.id}
 						className="prop-text"
-						onClick={(e: React.MouseEvent<HTMLParagraphElement>) => {
-							setInputValue(movie.title);
+						onClick={() => {
 							setFilteredMovies([movie]);
-							setPropOpen(false);
+							setSearchPropOpen(false);
 						}}
-						onKeyDown={(e) => {
-							if (e.key === "Enter" || e.key === " ") {
-								setInputValue(movie.title);
-								setFilteredMovies([movie]);
-								setPropOpen(false);
-							}
-						}}
+						onKeyDown={() => setFilteredMovies([movie])}
 					>
 						{movie.title}
 					</p>

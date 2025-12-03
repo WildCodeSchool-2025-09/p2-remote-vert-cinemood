@@ -1,37 +1,50 @@
 import { useEffect, useState } from "react";
 import "./Filters.css";
+import { useSearchbar } from "../../context/SearchBarContext";
 
-function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
+function Filters({
+	genre,
+	movies,
+	filteredMovies,
+	setFilteredMovies,
+	setIsOpen,
+}) {
 	const [open, setOpen] = useState(false);
 	const [yearOpen, setYearOpen] = useState(false);
-	const [combainedGenres, setCombainedGenres] = useState([]);
+	const [combinedGenres, setCombinedGenres] = useState([]);
 	const [minYear, setMinYear] = useState(1950);
 	const [maxYear, setMaxYear] = useState(2025);
 	const [ratingOpen, setRatingOpen] = useState(false);
-	const [rating, setRating] = useState(null);
+	const [rating, setRating] = useState("");
+	const { searchValue, setSearchPropOpen } = useSearchbar();
 
 	const selectGenre = (g) => {
 		let update = [];
-		if (combainedGenres.includes(g.id)) {
-			update = combainedGenres.filter((id) => id !== g.id);
+		if (combinedGenres.includes(g.id)) {
+			update = combinedGenres.filter((id) => id !== g.id);
 		} else {
-			update = [...combainedGenres, g.id];
+			update = [...combinedGenres, g.id];
 		}
 
-		setCombainedGenres(update);
+		setCombinedGenres(update);
 	};
 
-	const handleYearChange = (min, max) => {
+	const selectYear = (min, max) => {
 		setMinYear(min ? Number(min) : null);
 		setMaxYear(max ? Number(max) : null);
+		setIsOpen(true);
 	};
 
 	useEffect(() => {
 		let results = [...movies];
 
-		if (combainedGenres.length > 0) {
+		results = results.filter((movie) =>
+			movie.title.toLowerCase().includes(searchValue.toLowerCase()),
+		);
+
+		if (combinedGenres.length > 0) {
 			results = results.filter((movie) =>
-				combainedGenres.every((id) => movie.genre_ids.includes(id)),
+				combinedGenres.every((id) => movie.genre_ids.includes(id)),
 			);
 		}
 
@@ -49,16 +62,21 @@ function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 		});
 
 		setFilteredMovies(results);
-		setIsOpen(true);
 	}, [
-		combainedGenres,
+		movies,
+		combinedGenres,
 		minYear,
 		maxYear,
 		rating,
-		setIsOpen,
+		searchValue,
 		setFilteredMovies,
-		movies,
 	]);
+
+	useEffect(() => {
+		const isInputEmpty = searchValue.trim().length > 0;
+		setIsOpen(isInputEmpty);
+		setSearchPropOpen(isInputEmpty);
+	}, [searchValue, setIsOpen, setSearchPropOpen]);
 
 	return (
 		<>
@@ -74,10 +92,13 @@ function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 					<div className={`dropdown-content ${open ? "show" : ""}`}>
 						{genre?.genres?.map((g) => (
 							<button
-								className={`genre-link ${combainedGenres.includes(g.id) ? "active" : ""}`}
+								className={`genre-link ${combinedGenres.includes(g.id) ? "active" : ""}`}
 								type="button"
 								key={g.name}
-								onClick={() => selectGenre(g)}
+								onClick={() => {
+									setIsOpen(true);
+									selectGenre(g);
+								}}
 							>
 								{g.name}
 							</button>
@@ -99,7 +120,7 @@ function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 							min={1950}
 							max={2025}
 							className="year-input"
-							onChange={(e) => handleYearChange(e.target.value, maxYear)}
+							onChange={(e) => selectYear(e.target.value, maxYear)}
 						/>
 						<input
 							type="number"
@@ -107,7 +128,7 @@ function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 							min={1950}
 							max={2025}
 							className="year-input"
-							onChange={(e) => handleYearChange(minYear, e.target.value)}
+							onChange={(e) => selectYear(minYear, e.target.value)}
 						/>
 						<button
 							className="year-input"
@@ -137,7 +158,10 @@ function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 							min={1}
 							max={10}
 							className="rating-input"
-							onChange={(e) => setRating(Number(e.target.value))}
+							onChange={(e) => {
+								setRating(Number(e.target.value));
+								setIsOpen(true);
+							}}
 						/>
 					</div>
 				</div>
@@ -147,7 +171,7 @@ function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 					id="refresh-button"
 					type="button"
 					onClick={() => {
-						setCombainedGenres([]);
+						setCombinedGenres([]);
 						setFilteredMovies(movies);
 						setMinYear(1950);
 						setMaxYear(2025);
@@ -165,7 +189,7 @@ function Filters({ genre, movies, setFilteredMovies, setIsOpen }) {
 				</button>
 			</div>
 			<div className="selected-genres">
-				{combainedGenres.map((id) => {
+				{combinedGenres.map((id) => {
 					const g = genre?.genres?.find((item) => item.id === id);
 					if (!g) return null;
 

@@ -111,3 +111,21 @@ body {
 .btn-info {
 	margin: 20px;
 }
+
+.modal-catalog {
+	width: 100%;
+	min-height: 1440px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-content: flex-start;
+	align-items: flex-start;
+	gap: 20px;
+	padding-top: 20px;
+}
+
+.resurch-no-results {
+	position: absolute;
+	top: 50%;
+}
