@@ -2,6 +2,7 @@ import "./Movie.css";
 import "./Movie-mobile.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
+import { OrbitProgress } from "react-loading-indicators";
 import { Link, useParams } from "react-router";
 import logo6 from "../../assets/images/pegi/logo6.png";
 import logo10 from "../../assets/images/pegi/logo10.png";
@@ -15,7 +16,6 @@ import { useFavoriteMoviesList } from "../../context/FavoriteMovieListContext";
 import { useWatchListMovies } from "../../context/WatchListMoviesContext";
 import type { MovieData } from "../../types/MovieType";
 import avatar from "./../../assets/images/avatar-utilisateur.jpg";
-import { OrbitProgress } from "react-loading-indicators";
 
 interface CreditData {
 	crew: { job: string; name: string }[];
@@ -187,7 +187,8 @@ function Movie() {
 
 	const rating = movie.vote_average ?? "";
 
-	const runtimeInHours = (movie) => {
+	const runtimeInHours = (movie: MovieData) => {
+		if (!movie.runtime && movie.runtime !== 0) return "";
 		const hours = Math.floor(movie.runtime / 60);
 		const mins = movie.runtime - hours * 60;
 		return `${hours}h${mins}`;
