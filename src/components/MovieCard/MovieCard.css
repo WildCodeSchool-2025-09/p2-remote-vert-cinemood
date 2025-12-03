@@ -51,3 +51,14 @@
 	opacity: 1;
 	transform: translateY(0);
 }
+
+.plus-dinfo-btn {
+	background: rgba(255, 255, 255, 0.1);
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	font-size: 1.2rem;
+	cursor: pointer;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}

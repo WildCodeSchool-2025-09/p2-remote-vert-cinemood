@@ -31,7 +31,8 @@ function SearchInput() {
 				<input
 					value={searchValue}
 					type="text"
-					className="search-text"
+					className="search-bar"
+					placeholder="Recherche"
 					onChange={(e) => setSearchValue(e.target.value)}
 				/>
 			</form>

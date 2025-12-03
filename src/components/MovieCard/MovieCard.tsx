@@ -1,5 +1,6 @@
 import "./MovieCard.css";
 import "./MovieCard-mobile.css";
+import { Link } from "react-router";
 
 function MovieCard({ movie }) {
 	const imageUrl = movie.poster_path
@@ -14,7 +15,9 @@ function MovieCard({ movie }) {
 
 					<div className="card-content">
 						<h3>{movie.title}</h3>
-						<button type="button">Plus d'info</button>
+						<Link to={`/film/${movie.id}`} className="plus-dinfo-btn">
+							Plus d'info
+						</Link>
 					</div>
 				</div>
 			</div>

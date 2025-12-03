@@ -3,6 +3,7 @@ import "./NavBar.css";
 import "./NavBar-mobile.css";
 import { useState } from "react";
 import { useLaunch } from "../../context/LaunchQuiz";
+import SearchInput from "../SearchInput/SearchInput";
 
 function NavBar() {
 	const { setLaunch } = useLaunch();
@@ -51,8 +52,7 @@ function NavBar() {
 						</Link>
 					</li>
 					<li className="navbar-item">
-						{/*Fonctionnalités de la barre de recherche sur une autre US*/}
-						<input type="text" className="search-bar" placeholder="Recherche" />
+						<SearchInput />
 					</li>
 					<li className="navbar-item">
 						<Link
