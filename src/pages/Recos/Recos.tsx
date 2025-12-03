@@ -3,12 +3,12 @@ import RecosCarousel from "../../components/RecosCarousel/RecosCarousel";
 import "./Recos.css";
 import { Link } from "react-router";
 import { useQuiz } from "../../context/QuizContext";
-import type { Movie } from "../../types/MovieType";
+import type { MovieData } from "../../types/MovieType";
 
 export default function Recos() {
 	const { quizAnswers } = useQuiz();
 	const quizTaken = quizAnswers.length > 0;
-	const [movieRecos, setMovieRecos] = useState<Movie[]>([]);
+	const [movieRecos, setMovieRecos] = useState<MovieData[]>([]);
 	const randomStartIndex = Math.floor(Math.random() * 14);
 
 	const fetchMovie = useCallback(() => {
@@ -31,7 +31,7 @@ export default function Recos() {
 		fetch(url, options)
 			.then((response) => response.json())
 			.then((movies) =>
-				setMovieRecos(movies.results.filter((movie) => movie.poster_path)),
+				setMovieRecos(movies.results.filter((movie : MovieData) => movie.poster_path)),
 			)
 			.catch(console.error);
 	}, [quizTaken, quizAnswers]);
