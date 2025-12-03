@@ -19,6 +19,8 @@ function NavBar() {
 						src="/logo-cine-mood-black.png"
 						alt="CinéMood"
 						className={`logo ${isMenuOpen ? "" : "show"}`}
+						onClick={() => {window.scrollTo({ top: 0, left: 0 });
+}}
 					/>
 				</Link>
 				<div
@@ -40,7 +42,10 @@ function NavBar() {
 						</Link>
 					</li>
 					<li className="navbar-item">
-						<Link to="/catalogue" className="nav-button" onClick={toggleMenu}>
+						<Link to="/catalogue" className="nav-button" 							
+						onClick={
+								toggleMenu	
+						}>
 							Catalogue
 						</Link>
 					</li>
@@ -55,6 +60,7 @@ function NavBar() {
 							onClick={() => {
 								setLaunch(true);
 								toggleMenu();
+								window.scrollTo({ top: 0, left: 0 });	
 							}}
 						>
 							Lance le Quiz

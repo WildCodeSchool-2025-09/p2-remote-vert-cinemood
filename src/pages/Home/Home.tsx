@@ -60,14 +60,22 @@ function Home() {
 					<Link
 						to="/quiz"
 						className="primary-button"
-						onClick={() => setLaunch(true)}
+						onClick={() => {
+								setLaunch(true);
+								window.scrollTo({ top: 0, left: 0 });	
+							}
+						}
 					>
 						Lance le quiz
 					</Link>
 					<Link
 						to="/quiz"
 						className="primary-button btn-empty"
-						onClick={() => setLaunch(false)}
+						onClick={() => {
+								setLaunch(false);
+								window.scrollTo({ top: 0, left: 0 });	
+							}
+						}
 					>
 						En savoir plus
 					</Link>
@@ -99,7 +107,7 @@ function Home() {
 					<p className="body-text">
 						Reçois une recommandation tirée au sort rien que pour toi
 					</p>
-					<Link to="/recommandations" className="primary-button blue-button">
+					<Link to="/recommandations" className="primary-button blue-button" onClick={() => window.scrollTo({ top: 0, left: 0 })}> 
 						Surprends-moi
 					</Link>
 				</section>

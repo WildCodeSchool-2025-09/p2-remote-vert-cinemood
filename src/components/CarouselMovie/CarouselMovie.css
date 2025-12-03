@@ -50,14 +50,14 @@
 }
 
 .embla__slide {
+	min-width: 300px;
+	aspect-ratio: 3/4;
 	padding: 15px 10px;
 	display: flex;
 	justify-content: center;
 }
 
 .movie-poster {
-	width: 250px;
-	height: 350px;
 	position: relative;
 	overflow: hidden;
 }
