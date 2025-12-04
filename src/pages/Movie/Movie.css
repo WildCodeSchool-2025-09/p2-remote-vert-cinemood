@@ -68,6 +68,7 @@
 .info-details-top {
 	display: flex;
 	flex-direction: column;
+	align-items: flex-start;
 	gap: 0.5rem;
 }
 
@@ -107,7 +108,7 @@
 	display: flex;
 }
 
-.icon {
+.icon-large-blue {
 	color: var(--white);
 	font-size: 2rem;
 	margin: 0 1rem 1rem 1rem;
@@ -115,7 +116,7 @@
 	transition: all 0.2s ease;
 }
 
-.icon:hover {
+.icon-large-blue:hover {
 	color: var(--light-blue);
 	transform: scale(1.2);
 }

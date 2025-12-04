@@ -6,19 +6,33 @@ function Footer() {
 	return (
 		<>
 			<footer>
-				<Link to="/">
+				<Link
+					to="/"
+					onClick={() => {
+						window.scrollTo({ top: 0, left: 0 });
+					}}
+				>
 					<img src="/logo-cine-mood-black.png" alt="logo" height="80px" />
 				</Link>
 				<p className="body-text footer">
 					EXPLORER
 					<ul>
-						<Link to="/quiz" className="link">
+						<Link
+							to="/quiz"
+							className="link"
+							onClick={() => {
+								window.scrollTo({ top: 0, left: 0 });
+							}}
+						>
 							<li>Quiz</li>
 						</Link>
-						<Link to="/profil" className="link">
-							<li className="link">Profil</li>
-						</Link>
-						<Link to="/catalogue">
+						<li className="link">Profil</li>
+						<Link
+							to="/catalogue"
+							onClick={() => {
+								window.scrollTo({ top: 0, left: 0 });
+							}}
+						>
 							<li>Catalogue</li>
 						</Link>
 					</ul>

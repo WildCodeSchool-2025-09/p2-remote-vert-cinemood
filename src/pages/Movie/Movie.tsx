@@ -50,12 +50,14 @@ interface StarRatingProps {
 }
 
 function Movie() {
-	const [messages, setMessages] = useState<
-		{ pseudo: string; text: string; note: number }[]
-	>([]);
+	const { id } = useParams<{ id: string }>();
+	if (!id) return null;
+	const [messagesByMovie, setMessagesByMovie] = useState<
+		Record<string, { pseudo: string; text: string; note: number }[]>
+	>({});
+	const messages = messagesByMovie[id] || [];
 	const [newMessage, setNewMessage] = useState<string>("");
 	const [pseudo, setPseudo] = useState<string>("");
-	const { id } = useParams<{ id: string }>();
 	const [movie, setMovie] = useState<MovieData | null>(null);
 	const [credits, setCredits] = useState<CreditData | null>(null);
 	const [videos, setVideos] = useState<VideoData | null>(null);
@@ -68,8 +70,8 @@ function Movie() {
 	const [hoverNote, setHoverNote] = useState(0); // note au survol
 	const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 	const apiUrl = import.meta.env.VITE_TMDB_API_URL;
-	const { FavoriteMoviesList, setFavoriteMoviesList } = useFavoriteMovieList();
-	const { WatchListMovies, setWatchListMovies } = useWatchListMovie();
+	const { FavoriteMovieList, setFavoriteMovieList } = useFavoriteMovieList();
+	const { WatchListMovie, setWatchListMovie } = useWatchListMovie();
 	const handleTrailerClick = () => setShowTrailer((prev) => !prev);
 
 	useEffect(() => {
@@ -243,11 +245,14 @@ function Movie() {
 	};
 
 	function sendMessage() {
-		if (!newMessage.trim()) return;
-		if (!pseudo.trim()) return;
-		if (note === 0) return;
+		if (!id) return;
+		if (!newMessage.trim() || !pseudo.trim() || note === 0) return;
 
-		setMessages([{ pseudo, text: newMessage, note }, ...messages]);
+		setMessagesByMovie((prev) => ({
+			...prev,
+			[id]: [{ pseudo, text: newMessage, note }, ...(prev[id] || [])],
+		}));
+
 		setNote(0);
 		setNewMessage("");
 		setPseudo("");
@@ -328,15 +333,15 @@ function Movie() {
 							<div className="tag-list">
 								<Tag
 									className="icon-large-blue"
-									list={FavoriteMoviesList}
-									setter={setFavoriteMoviesList}
+									list={FavoriteMovieList}
+									setter={setFavoriteMovieList}
 									icon="bi bi-suit-heart"
 									movie={movie}
 								/>
 								<Tag
 									className="icon-large-blue"
-									list={WatchListMovies}
-									setter={setWatchListMovies}
+									list={WatchListMovie}
+									setter={setWatchListMovie}
 									icon="bi bi-plus-circle"
 									movie={movie}
 								/>
@@ -467,23 +472,16 @@ function Movie() {
 					<div className="tous-les-commentaires">
 						<article>
 							{messages.map((msg) => {
+								const key = `${msg.pseudo}-${msg.note}-${msg.text.slice(0, 10)}`;
 								return (
-									<div
-										className="body-text"
-										id="last-commentaire"
-										key={msg.pseudo}
-									>
+									<div className="body-text" id="last-commentaire" key={key}>
 										<img src={avatar} alt="avatar" width="50px" height="50px" />
 										<strong className="pseudo">{msg.pseudo}</strong>
-										{(() => {
-											const note = msg.note;
-											if (!note || note < 1 || note > 5) return null;
-											return (
-												<span className="stars stars-comment">
-													{"★".repeat(note) + "☆".repeat(5 - note)}
-												</span>
-											);
-										})()}
+										{msg.note >= 1 && msg.note <= 5 && (
+											<span className="stars stars-comment">
+												{"★".repeat(msg.note) + "☆".repeat(5 - msg.note)}
+											</span>
+										)}
 										<article className="contenue-commentaire">
 											{msg.text}
 										</article>

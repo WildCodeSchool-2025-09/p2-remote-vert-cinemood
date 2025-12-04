@@ -5,11 +5,19 @@ import "./RecosCarousel.css";
 import "./Recos-mobile.css";
 import { OrbitProgress } from "react-loading-indicators";
 import { Link } from "react-router";
+import { useAlreadySeenMovieList } from "../../context/AlreadySeenMovieListContext";
+import { useFavoriteMovieList } from "../../context/FavoriteMovieListContext";
+import { useWatchListMovie } from "../../context/WatchListMovieContext";
+import Tag from "../Tag/Tag";
 
 export default function RecosCarousel({
 	movieRecos,
 	randomStartIndex,
 }: RecosCarouselProps) {
+	const { AlreadySeenMovieList, setAlreadySeenMovieList } =
+		useAlreadySeenMovieList();
+	const { FavoriteMovieList, setFavoriteMovieList } = useFavoriteMovieList();
+	const { WatchListMovie, setWatchListMovie } = useWatchListMovie();
 	const settings = {
 		centerMode: true,
 		centerPadding: "0px",
@@ -48,10 +56,36 @@ export default function RecosCarousel({
 											src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
 											alt={movie.title}
 										/>
-										<div className="primary-button link-movie-details">
+										{/* <div className="primary-button link-movie-details">
 											En savoir plus
-										</div>
+										</div> */}
 									</Link>
+									<div className="show-mini-details">
+										<p className="title-small-carousel">{movie.title}</p>
+										<div className="tag-list-carousel">
+											<Tag
+												className="icon-small-carousel"
+												list={FavoriteMovieList}
+												setter={setFavoriteMovieList}
+												icon="bi bi-suit-heart"
+												movie={movie}
+											/>
+											<Tag
+												className="icon-small-carousel"
+												list={WatchListMovie}
+												setter={setWatchListMovie}
+												icon="bi bi-plus-circle"
+												movie={movie}
+											/>
+											<Tag
+												className="icon-small-carousel"
+												list={AlreadySeenMovieList}
+												setter={setAlreadySeenMovieList}
+												icon="bi bi-eye"
+												movie={movie}
+											/>
+										</div>
+									</div>
 								</div>
 							))}
 					</Slider>

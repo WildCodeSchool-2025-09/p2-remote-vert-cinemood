@@ -1,9 +1,9 @@
 import { type ReactNode, createContext, useContext, useState } from "react";
-import type { Movie } from "../types/MovieType";
+import type { MovieData } from "../types/MovieType";
 
 type WatchListMovietate = {
-	WatchListMovie: Movie[];
-	setWatchListMovie: React.Dispatch<React.SetStateAction<Movie[]>>;
+	WatchListMovie: MovieData[];
+	setWatchListMovie: React.Dispatch<React.SetStateAction<MovieData[]>>;
 };
 
 const WatchListMovieContext = createContext<WatchListMovietate>({
@@ -14,7 +14,7 @@ const WatchListMovieContext = createContext<WatchListMovietate>({
 export default function WatchListMovieProvider({
 	children,
 }: { children: ReactNode }) {
-	const [WatchListMovie, setWatchListMovie] = useState<Movie[]>([]);
+	const [WatchListMovie, setWatchListMovie] = useState<MovieData[]>([]);
 
 	return (
 		<WatchListMovieContext.Provider
