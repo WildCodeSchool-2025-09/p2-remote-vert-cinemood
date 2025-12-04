@@ -1,6 +1,6 @@
-const apiUrl = "https://api.themoviedb.org/3/";
-const accessToken =
-	"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNDBlNThkMGE5MTZlN2RjODYyNGMwN2M3Zjg1MTQ3MSIsIm5iZiI6MTc2MjE2NTI4MC42OTcsInN1YiI6IjY5MDg4MjIwMTYyODg1YjQxYmRkODczZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UwcwODoXxLIwygVTUmmBRyhlmJQ-WYQoWDYwlUC2ank";
+const apiUrl = import.meta.env.VITE_TMDB_API_URL;
+const accessToken = import.meta.env.VITE_TMDB_API_KEY;
+
 const options = {
 	method: "GET",
 	headers: {
