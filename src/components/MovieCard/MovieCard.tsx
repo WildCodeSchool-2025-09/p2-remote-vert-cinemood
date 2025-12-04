@@ -22,7 +22,7 @@ function MovieCard({ movie }) {
 					<img src={imageUrl} alt={movie.title} className="movie-image" />
 
 					<div className="card-content">
-						{/* <h3>{movie.title}</h3> */}
+						<h3>{movie.title}</h3>
 						<Link to={`/film/${movie.id}`} className="plus-dinfo-btn">
 							Plus d'info
 						</Link>
