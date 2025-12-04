@@ -203,7 +203,7 @@ function Filters({
 							}}
 						>
 							<img
-								src="../../../public/filterimages/close_btn_icon.png"
+								src="/filterimages/close_btn_icon.png"
 								alt="X"
 								style={{ width: "18px" }}
 							/>
