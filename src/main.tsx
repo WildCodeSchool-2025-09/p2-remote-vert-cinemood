@@ -7,7 +7,7 @@ import AlreadySeenMovieListProvider from "./context/AlreadySeenMovieListContext"
 import FavoriteMoviesListProvider from "./context/FavoriteMovieListContext";
 import LaunchProvider from "./context/LaunchQuiz";
 import QuizProvider from "./context/QuizContext";
-import WatchListMoviesProvider from "./context/WatchListMoviesContext";
+import WatchListMoviesProvider from "./context/WatchListMovieContext";
 
 const rootElement = document.getElementById("root");
 

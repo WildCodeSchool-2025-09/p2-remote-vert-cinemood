@@ -87,6 +87,11 @@
 	max-width: 45ch;
 }
 
+.quiz-consignes-below {
+	padding-bottom: 60px;
+	max-width: 45ch;
+}
+
 .page-analyse {
 	height: 80vh;
 	padding: 1rem;

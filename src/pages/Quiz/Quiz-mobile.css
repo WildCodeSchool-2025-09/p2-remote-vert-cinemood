@@ -1,3 +1,12 @@
+@media (max-width: 1500px) {
+	.quiz-container .header-section-center {
+		padding: 2rem 0;
+	}
+	.image-container {
+		width: 250px;
+	}
+}
+
 @media (max-width: 1024px) {
 	.quiz-hero {
 		width: 70%;
@@ -25,7 +34,7 @@
 	}
 
 	.quiz-container .header-section-center {
-		padding: 1rem;
+		padding: 0;
 	}
 
 	.quiz-container {

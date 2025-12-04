@@ -6,8 +6,8 @@ import "./Recos-mobile.css";
 import { OrbitProgress } from "react-loading-indicators";
 import { Link } from "react-router";
 import { useAlreadySeenMovieList } from "../../context/AlreadySeenMovieListContext";
-import { useFavoriteMoviesList } from "../../context/FavoriteMovieListContext";
-import { useWatchListMovies } from "../../context/WatchListMoviesContext";
+import { useFavoriteMovieList } from "../../context/FavoriteMovieListContext";
+import { useWatchListMovie } from "../../context/WatchListMovieContext";
 import Tag from "../Tag/Tag";
 
 export default function RecosCarousel({
@@ -16,8 +16,8 @@ export default function RecosCarousel({
 }: RecosCarouselProps) {
 	const { AlreadySeenMovieList, setAlreadySeenMovieList } =
 		useAlreadySeenMovieList();
-	const { FavoriteMoviesList, setFavoriteMoviesList } = useFavoriteMoviesList();
-	const { WatchListMovies, setWatchListMovies } = useWatchListMovies();
+	const { FavoriteMovieList, setFavoriteMovieList } = useFavoriteMovieList();
+	const { WatchListMovie, setWatchListMovie } = useWatchListMovie();
 	const settings = {
 		centerMode: true,
 		centerPadding: "0px",
@@ -65,15 +65,15 @@ export default function RecosCarousel({
 										<div className="tag-list-carousel">
 											<Tag
 												className="icon-small-carousel"
-												list={FavoriteMoviesList}
-												setter={setFavoriteMoviesList}
+												list={FavoriteMovieList}
+												setter={setFavoriteMovieList}
 												icon="bi bi-suit-heart"
 												movie={movie}
 											/>
 											<Tag
 												className="icon-small-carousel"
-												list={WatchListMovies}
-												setter={setWatchListMovies}
+												list={WatchListMovie}
+												setter={setWatchListMovie}
 												icon="bi bi-plus-circle"
 												movie={movie}
 											/>

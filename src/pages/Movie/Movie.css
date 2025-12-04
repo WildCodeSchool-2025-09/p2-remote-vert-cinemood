@@ -283,3 +283,15 @@
 .star-icon.filled {
 	color: #f5c518;
 }
+
+.star-pegi-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+}
+
+.pegi {
+	width: 30px;
+	aspect-ratio: 1 / 1;
+}

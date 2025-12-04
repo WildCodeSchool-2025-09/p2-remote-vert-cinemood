@@ -3,8 +3,8 @@ import { Link } from "react-router";
 import "./CarouselMovie.css";
 import "./CarouselMovie-mobile.css";
 import { useAlreadySeenMovieList } from "../../context/AlreadySeenMovieListContext";
-import { useFavoriteMoviesList } from "../../context/FavoriteMovieListContext";
-import { useWatchListMovies } from "../../context/WatchListMoviesContext";
+import { useFavoriteMovieList } from "../../context/FavoriteMovieListContext";
+import { useWatchListMovie } from "../../context/WatchListMovieContext";
 import type { MovieData } from "../../types/MovieType";
 import Tag from "../Tag/Tag";
 
@@ -16,8 +16,8 @@ function CarouselMovie({ movies }: CarouselProps) {
 	const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
 	const { AlreadySeenMovieList, setAlreadySeenMovieList } =
 		useAlreadySeenMovieList();
-	const { FavoriteMoviesList, setFavoriteMoviesList } = useFavoriteMoviesList();
-	const { WatchListMovies, setWatchListMovies } = useWatchListMovies();
+	const { FavoriteMovieList, setFavoriteMovieList } = useFavoriteMovieList();
+	const { WatchListMovie, setWatchListMovie } = useWatchListMovie();
 
 	return (
 		<div className="carousel-wrapper">
@@ -50,15 +50,15 @@ function CarouselMovie({ movies }: CarouselProps) {
 										<div className="tag-list-carousel">
 											<Tag
 												className="icon-small-carousel"
-												list={FavoriteMoviesList}
-												setter={setFavoriteMoviesList}
+												list={FavoriteMovieList}
+												setter={setFavoriteMovieList}
 												icon="bi bi-suit-heart"
 												movie={movie}
 											/>
 											<Tag
 												className="icon-small-carousel"
-												list={WatchListMovies}
-												setter={setWatchListMovies}
+												list={WatchListMovie}
+												setter={setWatchListMovie}
 												icon="bi bi-plus-circle"
 												movie={movie}
 											/>
