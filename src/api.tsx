@@ -9,7 +9,7 @@ const options = {
 	},
 };
 
-async function getMoviesByPage(page) {
+async function getMoviesByPage(page: []) {
 	const url = `${apiUrl}discover/movie?&include_adult=false&include_video=false&language=fr-FR&vote_average.gte=5&primary_release_date.gte=1960-01-01&vote_count.gte=100&page=${page}`;
 	try {
 		const res = await fetch(url, options);
