@@ -72,7 +72,7 @@ export default function Quiz() {
 		if (launch && questionNumber === 21) {
 			setQuizEnded(true);
 			setLaunch(false);
-			window.scrollTo({ top: 0, left: 0 })
+			window.scrollTo({ top: 0, left: 0 });
 		}
 	}, [launch, questionNumber, setLaunch]);
 
@@ -271,11 +271,10 @@ export default function Quiz() {
 							<button
 								type="button"
 								className="primary-button"
-						onClick={() => {
-								setLaunch(true);
-								window.scrollTo({ top: 0, left: 0 });	
-							}
-						}
+								onClick={() => {
+									setLaunch(true);
+									window.scrollTo({ top: 0, left: 0 });
+								}}
 							>
 								Lance le quiz
 							</button>

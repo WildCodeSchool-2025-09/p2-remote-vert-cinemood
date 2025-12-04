@@ -51,7 +51,7 @@
 
 .embla__slide {
 	min-width: 300px;
-	aspect-ratio: 3/4;
+	aspect-ratio: 3 / 4;
 	padding: 15px 10px;
 	display: flex;
 	justify-content: center;

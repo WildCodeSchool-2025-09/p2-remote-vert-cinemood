@@ -14,11 +14,10 @@ export default function RecosCarousel({
 	movieRecos,
 	randomStartIndex,
 }: RecosCarouselProps) {
-
-		const { AlreadySeenMovieList, setAlreadySeenMovieList } =
-			useAlreadySeenMovieList();
-		const { FavoriteMoviesList, setFavoriteMoviesList } = useFavoriteMoviesList();
-		const { WatchListMovies, setWatchListMovies } = useWatchListMovies();
+	const { AlreadySeenMovieList, setAlreadySeenMovieList } =
+		useAlreadySeenMovieList();
+	const { FavoriteMoviesList, setFavoriteMoviesList } = useFavoriteMoviesList();
+	const { WatchListMovies, setWatchListMovies } = useWatchListMovies();
 	const settings = {
 		centerMode: true,
 		centerPadding: "0px",
@@ -63,30 +62,30 @@ export default function RecosCarousel({
 									</Link>
 									<div className="show-mini-details">
 										<p className="title-small-carousel">{movie.title}</p>
-												<div className="tag-list-carousel">
-														<Tag
-															className="icon-small-carousel"
-															list={FavoriteMoviesList}
-															setter={setFavoriteMoviesList}
-															icon="bi bi-suit-heart"
-															movie={movie}
-														/>
-														<Tag
-																				className="icon-small-carousel"
-																				list={WatchListMovies}
-																				setter={setWatchListMovies}
-																				icon="bi bi-plus-circle"
-																				movie={movie}
-																			/>
-																			<Tag
-																				className="icon-small-carousel"
-																				list={AlreadySeenMovieList}
-																				setter={setAlreadySeenMovieList}
-																				icon="bi bi-eye"
-																				movie={movie}
-																			/>
-																		</div>
-																	</div>
+										<div className="tag-list-carousel">
+											<Tag
+												className="icon-small-carousel"
+												list={FavoriteMoviesList}
+												setter={setFavoriteMoviesList}
+												icon="bi bi-suit-heart"
+												movie={movie}
+											/>
+											<Tag
+												className="icon-small-carousel"
+												list={WatchListMovies}
+												setter={setWatchListMovies}
+												icon="bi bi-plus-circle"
+												movie={movie}
+											/>
+											<Tag
+												className="icon-small-carousel"
+												list={AlreadySeenMovieList}
+												setter={setAlreadySeenMovieList}
+												icon="bi bi-eye"
+												movie={movie}
+											/>
+										</div>
+									</div>
 								</div>
 							))}
 					</Slider>

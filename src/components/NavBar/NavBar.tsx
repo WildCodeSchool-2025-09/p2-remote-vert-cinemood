@@ -3,6 +3,7 @@ import "./NavBar.css";
 import "./NavBar-mobile.css";
 import { useState } from "react";
 import { useLaunch } from "../../context/LaunchQuiz";
+import SearchInput from "../SearchInput/SearchInput";
 
 function NavBar() {
 	const { setLaunch } = useLaunch();
@@ -18,7 +19,7 @@ function NavBar() {
 					<img
 						src="/logo-cine-mood-black.png"
 						alt="CinéMood"
-						className={`logo ${isMenuOpen ? "" : "show"}`}
+						className={`logo ${isMenuOpen ? "" : "show-mobile"}`}
 						onClick={() => {
 							window.scrollTo({ top: 0, left: 0 });
 						}}
@@ -34,7 +35,7 @@ function NavBar() {
 				>
 					☰
 				</div>
-				<ul className={`navbar-list ${isMenuOpen ? "show" : ""}`}>
+				<ul className={`navbar-list ${isMenuOpen ? "show-mobile" : ""}`}>
 					<li className="navbar-item">
 						<Link to="/apropos" onClick={toggleMenu} className="nav-button">
 							À propos
@@ -51,8 +52,7 @@ function NavBar() {
 						</Link>
 					</li>
 					<li className="navbar-item">
-						{/*Fonctionnalités de la barre de recherche sur une autre US*/}
-						<input type="text" className="search-bar" placeholder="Recherche" />
+						<SearchInput />
 					</li>
 					<li className="navbar-item">
 						<Link

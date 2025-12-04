@@ -1,0 +1,33 @@
+.movie-card-wrapper {
+	position: relative;
+	display: inline-block;
+	padding: 20px;
+}
+
+.movie-card {
+	width: 250px;
+	height: auto;
+	margin: 8px;
+	border-radius: 1.2rem;
+	overflow: hidden;
+	cursor: pointer;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	z-index: 1000;
+	border: 2px solid transparent;
+}
+
+.movie-image {
+	width: 250px;
+	border-radius: inherit;
+}
+
+.movie-card:hover {
+	transform: scale(1.05);
+	box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+	border: 2px solid var(--white);
+}
+
+.movie-card:hover .show-mini-details {
+	opacity: 1;
+	transform: translateY(0);
+}

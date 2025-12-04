@@ -31,7 +31,9 @@ export default function Recos() {
 		fetch(url, options)
 			.then((response) => response.json())
 			.then((movies) =>
-				setMovieRecos(movies.results.filter((movie : MovieData) => movie.poster_path)),
+				setMovieRecos(
+					movies.results.filter((movie: MovieData) => movie.poster_path),
+				),
 			)
 			.catch(console.error);
 	}, [quizTaken, quizAnswers]);

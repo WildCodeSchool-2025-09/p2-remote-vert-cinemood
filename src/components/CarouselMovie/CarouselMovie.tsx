@@ -2,10 +2,10 @@ import useEmblaCarousel from "embla-carousel-react";
 import { Link } from "react-router";
 import "./CarouselMovie.css";
 import "./CarouselMovie-mobile.css";
-import type { MovieData } from "../../types/MovieType";
 import { useAlreadySeenMovieList } from "../../context/AlreadySeenMovieListContext";
 import { useFavoriteMoviesList } from "../../context/FavoriteMovieListContext";
 import { useWatchListMovies } from "../../context/WatchListMoviesContext";
+import type { MovieData } from "../../types/MovieType";
 import Tag from "../Tag/Tag";
 
 type CarouselProps = {

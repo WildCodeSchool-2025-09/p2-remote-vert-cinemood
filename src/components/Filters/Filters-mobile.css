@@ -1,0 +1,14 @@
+@media (max-width: 480px) {
+	.dropdown-btn {
+		padding: 1rem 1rem;
+	}
+
+	.close-btn {
+		min-width: 50px;
+		min-height: 40px;
+	}
+
+	.show {
+		grid-template-columns: auto auto;
+	}
+}
