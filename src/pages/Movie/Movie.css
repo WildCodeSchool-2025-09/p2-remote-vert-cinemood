@@ -72,6 +72,10 @@
 	gap: 0.5rem;
 }
 
+.info-details-top h1 {
+	text-align: left;
+}
+
 .sub-movie-title-text {
 	font-family: var(--font-family-title);
 	font-size: 1rem;
