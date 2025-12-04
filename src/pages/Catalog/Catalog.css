@@ -46,6 +46,8 @@ body {
 	justify-content: center;
 	gap: 1rem;
 	padding: 1rem;
+	background-color: var(--dark-purple);
+	padding-top: 2rem;
 }
 
 .catalog-btn {
@@ -64,39 +66,69 @@ body {
 	transform: scale(1.03);
 }
 
-.search-input {
-	max-width: 320px;
-	padding: 0.7rem 1rem;
-	border-radius: 4px;
-	border: none;
-	background: rgba(255, 255, 255, 0.12);
-	color: #fff;
-	font-size: 0.1rem;
-	outline: none;
-	transition: background 0.25s ease, box-shadow 0.25s ease;
-}
+/* Catalog Cover Background */
 
-search-input::placeholder {
-	color: rgba(255, 255, 255, 0.55);
-}
-
-.search-btn {
-	background: rgba(255, 255, 255, 0.1);
-	margin-left: 0.8rem;
-	border: none;
-	border-radius: 4px;
+.movie-cover {
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	transition: background-image 1s ease-in-out;
 	color: white;
-	cursor: pointer;
-	transition: background 0.25s ease, transform 0.2s ease;
+	font-size: 3rem;
+	width: 100%;
+	height: 500px;
+	aspect-ratio: 2 / 3;
+	margin: auto;
+	position: relative;
 }
 
-.search-btn:hover {
-	background: #f6121d;
-	transform: scale(1.02);
+.open {
+	display: none;
 }
 
-.search-btn:active {
-	transform: scale(0.97);
+.cover-overly {
+	inset: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(
+		to bottom,
+		rgba(40, 3, 92, 0) 0%,
+		rgba(40, 3, 92, 0.07) 76%,
+		rgba(40, 3, 92, 1) 100%
+	);
+	pointer-events: none;
+	display: flex;
+	flex-direction: colmn;
+	align-items: flex-end;
+}
+
+.movie-title {
+	margin: 20px;
+}
+
+.btn-info {
+	margin: 20px;
+}
+
+.modal-catalog {
+	width: 100%;
+	min-height: 1440px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-content: flex-start;
+	align-items: flex-start;
+	gap: 20px;
+	padding-top: 20px;
+}
+
+.resurch-no-results {
+	position: absolute;
+	top: 50%;
 }
 
 /* Movies Catalog background cover */

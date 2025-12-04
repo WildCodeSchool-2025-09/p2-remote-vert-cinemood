@@ -26,7 +26,14 @@ function Footer() {
 						>
 							<li>Quiz</li>
 						</Link>
-						<li className="link">Profil</li>
+						<Link
+							to="/profil"
+							onClick={() => {
+								window.scrollTo({ top: 0, left: 0 });
+							}}
+						>
+							<li className="link">Profil</li>
+						</Link>
 						<Link
 							to="/catalogue"
 							onClick={() => {
@@ -40,7 +47,14 @@ function Footer() {
 				<p className="body-text footer">
 					SOCIÉTÉ
 					<ul>
-						<li className="link">A propos</li>
+						<Link
+							to="/apropos"
+							onClick={() => {
+								window.scrollTo({ top: 0, left: 0 });
+							}}
+						>
+							<li className="link">A propos</li>
+						</Link>
 						<li className="link">Contact</li>
 						<li className="link">Actualités</li>
 					</ul>

@@ -26,7 +26,7 @@
 		display: none;
 	}
 
-	.navbar-list.show {
+	.navbar-list.show-mobile {
 		display: flex;
 	}
 

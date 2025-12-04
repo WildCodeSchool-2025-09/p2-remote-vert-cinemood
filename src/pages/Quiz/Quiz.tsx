@@ -124,10 +124,13 @@ export default function Quiz() {
 
 	let encouragements = "";
 	switch (true) {
-		case questionNumber < 8:
+		case questionNumber < 1:
 			encouragements = "Clique sur une image pour commencer !";
 			break;
-		case questionNumber < 15:
+		case questionNumber < 7:
+			encouragements = "Choisi encore parmi les images!";
+			break;
+		case questionNumber < 14:
 			encouragements = "Premier palier atteint, continue comme ça !";
 			break;
 		case questionNumber < 20:
